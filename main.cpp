@@ -64,7 +64,7 @@ int main(int argc, char **argv)
 
 //! [1]
     QGraphicsScene scene;
-    scene.setSceneRect(-300, -300, 600, 600);
+    scene.setSceneRect(200, 200, 1280,769);
 //! [1] //! [2]
     scene.setItemIndexMethod(QGraphicsScene::NoIndex);
 //! [2]
@@ -82,7 +82,7 @@ int main(int argc, char **argv)
 //! [4]
     GraphicsView view(&scene);
     view.setRenderHint(QPainter::Antialiasing);
-    view.setBackgroundBrush(QPixmap(":/images/cheese.jpg"));
+    view.setBackgroundBrush(QPixmap(":/images/background.jpg"));
 //! [4] //! [5]
     view.setCacheMode(QGraphicsView::CacheBackground);
     view.setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
