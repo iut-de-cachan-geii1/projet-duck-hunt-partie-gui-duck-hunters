@@ -1,0 +1,17 @@
+{
+    "cmake.preferredGenerators": [
+        "Ninja"
+    ],
+    "cmake.configureOnOpen": false,
+    "cmake.configureEnvironment": {
+        "BOOST_ROOT": "C:/Boost"
+    },
+    "git.autofetch": true,
+    "cmake.environment": {
+        "Qt6_DIR": "C:\\Qt\\6.2.1\\mingw81_64\\lib\\cmake",
+        "Qt6WidgetsTools_DIR": "C:\\Qt\\6.2.1\\mingw81_64\\lib\\cmake",
+        "Qt6CoreTools_DIR": "C:\\Qt\\6.2.1\\mingw81_64\\lib\\cmake",
+        "Qt6GUITools_DIR": "C:\\Qt\\6.2.1\\mingw81_64\\lib\\cmake",
+        "QT_DIR": "C:\\Qt\\6.2.1\\mingw81_64\\lib\\cmake"
+    }
+}

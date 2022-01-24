@@ -1,0 +1,46 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: debian:buster
+    steps:
+      - checkout
+      - run:
+          name: Recherche des dépendances
+          command: >
+            apt-get update && apt-get -y install
+            libboost-all-dev
+            cmake 
+            ninja-build 
+            build-essential
+            qt5-default
+            qtmultimedia5-dev
+            libxcb-xinerama0-dev
+            ca-certificates
+            clang-tidy
+      - run:
+          name: Génération du dossier de build et creation du projet cmake
+          command: mkdir build && cd build && cmake ../ -G Ninja -DBOOST_ROOT=/usr
+      - run:
+          name: Compilation du code c/c++
+          command: cd build && ninja
+      - run:
+          name: Inspection du code c/c++
+          command: >
+            mkdir inspect_dir &&
+            cp
+            `find ./ -path ./build -prune -o -name '*.c' -print`
+            `find ./ -path ./build -prune -o -name '*.h' -print`
+            `find ./ -path ./build -prune -o -name '*.cpp' -print`
+            `find ./ -path ./build -prune -o -name '*.hpp' -print`
+            inspect_dir/. &&
+            inspect inspect_dir
+            -copyright -crlf -end -link -path_name -tab -ascii -apple_macro
+            -assert_macro -deprecated_macro -minmax -unnamed
+            > inspect_report.html
+      - run:
+          name: Exécution des tests unitaires
+          command: cd build && ctest
+      - store_artifacts:
+          path: inspect_report.html
+          destination: artefact
