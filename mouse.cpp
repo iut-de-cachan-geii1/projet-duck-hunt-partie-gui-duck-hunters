@@ -105,7 +105,10 @@ QPainterPath Mouse::shape() const
 //! [3]
 void Mouse::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    // Body
+    QImage imageDeCanard(":/images/canard.png");
+    painter->drawImage(QPoint(-300,300),imageDeCanard);
+
+    /*/ Body
     painter->setBrush(color);
     painter->drawEllipse(-10, -20, 20, 40);
 
@@ -133,7 +136,7 @@ void Mouse::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWi
     path.cubicTo(5, 27, 5, 32, 0, 30);
     path.cubicTo(-5, 32, -5, 42, 0, 35);
     painter->setBrush(Qt::NoBrush);
-    painter->drawPath(path);
+    painter->drawPath(path);*/
 }
 //! [3]
 
