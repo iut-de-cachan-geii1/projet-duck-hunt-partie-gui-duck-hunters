@@ -105,10 +105,10 @@ QPainterPath Mouse::shape() const
 //! [3]
 void Mouse::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    QImage imageDeCanard(":/images/canard.png");
-    painter->drawImage(QPoint(-300,300),imageDeCanard);
+    QPixmap imageDeCanard(":/images/canard.png");
+    painter->drawPixmap(QPoint(-300,300),imageDeCanard);/*
 
-    /*/ Body
+    // Body
     painter->setBrush(color);
     painter->drawEllipse(-10, -20, 20, 40);
 
@@ -180,7 +180,8 @@ void Mouse::timerEvent(QTimerEvent *event)
                                                        << mapToScene(0, 0)
                                                        << mapToScene(-30, -50)
                                                        << mapToScene(30, -50));
-    for (QGraphicsItem *item : dangerMice) 
+
+    for (QGraphicsItem *item : dangerMice)
     {
         if (item == this)
         {
@@ -208,6 +209,7 @@ void Mouse::timerEvent(QTimerEvent *event)
 
     // Add some random movement
 //! [10]
+//! */
     if (dangerMice.size() > 1 && QRandomGenerator::global()->bounded(10) == 0) 
     {
         if (QRandomGenerator::global()->bounded(1) != 0)

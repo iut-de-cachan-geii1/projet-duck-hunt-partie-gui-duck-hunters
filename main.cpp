@@ -54,7 +54,7 @@
 #include <QApplication>
 #include <cmath>
 
-static constexpr int MouseCount = 7;
+static constexpr int MouseCount = 10;
 
 //! [0]
 int main(int argc, char **argv)
@@ -64,7 +64,7 @@ int main(int argc, char **argv)
 
 //! [1]
     QGraphicsScene scene;
-    scene.setSceneRect(-300, -300, 600, 600);
+    scene.setSceneRect(300, 300, 600, 600);
 //! [1] //! [2]
     scene.setItemIndexMethod(QGraphicsScene::NoIndex);
 //! [2]
@@ -73,8 +73,7 @@ int main(int argc, char **argv)
     for (int i = 0; i < MouseCount; ++i) 
     {
         Mouse *mouse = new Mouse;
-        mouse->setPos(::sin((i * 6.28) / MouseCount) * 200,
-                      ::cos((i * 6.28) / MouseCount) * 200);
+        mouse->setPos(100*i,400);
         scene.addItem(mouse);
     }
 //! [3]
@@ -82,12 +81,14 @@ int main(int argc, char **argv)
 //! [4]
     GraphicsView view(&scene);
     view.setRenderHint(QPainter::Antialiasing);
-    view.setBackgroundBrush(QPixmap(":/images/cheese.jpg"));
+    view.setBackgroundBrush(QColor("cyan"));
+    view.setForegroundBrush(QPixmap(":/images/foreground.png"));
 //! [4] //! [5]
     view.setCacheMode(QGraphicsView::CacheBackground);
+
     view.setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
 //! [5] //! [6]
-    view.setWindowTitle(QT_TRANSLATE_NOOP(QGraphicsView, "Colliding Mice"));
+    view.setWindowTitle(QT_TRANSLATE_NOOP(QGraphicsView, "Duck Hunt"));
     view.showMaximized();
 
     return QApplication::exec();
