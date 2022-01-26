@@ -51,8 +51,8 @@ endif()
 #    endif()
 #endif()
 
-find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets REQUIRED)
-find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
+find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets Multimedia MultimediaWidgets SerialPort REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets Widgets Multimedia MultimediaWidgets SerialPort REQUIRED)
 
 file(GLOB PROJECT_SOURCES
     "*.c"
@@ -60,6 +60,7 @@ file(GLOB PROJECT_SOURCES
     "*.h"
     "*.hpp"
     "*.ui"
+    "*.qrc"
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
@@ -80,7 +81,11 @@ else()
 endif()
 
 target_link_libraries(MyQtProject PRIVATE 
-    Qt${QT_VERSION_MAJOR}::Widgets)
+    Qt${QT_VERSION_MAJOR}::Widgets
+    Qt${QT_VERSION_MAJOR}::Multimedia
+    Qt${QT_VERSION_MAJOR}::MultimediaWidgets
+    Qt${QT_VERSION_MAJOR}::SerialPort
+    )
 
 set_target_properties(MyQtProject PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
