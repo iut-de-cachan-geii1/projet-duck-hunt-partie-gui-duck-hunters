@@ -1,4 +1,4 @@
-QT += widgets
+QT += widgets multimedia multimediawidgets serialport
 
 HEADERS += \
         mouse.h \
