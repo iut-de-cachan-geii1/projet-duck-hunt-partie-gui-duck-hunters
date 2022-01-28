@@ -77,7 +77,7 @@ int main(int argc, char **argv)
         static int pos_random = QRandomGenerator::global()->bounded(500,800);
         duck->setPos(pos_random ,570 );
         scene.addItem(duck);
-        scene.addRect(0,0,1201,600);
+       // scene.addRect(0,0,1201,600);
 
 //! [3]
 

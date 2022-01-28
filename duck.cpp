@@ -60,12 +60,14 @@
 #include <QDialog>
 #include <QPixmap>
 
-constexpr qreal Pi = M_PI;
-constexpr qreal TwoPi = 2 * M_PI;
+#define Droite 1205
+#define Gauche 0
+#define Haut 0
+#define Bas 600
 
 static qreal normalizeAngle(qreal angle)
 {
-    while (angle < 0)
+    /*while (angle < 0)
     {
         angle += TwoPi;
     }
@@ -74,42 +76,35 @@ static qreal normalizeAngle(qreal angle)
     {
         angle -= TwoPi;
     }
-
+*/
     return angle;
 }
 
-//! [0]
 Duck::Duck()
 {
     //    setTransform(QTransform().rotate(QRandomGenerator::global()->bounded(360 * 16)), true);
     startTimer(1000 / 33);
 }
-//! [0]
 
-//! [1]
 QRectF Duck::boundingRect() const
 {
     qreal adjust = 0.5;
     return QRectF(-18 - adjust, -22 - adjust,
                   36 + adjust, 60 + adjust);
 }
-//! [1]
 
-//! [2]
 QPainterPath Duck::shape() const
 {
     QPainterPath path;
     path.addRect(-10, -20, 75, 71);
     return path;
 }
-//! [2]
 
-//! [3]
 void Duck::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    QLineF lineCenterToDestination(QPoint(0, 0), mapFromScene(1201, 200));
+   // QLineF lineCenterToDestination(QPoint(0, 0), mapFromScene(1201, 200));
 
-    painter->drawLine(lineCenterToDestination);
+    //painter->drawLine(lineCenterToDestination);
 
     QPixmap imageDeCanard(":/images/canard.png");
     painter->drawPixmap(QPoint(0, 0), imageDeCanard);
@@ -118,153 +113,92 @@ void Duck::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
     //    QLabel *processLabel = new QLabel(this);
     //    processLabel->setMovie(movie);
     //    movie->start();
-
-    // // Body
-    //    painter->setBrush(color);
-    //    painter->drawEllipse(-10, -20, 20, 40);
-
-    //    // Eyes
-    //    painter->setBrush(Qt::white);
-    //    painter->drawEllipse(-10, -17, 8, 8);
-    //    painter->drawEllipse(2, -17, 8, 8);
-
-    //    // Nose
-    //    painter->setBrush(Qt::black);
-    //    painter->drawEllipse(QRectF(-2, -22, 4, 4));
-
-    //    // Pupils
-    //    painter->drawEllipse(QRectF(-8.0 + mouseEyeDirection, -17, 4, 4));
-    //    painter->drawEllipse(QRectF(4.0 + mouseEyeDirection, -17, 4, 4));
-
-    //    // Ears
-    //    painter->setBrush(scene()->collidingItems(this).isEmpty() ? Qt::darkYellow : Qt::red);
-    //    painter->drawEllipse(-17, -12, 16, 16);
-    //    painter->drawEllipse(1, -12, 16, 16);
-
-    //    // Tail
-    //    QPainterPath path(QPointF(0, 20));
-    //    path.cubicTo(-5, 22, -5, 22, 0, 25);
-    //    path.cubicTo(5, 27, 5, 32, 0, 30);
-    //    path.cubicTo(-5, 32, -5, 42, 0, 35);
-    //    painter->setBrush(Qt::NoBrush);
-    //    painter->drawPath(path);
 }
-//! [3]
+
 void move(QWidget *widget)
 {
 }
-//! [4]
 
 void Duck::timerEvent(QTimerEvent *event)
 {
+
     QPointF pos_actuelle = pos();
     QPointF position_target(1200, 200);
+    static int directionX =  QRandomGenerator::global()->bounded(0,2); //si 1 va a gauche, si 0 va a droitre
+    static int directionY = 1; //si 1 va en haut, si 0 va en bas
+    static int hauteur_rng = QRandomGenerator::global()->bounded(2, 5);
 
-    static int directionX = QRandomGenerator::global()->bounded(0, 2);
-    static int hauteur_rng = QRandomGenerator::global()->bounded(1, 5);
-
-    if (directionX == 0)
+    if ((directionX == 1) && (directionY == 1)) // va en haut vers la gauche
     {
-        if (pos_actuelle.rx() != 0)
+        /*if ((pos_actuelle.rx() != 0)||(pos_actuelle.ry() != 0)) //tant que pas bord de gauche
         {
             setPos(pos_actuelle + QPointF(-5, -hauteur_rng));
+        }
+        else //sinon va a droite
+        {
+            directionX = !directionX;
+        }*/
+        if(pos_actuelle.rx() == 0)
+        {
+            directionX = 0;
+        }
+        else if(pos_actuelle.ry() <= 0)
+        {
+            directionY = 0;
         }
     }
     else if (directionX == 1)
     {
         if (pos_actuelle.rx() != 1205)
         {
-            setPos(pos_actuelle + QPointF(5, -hauteur_rng));
+            setPos(pos_actuelle + QPointF(-10, -hauteur_rng));
         }
     }
-
-    /*
-    //! [4]
-        // Don't move too far away
-    //! [5]
-        QLineF lineToCenter(QPointF(300, 40), mapFromScene(300, 300));
-        if (lineToCenter.length() > 150)
+    if ((directionX == 0) && (directionY == 1))//Va en haut a droite
+    {
+        if(pos_actuelle.rx() == 1200)
         {
-            qreal angleToCenter = std::atan2(lineToCenter.dy(), lineToCenter.dx());
-            angleToCenter = normalizeAngle((Pi - angleToCenter) + Pi / 2);
-
-            if (angleToCenter < Pi && angleToCenter > Pi / 4)
-            {
-                // Rotate left
-                angle += (angle < -Pi / 2) ? 0.25 : -0.25;
-            }
-            else if (angleToCenter >= Pi && angleToCenter < (Pi + Pi / 2 + Pi / 4))
-            {
-                // Rotate right
-                angle += (angle < Pi / 2) ? 0.25 : -0.25;
-            }
+            directionX = 1;
         }
-        else if (::sin(angle) < 0)
+        else if(pos_actuelle.ry() <= 0)
         {
-            angle += 0.25;
+            directionY = 0;
         }
-        else if (::sin(angle) > 0)
+        else
         {
-            angle -= 0.25;
-    //! [5] //! [6]
+            setPos(pos_actuelle + QPointF(10, -hauteur_rng));
         }
-    //! [6]
 
-    //    // Try not to crash with any other mice
-    ////! [7]
-    //    QList<QGraphicsItem *> dangerMice = scene()->items(QPolygonF()
-    //                                                       << mapToScene(0, 0)
-    //                                                       << mapToScene(-30, -50)
-    //                                                       << mapToScene(30, -50));
-    //    for (QGraphicsItem *item : dangerMice)
-    //    {
-    //        if (item == this)
-    //        {
-    //            continue;
-    //        }
-
-    //        QLineF lineToMouse(QPointF(0, 0), mapFromItem(item, 0, 0));
-    //        qreal angleToMouse = std::atan2(lineToMouse.dy(), lineToMouse.dx());
-    //        angleToMouse = normalizeAngle((Pi - angleToMouse) + Pi / 2);
-
-    //        if (angleToMouse >= 0 && angleToMouse < Pi / 2)
-    //        {
-    //            // Rotate right
-    //            angle += 0.5;
-    //        }
-    //        else if (angleToMouse <= TwoPi && angleToMouse > (TwoPi - Pi / 2))
-    //        {
-    //            // Rotate left
-    //            angle -= 0.5;
-    ////! [7] //! [8]
-    //        }
-    ////! [8] //! [9]
-    //    }
-    ////! [9]
-
-    //    // Add some random movement
-    ////! [10]
-    //    if (dangerMice.size() > 1 && QRandomGenerator::global()->bounded(10) == 0)
-    //    {
-    //        if (QRandomGenerator::global()->bounded(1) != 0)
-    //        {
-    //            angle += QRandomGenerator::global()->bounded(1 / 500.0);
-
-    //        }
-    //        else
-    //        {
-    //            angle -= QRandomGenerator::global()->bounded(1 / 500.0);
-    //        }
-    //    }
-    ////! [10]
-
-    //! [11]
-        speed += (-50 + QRandomGenerator::global()->bounded(1000000)) / 100.0;
-
-        qreal dx = ::sin(angle) * 10;
-        mouseEyeDirection = (qAbs(dx / 5) < 1) ? 0 : dx / 5;
-
-        setTransform(QTransform().rotate(dx), true);
-        setPos(mapToParent(0, -(3 + sin(speed) * 3)));*/
+    }
+    
+    if ((directionX == 1) && (directionY == 0))//va en bas a gauche 
+    {
+        if(pos_actuelle.rx() == 0)
+        {
+            directionX = 0;
+        }
+        else if(pos_actuelle.ry() >= 540)
+        {
+            directionY = 1;
+        }
+        else
+        {
+            setPos(pos_actuelle + QPointF(-10, hauteur_rng));
+        }
+    }
+    if ((directionX == 0) && (directionY == 0))//va en bas a droite
+    {
+        if(pos_actuelle.rx() == 1200)
+        {
+            directionX = 1;
+        }
+        else if(pos_actuelle.ry() >= 540)
+        {
+            directionY = 1;
+        }
+        else
+        {
+            setPos(pos_actuelle + QPointF(10, hauteur_rng));
+        }
+    }
 }
-//! [11]
