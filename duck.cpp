@@ -147,7 +147,7 @@ void Duck::timerEvent(QTimerEvent *event)
             directionY = 0;
         }
     }
-    else if (directionX#pragma region  == 1)
+    else if (directionX == 1)
     {
         if (pos_actuelle.rx() != 1205)
         {
