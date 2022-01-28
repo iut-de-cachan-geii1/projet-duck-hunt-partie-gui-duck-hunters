@@ -49,12 +49,14 @@
 ****************************************************************************/
 
 #include "graphicsview.h"
-#include "mouse.h"
+#include "duck.h"
 
 #include <QApplication>
 #include <cmath>
+#include <QPainterPath>
 
-static constexpr int MouseCount = 7;
+static constexpr int DuckCount = 2
+        ;
 
 //! [0]
 int main(int argc, char **argv)
@@ -64,31 +66,31 @@ int main(int argc, char **argv)
 
 //! [1]
     QGraphicsScene scene;
-    scene.setSceneRect(200, 200, 1280,769);
+    scene.setSceneRect(0, 0, 1280, 769);
 //! [1] //! [2]
     scene.setItemIndexMethod(QGraphicsScene::NoIndex);
 //! [2]
 
 //! [3]
-    for (int i = 0; i < MouseCount; ++i) 
-    {
-        Mouse *mouse = new Mouse;
-        mouse->setPos(::sin((i * 6.28) / MouseCount) * 200,
-                      ::cos((i * 6.28) / MouseCount) * 200);
-        scene.addItem(mouse);
-    }
+
+        Duck *duck = new Duck;
+        duck->setPos(640,570);
+        scene.addItem(duck);
+        scene.addRect(0,0,1201,600);
+
 //! [3]
 
 //! [4]
     GraphicsView view(&scene);
     view.setRenderHint(QPainter::Antialiasing);
-    view.setBackgroundBrush(QPixmap(":/images/background.jpg"));
+    view.setBackgroundBrush(QPixmap(":/images/background.png"));
+    view.setForegroundBrush(QPixmap(":/images/foreground.png"));
 //! [4] //! [5]
     view.setCacheMode(QGraphicsView::CacheBackground);
-    view.setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
+      view.setViewportUpdateMode(QGraphicsView::QGraphicsView::FullViewportUpdate);
 //! [5] //! [6]
     view.setWindowTitle(QT_TRANSLATE_NOOP(QGraphicsView, "Colliding Mice"));
-    view.showMaximized();
+    view.showNormal();
 
     return QApplication::exec();
 }

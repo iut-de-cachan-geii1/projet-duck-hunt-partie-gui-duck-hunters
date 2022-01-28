@@ -58,6 +58,7 @@ GraphicsView::GraphicsView(QGraphicsScene *scene, QWidget *parent)
 {
     viewport()->setAttribute(Qt::WA_AcceptTouchEvents);
     setDragMode(ScrollHandDrag);
+    setFixedSize(1280,769);
 }
 
 bool GraphicsView::viewportEvent(QEvent *event)
@@ -69,7 +70,7 @@ bool GraphicsView::viewportEvent(QEvent *event)
     {
         QTouchEvent *touchEvent = static_cast<QTouchEvent *>(event);
         QList<QTouchEvent::TouchPoint> touchPoints = touchEvent->touchPoints();
-        if (touchPoints.count() == 2) 
+        if (touchPoints.count() == 2)
         {
             // determine scale factor
             const QTouchEvent::TouchPoint &touchPoint0 = touchPoints.first();
@@ -77,7 +78,7 @@ bool GraphicsView::viewportEvent(QEvent *event)
             qreal currentScaleFactor =
                     QLineF(touchPoint0.pos(), touchPoint1.pos()).length()
                     / QLineF(touchPoint0.startPos(), touchPoint1.startPos()).length();
-            if ( (touchEvent->touchPointStates() & Qt::TouchPointReleased) != 0u) 
+           if ( (touchEvent->touchPointStates() & Qt::TouchPointReleased) != 0u)
             {
                 // if one of the fingers is released, remember the current scale
                 // factor so that adding another finger later will continue zooming
@@ -95,3 +96,4 @@ bool GraphicsView::viewportEvent(QEvent *event)
     }
     return QGraphicsView::viewportEvent(event);
 }
+

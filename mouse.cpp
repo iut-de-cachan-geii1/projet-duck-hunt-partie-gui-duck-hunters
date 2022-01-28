@@ -105,7 +105,10 @@ QPainterPath Mouse::shape() const
 //! [3]
 void Mouse::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    // Body
+    QImage imageDeCanard(":/images/duck_animated.gif");
+       painter->drawImage(QPoint(0,200),imageDeCanard);
+
+  /*// Body
     painter->setBrush(color);
     painter->drawEllipse(-10, -20, 20, 40);
 
@@ -133,7 +136,7 @@ void Mouse::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWi
     path.cubicTo(5, 27, 5, 32, 0, 30);
     path.cubicTo(-5, 32, -5, 42, 0, 35);
     painter->setBrush(Qt::NoBrush);
-    painter->drawPath(path);
+    painter->drawPath(path);*/
 }
 //! [3]
 
@@ -143,7 +146,7 @@ void Mouse::timerEvent(QTimerEvent *event)
 //! [4]
     // Don't move too far away
 //! [5]
-    QLineF lineToCenter(QPointF(0, 0), mapFromScene(0, 0));
+    QLineF lineToCenter(QPointF(0, 0), mapFromScene(400, 400));
     if (lineToCenter.length() > 150) 
     {
         qreal angleToCenter = std::atan2(lineToCenter.dy(), lineToCenter.dx());

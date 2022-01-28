@@ -1,12 +1,14 @@
 QT += widgets
 
 HEADERS += \
-        mouse.h \
-        graphicsview.h
+        duck.h \
+        graphicsview.h \
+        mouse.h
 SOURCES += \
+    duck.cpp \
 	main.cpp \
-        mouse.cpp \
         graphicsview.cpp
 
 RESOURCES += \
 	mice.qrc
+
