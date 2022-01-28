@@ -170,7 +170,7 @@ void Duck::timerEvent(QTimerEvent *event)
             setPos(pos_actuelle + QPointF(-5, -hauteur_rng));
         }
     }
-    else if (directionX#pragma region  == 1)
+    else if (directionX == 1)
     {
         if (pos_actuelle.rx() != 1205)
         {
