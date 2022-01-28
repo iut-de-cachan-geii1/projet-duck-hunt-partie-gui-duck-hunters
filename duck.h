@@ -48,23 +48,25 @@
 **
 ****************************************************************************/
 
-#ifndef MOUSE_H
-#define MOUSE_H
+#ifndef DUCK_H
+#define DUCK_H
 
 #include <QGraphicsObject>
+#include <QLabel>
 
 //! [0]
-class Mouse : public QGraphicsObject
+class Duck : public QGraphicsObject
 {
     Q_OBJECT
 
 public:
-    Mouse();
+    Duck();
 
     QRectF boundingRect() const override;
     QPainterPath shape() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
                QWidget *widget) override;
+    void move(QWidget *widget);
 
 protected:
     void timerEvent(QTimerEvent *event) override;

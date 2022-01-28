@@ -146,7 +146,7 @@ void Mouse::timerEvent(QTimerEvent *event)
 //! [4]
     // Don't move too far away
 //! [5]
-    QLineF lineToCenter(QPointF(0, 0), mapFromScene(0, 0));
+    QLineF lineToCenter(QPointF(0, 0), mapFromScene(400, 400));
     if (lineToCenter.length() > 150) 
     {
         qreal angleToCenter = std::atan2(lineToCenter.dy(), lineToCenter.dx());
