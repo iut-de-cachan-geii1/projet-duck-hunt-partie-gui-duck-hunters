@@ -154,28 +154,29 @@ void move(QWidget *widget)
 {
 }
 //! [4]
+
 void Duck::timerEvent(QTimerEvent *event)
 {
     QPointF pos_actuelle = pos();
     QPointF position_target(1200, 200);
 
-    if ((pos_actuelle.rx() != position_target.rx()))
+    static int directionX = QRandomGenerator::global()->bounded(0, 2);
+    static int hauteur_rng = QRandomGenerator::global()->bounded(1, 5);
+
+    if (directionX == 0)
     {
-        if (pos_actuelle.ry() != position_target.ry())
+        if (pos_actuelle.rx() != 0)
         {
-            setPos(pos_actuelle - QPointF(-3, 3));
-        }
-        else
-        {
-            setPos(pos_actuelle + QPointF(3, 0));
+            setPos(pos_actuelle + QPointF(-5, -hauteur_rng));
         }
     }
-
-    //        else if (pos_actuelle.ry() != position_target.ry())
-    //        {
-
-    //            setPos(pos_actuelle - QPointF(0,1));
-    //        }
+    else if (directionX#pragma region  == 1)
+    {
+        if (pos_actuelle.rx() != 1205)
+        {
+            setPos(pos_actuelle + QPointF(5, -hauteur_rng));
+        }
+    }
 
     /*
     //! [4]
