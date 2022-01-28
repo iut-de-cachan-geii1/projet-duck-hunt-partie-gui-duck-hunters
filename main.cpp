@@ -51,12 +51,12 @@
 #include "graphicsview.h"
 #include "duck.h"
 
+#include <QRandomGenerator>
 #include <QApplication>
 #include <cmath>
 #include <QPainterPath>
 
-static constexpr int DuckCount = 2
-        ;
+static constexpr int DuckCount = 2;
 
 //! [0]
 int main(int argc, char **argv)
@@ -74,7 +74,8 @@ int main(int argc, char **argv)
 //! [3]
 
         Duck *duck = new Duck;
-        duck->setPos(640,570);
+        static int pos_random = QRandomGenerator::global()->bounded(500,800);
+        duck->setPos(pos_random ,570 );
         scene.addItem(duck);
        // scene.addRect(0,0,1201,600);
 

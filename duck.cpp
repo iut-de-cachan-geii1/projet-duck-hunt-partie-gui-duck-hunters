@@ -146,7 +146,10 @@ void Duck::timerEvent(QTimerEvent *event)
         {
             directionY = 0;
         }
-        else
+    }
+    else if (directionX#pragma region  == 1)
+    {
+        if (pos_actuelle.rx() != 1205)
         {
             setPos(pos_actuelle + QPointF(-10, -hauteur_rng));
         }
