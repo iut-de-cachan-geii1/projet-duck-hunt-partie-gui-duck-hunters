@@ -76,7 +76,7 @@ int main(int argc, char **argv)
         Duck *duck = new Duck;
         duck->setPos(640,570);
         scene.addItem(duck);
-        scene.addRect(0,0,1201,600);
+       // scene.addRect(0,0,1201,600);
 
 //! [3]
 
