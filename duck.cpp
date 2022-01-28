@@ -124,7 +124,7 @@ void Duck::timerEvent(QTimerEvent *event)
 
     QPointF pos_actuelle = pos();
     QPointF position_target(1200, 200);
-    static int directionX =  QRandomGenerator::global()->bounded(0,2); //si 1 va à gauche, si 0 va à droitre
+    static int directionX =  QRandomGenerator::global()->bounded(0,2); //si 1 va a gauche, si 0 va a droitre
     static int directionY = 1; //si 1 va en haut, si 0 va en bas
     static int hauteur_rng = QRandomGenerator::global()->bounded(2, 5);
 
@@ -134,7 +134,7 @@ void Duck::timerEvent(QTimerEvent *event)
         {
             setPos(pos_actuelle + QPointF(-5, -hauteur_rng));
         }
-        else //sinon va à droite
+        else //sinon va a droite
         {
             directionX = !directionX;
         }*/
@@ -154,7 +154,7 @@ void Duck::timerEvent(QTimerEvent *event)
             setPos(pos_actuelle + QPointF(-10, -hauteur_rng));
         }
     }
-    if ((directionX == 0) && (directionY == 1))//Va en haut à droite
+    if ((directionX == 0) && (directionY == 1))//Va en haut a droite
     {
         if(pos_actuelle.rx() == 1200)
         {
@@ -171,7 +171,7 @@ void Duck::timerEvent(QTimerEvent *event)
 
     }
     
-    if ((directionX == 1) && (directionY == 0))//va en bas à gauche 
+    if ((directionX == 1) && (directionY == 0))//va en bas a gauche 
     {
         if(pos_actuelle.rx() == 0)
         {
@@ -186,7 +186,7 @@ void Duck::timerEvent(QTimerEvent *event)
             setPos(pos_actuelle + QPointF(-10, hauteur_rng));
         }
     }
-    if ((directionX == 0) && (directionY == 0))//va en bas à droite
+    if ((directionX == 0) && (directionY == 0))//va en bas a droite
     {
         if(pos_actuelle.rx() == 1200)
         {
