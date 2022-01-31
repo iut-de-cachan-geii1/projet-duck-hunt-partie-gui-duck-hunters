@@ -130,15 +130,7 @@ void Duck::timerEvent(QTimerEvent *event)
 
     if ((directionX == 1) && (directionY == 1)) // va en haut vers la gauche
     {
-        /*if ((pos_actuelle.rx() != 0)||(pos_actuelle.ry() != 0)) //tant que pas bord de gauche
-        {
-            setPos(pos_actuelle + QPointF(-5, -hauteur_rng));
-        }
-        else //sinon va a droite
-        {
-            directionX = !directionX;
-        }*/
-        if(pos_actuelle.rx() == 0)
+        if(pos_actuelle.rx() <= 0)
         {
             directionX = 0;
         }
@@ -146,17 +138,15 @@ void Duck::timerEvent(QTimerEvent *event)
         {
             directionY = 0;
         }
-    }
-    else if (directionX == 1)
-    {
-        if (pos_actuelle.rx() != 1205)
+        else
         {
-            setPos(pos_actuelle + QPointF(-10, -hauteur_rng));
+            setPos(pos_actuelle + QPointF(-8, -hauteur_rng));
         }
     }
-    if ((directionX == 0) && (directionY == 1))//Va en haut a droite
+    
+    if ((directionX == 0) && (directionY == 1))//Va en haut a droite 
     {
-        if(pos_actuelle.rx() == 1200)
+        if(pos_actuelle.rx() >= 1200)
         {
             directionX = 1;
         }
@@ -166,14 +156,14 @@ void Duck::timerEvent(QTimerEvent *event)
         }
         else
         {
-            setPos(pos_actuelle + QPointF(10, -hauteur_rng));
+            setPos(pos_actuelle + QPointF(8, -hauteur_rng));
         }
 
     }
     
     if ((directionX == 1) && (directionY == 0))//va en bas a gauche 
     {
-        if(pos_actuelle.rx() == 0)
+        if(pos_actuelle.rx() <= 0)
         {
             directionX = 0;
         }
@@ -183,12 +173,12 @@ void Duck::timerEvent(QTimerEvent *event)
         }
         else
         {
-            setPos(pos_actuelle + QPointF(-10, hauteur_rng));
+            setPos(pos_actuelle + QPointF(-8, hauteur_rng));
         }
     }
     if ((directionX == 0) && (directionY == 0))//va en bas a droite
     {
-        if(pos_actuelle.rx() == 1200)
+        if(pos_actuelle.rx() >= 1200)
         {
             directionX = 1;
         }
@@ -198,7 +188,7 @@ void Duck::timerEvent(QTimerEvent *event)
         }
         else
         {
-            setPos(pos_actuelle + QPointF(10, hauteur_rng));
+            setPos(pos_actuelle + QPointF(8, hauteur_rng));
         }
     }
 }
