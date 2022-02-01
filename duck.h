@@ -53,20 +53,24 @@
 
 #include <QGraphicsObject>
 #include <QLabel>
+#include <QMovie>
 
 //! [0]
 class Duck : public QGraphicsObject
 {
     Q_OBJECT
+    
 
 public:
-    Duck();
-
+     Duck();
     QRectF boundingRect() const override;
     QPainterPath shape() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
                QWidget *widget) override;
     void move(QWidget *widget);
+    void setMovie(QMovie* movie);
+  
+
 
 protected:
     void timerEvent(QTimerEvent *event) override;
@@ -76,6 +80,8 @@ private:
     qreal speed = 0;
     qreal mouseEyeDirection = 0;
     QColor color;
+    QPointer<QMovie> mMovie;
+    QMetaObject::Connection mConnection;
 };
 //! [0]
 

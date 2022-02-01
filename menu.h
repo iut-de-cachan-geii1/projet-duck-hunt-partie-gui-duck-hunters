@@ -48,8 +48,8 @@
 **
 ****************************************************************************/
 
-#ifndef MENU_H
-#define MENU_H
+#ifndef menu_H
+#define menu_H
 
 #include <QGraphicsObject>
 #include <QLabel>
@@ -60,22 +60,11 @@ class menu : public QGraphicsObject
     Q_OBJECT
 
 public:
-    menu();
-
-    QRectF boundingRect() const override;
-    QPainterPath shape() const override;
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
-               QWidget *widget) override;
-    void move(QWidget *widget);
-
+   
 protected:
-    void timerEvent(QTimerEvent *event) override;
 
 private:
-    qreal angle = 0;
-    qreal speed = 0;
-    qreal mouseEyeDirection = 0;
-    QColor color;
+   
 };
 //! [0]
 

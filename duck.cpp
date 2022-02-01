@@ -59,6 +59,8 @@
 #include <QLabel>
 #include <QDialog>
 #include <QPixmap>
+#include <QGraphicsVideoItem>
+#include <QMediaPlayer>
 
 #define Droite 1205
 #define Gauche 0
@@ -82,15 +84,16 @@ static qreal normalizeAngle(qreal angle)
 
 Duck::Duck()
 {
+
     //    setTransform(QTransform().rotate(QRandomGenerator::global()->bounded(360 * 16)), true);
     startTimer(1000 / 33);
 }
 
 QRectF Duck::boundingRect() const
 {
-    qreal adjust = 0.5;
-    return QRectF(-18 - adjust, -22 - adjust,
-                  36 + adjust, 60 + adjust);
+     qreal adjust = 0.5;
+     return QRectF(-18 - adjust, -22 - adjust,
+                 36 + adjust, 60 + adjust);
 }
 
 QPainterPath Duck::shape() const
@@ -102,21 +105,30 @@ QPainterPath Duck::shape() const
 
 void Duck::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-   // QLineF lineCenterToDestination(QPoint(0, 0), mapFromScene(1201, 200));
+    
+    // QLineF lineCenterToDestination(QPoint(0, 0), mapFromScene(1201, 200));
 
-    //painter->drawLine(lineCenterToDestination);
+    // painter->drawLine(lineCenterToDestination);
 
+    // static QMovie *movie = new QMovie(":/images/duck_animated.gif");
+    // static QLabel *processLabel = new QLabel(widget);
+    // processLabel->setMovie(movie);
+
+   
     QPixmap imageDeCanard(":/images/canard.png");
     painter->drawPixmap(QPoint(0, 0), imageDeCanard);
-
-    //    QMovie *movie = new QMovie(":/images/duck_animated.gif");
-    //    QLabel *processLabel = new QLabel(this);
-    //    processLabel->setMovie(movie);
-    //    movie->start();
 }
 
-void move(QWidget *widget)
-{
+
+
+void Duck::setMovie(QMovie* movie) {
+    movie = new QMovie(":/images/duck_animated.gif");
+    prepareGeometryChange();
+    QObject::disconnect(mConnection);
+    mMovie = movie;
+    if (mMovie) {
+        mConnection = QObject::connect(mMovie, &QMovie::frameChanged, [=]{ update(); });
+    }
 }
 
 void Duck::timerEvent(QTimerEvent *event)
@@ -124,17 +136,17 @@ void Duck::timerEvent(QTimerEvent *event)
 
     QPointF pos_actuelle = pos();
     QPointF position_target(1200, 200);
-    static int directionX =  QRandomGenerator::global()->bounded(0,2); //si 1 va a gauche, si 0 va a droitre
-    static int directionY = 1; //si 1 va en haut, si 0 va en bas
+    static int directionX = QRandomGenerator::global()->bounded(0, 2); // si 1 va a gauche, si 0 va a droitre
+    static int directionY = 1;                                         // si 1 va en haut, si 0 va en bas
     static int hauteur_rng = QRandomGenerator::global()->bounded(2, 5);
 
     if ((directionX == 1) && (directionY == 1)) // va en haut vers la gauche
     {
-        if(pos_actuelle.rx() <= 0)
+        if (pos_actuelle.rx() <= 0)
         {
             directionX = 0;
         }
-        else if(pos_actuelle.ry() <= 0)
+        else if (pos_actuelle.ry() <= 0)
         {
             directionY = 0;
         }
@@ -143,14 +155,14 @@ void Duck::timerEvent(QTimerEvent *event)
             setPos(pos_actuelle + QPointF(-8, -hauteur_rng));
         }
     }
-    
-    if ((directionX == 0) && (directionY == 1))//Va en haut a droite 
+
+    if ((directionX == 0) && (directionY == 1)) // Va en haut a droite
     {
-        if(pos_actuelle.rx() >= 1200)
+        if (pos_actuelle.rx() >= 1200)
         {
             directionX = 1;
         }
-        else if(pos_actuelle.ry() <= 0)
+        else if (pos_actuelle.ry() <= 0)
         {
             directionY = 0;
         }
@@ -158,16 +170,15 @@ void Duck::timerEvent(QTimerEvent *event)
         {
             setPos(pos_actuelle + QPointF(8, -hauteur_rng));
         }
-
     }
-    
-    if ((directionX == 1) && (directionY == 0))//va en bas a gauche 
+
+    if ((directionX == 1) && (directionY == 0)) // va en bas a gauche
     {
-        if(pos_actuelle.rx() <= 0)
+        if (pos_actuelle.rx() <= 0)
         {
             directionX = 0;
         }
-        else if(pos_actuelle.ry() >= 540)
+        else if (pos_actuelle.ry() >= 540)
         {
             directionY = 1;
         }
@@ -176,13 +187,13 @@ void Duck::timerEvent(QTimerEvent *event)
             setPos(pos_actuelle + QPointF(-8, hauteur_rng));
         }
     }
-    if ((directionX == 0) && (directionY == 0))//va en bas a droite
+    if ((directionX == 0) && (directionY == 0)) // va en bas a droite
     {
-        if(pos_actuelle.rx() >= 1200)
+        if (pos_actuelle.rx() >= 1200)
         {
             directionX = 1;
         }
-        else if(pos_actuelle.ry() >= 540)
+        else if (pos_actuelle.ry() >= 540)
         {
             directionY = 1;
         }
