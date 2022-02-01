@@ -1,24 +1,23 @@
-#ifndef DUCK_H
-#define DUCK_H
+#ifndef CROSSHAIR_H
+#define CROSSHAIR_H
 
 #include <QGraphicsObject>
 #include <QLabel>
 
-class Duck : public QGraphicsObject
+class Crosshair : public QGraphicsObject
 {
     Q_OBJECT
 
 public:
-    Duck();
+    Crosshair();
 
     QRectF boundingRect() const override;
     QPainterPath shape() const override;
+
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
                QWidget *widget) override;
-    
-    void detruireLeCanard();
 
-    QPointF positionDuck;
+    QPointF coordinateMouse;
 
 protected:
     void timerEvent(QTimerEvent *event) override;
@@ -26,8 +25,7 @@ protected:
 private:
     qreal angle = 0;
     qreal speed = 0;
-    qreal mouseEyeDirection = 0;
-    QColor color;
-    bool canard_tempo = 1;
+    
 };
+
 #endif
