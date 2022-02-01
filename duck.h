@@ -28,6 +28,6 @@ private:
     qreal speed = 0;
     qreal mouseEyeDirection = 0;
     QColor color;
-    bool canard_tempo = 1;
+    bool canard_tempo = true;
 };
 #endif
