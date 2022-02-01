@@ -52,13 +52,14 @@ QPainterPath Duck::shape() const
 
 void Duck::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
+    bool compare = true;
     QLineF lineCenterToDestination(QPoint(25, 25), mapFromScene(650, 350));
 
     //painter->drawLine(lineCenterToDestination);
     /*
     QPixmap imageDeCanard(":/images/canard.png");
     painter->drawPixmap(QPoint(0, 0), imageDeCanard);*/
-    if (canard_tempo == true)
+    if (canard_tempo == compare)
     {
         QPixmap imageDeCanard(":/images/canard1.png");
         painter->drawPixmap(QPoint(0, 0), imageDeCanard);
