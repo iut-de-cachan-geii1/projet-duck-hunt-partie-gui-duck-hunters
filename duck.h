@@ -53,14 +53,15 @@
 
 #include <QGraphicsObject>
 #include <QLabel>
+#include <QMovie>
 
 class Duck : public QGraphicsObject
 {
     Q_OBJECT
+    
 
 public:
-    Duck();
-
+     Duck();
     QRectF boundingRect() const override;
     QPainterPath shape() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,

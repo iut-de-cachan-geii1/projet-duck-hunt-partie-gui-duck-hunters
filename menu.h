@@ -48,49 +48,24 @@
 **
 ****************************************************************************/
 
-#include "graphicsview.h"
-#include "duck.h"
-#include "crosshair.h"
+#ifndef menu_H
+#define menu_H
 
-#include <QGraphicsVideoItem>
-#include <QRandomGenerator>
-#include <QApplication>
-#include <cmath>
-#include <QPainterPath>
-#include <QMediaPlayer>
+#include <QGraphicsObject>
+#include <QLabel>
 
-static constexpr int DuckCount = 2;
-
-int main(int argc, char **argv)
+//! [0]
+class menu : public QGraphicsObject
 {
-    QApplication app(argc, argv);
+    Q_OBJECT
 
-    QGraphicsScene scene;
-    scene.setSceneRect(0, 0, 1280, 769);
-    scene.setItemIndexMethod(QGraphicsScene::NoIndex);
+public:
+   
+protected:
 
-    Duck *duck = new Duck;
-    Crosshair *crosshair = new Crosshair;
-    static int pos_random = QRandomGenerator::global()->bounded(200, 900);
-    duck->setPos(pos_random, 570);
-    crosshair->setPos(640, 384);
-    scene.addItem(duck);
-    scene.addItem(crosshair);
-    // scene.addRect(0,0,1201,600);
+private:
+   
+};
+//! [0]
 
-    GraphicsView view(&scene);
-    view.setRenderHint(QPainter::Antialiasing);
-    view.setBackgroundBrush(QPixmap(":/images/background.png"));
-    view.setForegroundBrush(QPixmap(":/images/foreground.png"));
-
-    view.setCacheMode(QGraphicsView::CacheBackground);
-    view.setViewportUpdateMode(QGraphicsView::QGraphicsView::FullViewportUpdate);
-
-    view.attachCrosshair(crosshair);
-
-    view.setWindowTitle(QT_TRANSLATE_NOOP(QGraphicsView, "Duck hunt"));
-
-    view.showNormal();
-
-    return QApplication::exec();
-}
+#endif

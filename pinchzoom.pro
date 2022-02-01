@@ -12,3 +12,6 @@ SOURCES += \
 RESOURCES += \
 	mice.qrc
 
+FORMS += \
+    dialog.ui
+
