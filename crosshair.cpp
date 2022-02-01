@@ -51,4 +51,3 @@ void Crosshair::timerEvent(QTimerEvent *event)
     setPos(coordinateMouse);
 }
 
-
