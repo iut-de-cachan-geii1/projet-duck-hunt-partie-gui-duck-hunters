@@ -48,6 +48,7 @@
 **
 ****************************************************************************/
 
+
 #include "graphicsview.h"
 
 #include <QScrollBar>
@@ -58,11 +59,39 @@ GraphicsView::GraphicsView(QGraphicsScene *scene, QWidget *parent)
 {
     viewport()->setAttribute(Qt::WA_AcceptTouchEvents);
     setDragMode(ScrollHandDrag);
+    startTimer(1000/500);
     setFixedSize(1280,769);
+    setMouseTracking(true);
 }
+
+void GraphicsView::attachCrosshair(Crosshair *parametreCrosshair)
+{
+    this-> crosshair = parametreCrosshair;
+}
+void GraphicsView::attachDuck(Duck *DuckQuiFautAttacher)
+{
+    this-> duck = DuckQuiFautAttacher;
+}
+void GraphicsView::mouseMoveEvent(QMouseEvent *event)
+{
+    crosshair -> coordinateMouse = event->pos();
+}
+
+//============BOUM BOUM LE CANARD============
+
+void GraphicsView::mousePressEvent(QMouseEvent *event)
+{
+    if((crosshair-> coordinateMouse) == (duck->positionDuck))
+    {
+        duck -> detruireLeCanard();
+    }
+}
+
+//============BOUM BOUM LE CANARD============
 
 bool GraphicsView::viewportEvent(QEvent *event)
 {
+    /*
     switch (event->type()) {
     case QEvent::TouchBegin:
     case QEvent::TouchUpdate:
@@ -93,7 +122,7 @@ bool GraphicsView::viewportEvent(QEvent *event)
     }
     default:
         break;
-    }
+    }*/
     return QGraphicsView::viewportEvent(event);
 }
 

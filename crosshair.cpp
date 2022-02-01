@@ -1,3 +1,4 @@
+
 /****************************************************************************
 **
 ** Copyright (C) 2016 The Qt Company Ltd.
@@ -48,49 +49,56 @@
 **
 ****************************************************************************/
 
-#include "graphicsview.h"
-#include "duck.h"
 #include "crosshair.h"
 
-#include <QGraphicsVideoItem>
+#include <QGraphicsScene>
+#include <QPainter>
 #include <QRandomGenerator>
-#include <QApplication>
-#include <cmath>
-#include <QPainterPath>
-#include <QMediaPlayer>
+#include <QStyleOption>
+#include <qmath.h>
+#include <QMovie>
+#include <QLabel>
+#include <QDialog>
+#include <QPixmap>
 
-static constexpr int DuckCount = 2;
+#define Droite 1205
+#define Gauche 0
+#define Haut 0
+#define Bas 600
+#define vitesseX 8
 
-int main(int argc, char **argv)
+static qreal normalizeAngle(qreal angle)
 {
-    QApplication app(argc, argv);
-
-    QGraphicsScene scene;
-    scene.setSceneRect(0, 0, 1280, 769);
-    scene.setItemIndexMethod(QGraphicsScene::NoIndex);
-
-    Duck *duck = new Duck;
-    Crosshair *crosshair = new Crosshair;
-    static int pos_random = QRandomGenerator::global()->bounded(200, 900);
-    duck->setPos(pos_random, 570);
-    crosshair->setPos(640, 384);
-    scene.addItem(duck);
-    scene.addItem(crosshair);
-    // scene.addRect(0,0,1201,600);
-
-    GraphicsView view(&scene);
-    view.setRenderHint(QPainter::Antialiasing);
-    view.setBackgroundBrush(QPixmap(":/images/background.png"));
-    view.setForegroundBrush(QPixmap(":/images/foreground.png"));
-
-    view.setCacheMode(QGraphicsView::CacheBackground);
-    view.setViewportUpdateMode(QGraphicsView::QGraphicsView::FullViewportUpdate);
-
-    view.attachCrosshair(crosshair);
-
-    view.setWindowTitle(QT_TRANSLATE_NOOP(QGraphicsView, "Duck hunt"));
-
-    view.showNormal();
-
-    return QApplication::exec();
+    return angle;
 }
+
+Crosshair::Crosshair()
+{
+    startTimer(1000 / 33);
+}
+
+QRectF Crosshair::boundingRect() const
+{
+    qreal adjust = 0.5;
+    return QRectF(-18 - adjust, -22 - adjust,
+                  36 + adjust, 60 + adjust);
+}
+
+QPainterPath Crosshair::shape() const
+{
+    QPainterPath path;
+    path.addRect(-10, -20, 75, 71);
+    return path;
+}
+
+void Crosshair::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+{
+    QPixmap imageDeCrosshair(":/images/crosshair.png");
+    painter->drawPixmap(QPoint(-30, -30), imageDeCrosshair);
+}
+
+void Crosshair::timerEvent(QTimerEvent *event)
+{
+    setPos(coordinateMouse);
+}
+

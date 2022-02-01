@@ -6,5 +6,6 @@
         <file>images/canard2.png</file>
         <file>images/foreground.png</file>
         <file>images/duck_animated.gif</file>
+        <file>images/crosshair.png</file>
     </qresource>
 </RCC>

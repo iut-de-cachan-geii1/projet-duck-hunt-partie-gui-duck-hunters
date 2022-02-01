@@ -55,7 +55,6 @@
 #include <QLabel>
 #include <QMovie>
 
-//! [0]
 class Duck : public QGraphicsObject
 {
     Q_OBJECT
@@ -67,10 +66,10 @@ public:
     QPainterPath shape() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
                QWidget *widget) override;
-    void move(QWidget *widget);
-    void setMovie(QMovie* movie);
-  
+    
+    void detruireLeCanard();
 
+    QPointF positionDuck;
 
 protected:
     void timerEvent(QTimerEvent *event) override;
@@ -80,9 +79,6 @@ private:
     qreal speed = 0;
     qreal mouseEyeDirection = 0;
     QColor color;
-    QPointer<QMovie> mMovie;
-    QMetaObject::Connection mConnection;
+    bool canard_tempo = true;
 };
-//! [0]
-
 #endif

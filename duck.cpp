@@ -66,6 +66,7 @@
 #define Gauche 0
 #define Haut 0
 #define Bas 600
+#define vitesseX 8
 
 static qreal normalizeAngle(qreal angle)
 {
@@ -84,8 +85,6 @@ static qreal normalizeAngle(qreal angle)
 
 Duck::Duck()
 {
-
-    //    setTransform(QTransform().rotate(QRandomGenerator::global()->bounded(360 * 16)), true);
     startTimer(1000 / 33);
 }
 
@@ -99,34 +98,53 @@ QRectF Duck::boundingRect() const
 QPainterPath Duck::shape() const
 {
     QPainterPath path;
-    path.addRect(-10, -20, 75, 71);
+    path.addRect(0, 0, 75, 71);
     return path;
 }
 
 void Duck::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    
-    // QLineF lineCenterToDestination(QPoint(0, 0), mapFromScene(1201, 200));
+    bool compare = true;
+    QLineF lineCenterToDestination(QPoint(25, 25), mapFromScene(650, 350));
 
-    // painter->drawLine(lineCenterToDestination);
-
-    // static QMovie *movie = new QMovie(":/images/duck_animated.gif");
-    // static QLabel *processLabel = new QLabel(widget);
-    // processLabel->setMovie(movie);
-
-   
+    //painter->drawLine(lineCenterToDestination);
+    /*
     QPixmap imageDeCanard(":/images/canard.png");
-    painter->drawPixmap(QPoint(0, 0), imageDeCanard);
+    painter->drawPixmap(QPoint(0, 0), imageDeCanard);*/
+    if (canard_tempo == compare)
+    {
+        QPixmap imageDeCanard(":/images/canard1.png");
+        painter->drawPixmap(QPoint(0, 0), imageDeCanard);
+    }
+    else
+    {
+        QPixmap imageDeCanard(":/images/canard2.png");
+        painter->drawPixmap(QPoint(0, 0), imageDeCanard);
+    }
+}
+
+void Duck::detruireLeCanard()
+{
+    delete this;
 }
 
 void Duck::timerEvent(QTimerEvent *event)
 {
+    static int cpt = 0;
+    cpt++;
+
+    if (cpt == 7)
+    {
+        canard_tempo = !canard_tempo;
+        cpt = 0;
+    }
 
     QPointF pos_actuelle = pos();
+    positionDuck = pos_actuelle;
     QPointF position_target(1200, 200);
-    static int directionX = QRandomGenerator::global()->bounded(0, 2); // si 1 va a gauche, si 0 va a droitre
-    static int directionY = 1;                                         // si 1 va en haut, si 0 va en bas
-    static int hauteur_rng = QRandomGenerator::global()->bounded(2, 5);
+    static int directionX = QRandomGenerator::global()->bounded(0, 2); //si 1 va a gauche, si 0 va a droitre
+    static int directionY = 1;                                         //si 1 va en haut, si 0 va en bas
+    static int hauteur_rng = QRandomGenerator::global()->bounded(2, 9);
 
     if ((directionX == 1) && (directionY == 1)) // va en haut vers la gauche
     {
@@ -140,11 +158,10 @@ void Duck::timerEvent(QTimerEvent *event)
         }
         else
         {
-            setPos(pos_actuelle + QPointF(-8, -hauteur_rng));
+            setPos(pos_actuelle + QPointF(-vitesseX, -hauteur_rng));
         }
     }
-
-    if ((directionX == 0) && (directionY == 1)) // Va en haut a droite
+    if ((directionX == 0) && (directionY == 1)) //Va en haut a droite
     {
         if (pos_actuelle.rx() >= 1200)
         {
@@ -156,11 +173,11 @@ void Duck::timerEvent(QTimerEvent *event)
         }
         else
         {
-            setPos(pos_actuelle + QPointF(8, -hauteur_rng));
+            setPos(pos_actuelle + QPointF(vitesseX, -hauteur_rng));
         }
     }
 
-    if ((directionX == 1) && (directionY == 0)) // va en bas a gauche
+    if ((directionX == 1) && (directionY == 0)) //va en bas a gauche
     {
         if (pos_actuelle.rx() <= 0)
         {
@@ -172,10 +189,10 @@ void Duck::timerEvent(QTimerEvent *event)
         }
         else
         {
-            setPos(pos_actuelle + QPointF(-8, hauteur_rng));
+            setPos(pos_actuelle + QPointF(-vitesseX, hauteur_rng));
         }
     }
-    if ((directionX == 0) && (directionY == 0)) // va en bas a droite
+    if ((directionX == 0) && (directionY == 0)) //va en bas a droite
     {
         if (pos_actuelle.rx() >= 1200)
         {
@@ -187,7 +204,7 @@ void Duck::timerEvent(QTimerEvent *event)
         }
         else
         {
-            setPos(pos_actuelle + QPointF(8, hauteur_rng));
+            setPos(pos_actuelle + QPointF(vitesseX, hauteur_rng));
         }
     }
 }
