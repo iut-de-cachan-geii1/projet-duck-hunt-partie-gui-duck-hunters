@@ -119,18 +119,6 @@ void Duck::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
     painter->drawPixmap(QPoint(0, 0), imageDeCanard);
 }
 
-
-
-void Duck::setMovie(QMovie* movie) {
-    movie = new QMovie(":/images/duck_animated.gif");
-    prepareGeometryChange();
-    QObject::disconnect(mConnection);
-    mMovie = movie;
-    if (mMovie) {
-        mConnection = QObject::connect(mMovie, &QMovie::frameChanged, [=]{ update(); });
-    }
-}
-
 void Duck::timerEvent(QTimerEvent *event)
 {
 
