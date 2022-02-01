@@ -58,7 +58,7 @@ void Duck::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
     /*
     QPixmap imageDeCanard(":/images/canard.png");
     painter->drawPixmap(QPoint(0, 0), imageDeCanard);*/
-    if (canard_tempo == 1)
+    if (canard_tempo == true)
     {
         QPixmap imageDeCanard(":/images/canard1.png");
         painter->drawPixmap(QPoint(0, 0), imageDeCanard);
