@@ -50,23 +50,11 @@
 
 #include "duck.h"
 
-#include <QGraphicsScene>
-#include <QPainter>
-#include <QRandomGenerator>
-#include <QStyleOption>
-#include <qmath.h>
-#include <QMovie>
-#include <QLabel>
-#include <QDialog>
-#include <QPixmap>
-#include <QGraphicsVideoItem>
-#include <QMediaPlayer>
-
 #define Droite 1205
 #define Gauche 0
 #define Haut 0
 #define Bas 600
-#define vitesseX 8
+#define vitesseX 4
 
 static qreal normalizeAngle(qreal angle)
 {
@@ -90,15 +78,15 @@ Duck::Duck()
 
 QRectF Duck::boundingRect() const
 {
-     qreal adjust = 0.5;
-     return QRectF(-18 - adjust, -22 - adjust,
-                 36 + adjust, 60 + adjust);
+    qreal adjust = 0.5;
+    return QRectF(-18 - adjust, -22 - adjust,
+                  75 + adjust, 71 + adjust);
 }
 
 QPainterPath Duck::shape() const
 {
     QPainterPath path;
-    path.addRect(0, 0, 75, 71);
+    path.addRect(boundingRect());
     return path;
 }
 
@@ -107,19 +95,36 @@ void Duck::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
     bool compare = true;
     QLineF lineCenterToDestination(QPoint(25, 25), mapFromScene(650, 350));
 
-    //painter->drawLine(lineCenterToDestination);
+    // painter->drawLine(lineCenterToDestination);
     /*
     QPixmap imageDeCanard(":/images/canard.png");
     painter->drawPixmap(QPoint(0, 0), imageDeCanard);*/
-    if (canard_tempo == compare)
+
+    if (canard_sens == compare)
     {
-        QPixmap imageDeCanard(":/images/canard1.png");
-        painter->drawPixmap(QPoint(0, 0), imageDeCanard);
+        if (canard_tempo == compare)
+        {
+            QPixmap imageDeCanard(":/images/canard1.png");
+            painter->drawPixmap(QPoint(0, 0), imageDeCanard);
+        }
+        else
+        {
+            QPixmap imageDeCanard(":/images/canard2.png");
+            painter->drawPixmap(QPoint(0, 0), imageDeCanard);
+        }
     }
     else
     {
-        QPixmap imageDeCanard(":/images/canard2.png");
-        painter->drawPixmap(QPoint(0, 0), imageDeCanard);
+        if (canard_tempo == compare)
+        {
+            QPixmap imageDeCanard(":/images/canard1_inverse.png");
+            painter->drawPixmap(QPoint(0, 0), imageDeCanard);
+        }
+        else
+        {
+            QPixmap imageDeCanard(":/images/canard2_inverse.png");
+            painter->drawPixmap(QPoint(0, 0), imageDeCanard);
+        }
     }
 }
 
@@ -142,12 +147,14 @@ void Duck::timerEvent(QTimerEvent *event)
     QPointF pos_actuelle = pos();
     positionDuck = pos_actuelle;
     QPointF position_target(1200, 200);
-    static int directionX = QRandomGenerator::global()->bounded(0, 2); //si 1 va a gauche, si 0 va a droitre
-    static int directionY = 1;                                         //si 1 va en haut, si 0 va en bas
+    static int directionX = QRandomGenerator::global()->bounded(0, 2); // si 1 va a gauche, si 0 va a droitre
+    static int directionY = 1;                                         // si 1 va en haut, si 0 va en bas
     static int hauteur_rng = QRandomGenerator::global()->bounded(2, 9);
 
     if ((directionX == 1) && (directionY == 1)) // va en haut vers la gauche
     {
+        canard_sens = false;
+
         if (pos_actuelle.rx() <= 0)
         {
             directionX = 0;
@@ -161,8 +168,10 @@ void Duck::timerEvent(QTimerEvent *event)
             setPos(pos_actuelle + QPointF(-vitesseX, -hauteur_rng));
         }
     }
-    if ((directionX == 0) && (directionY == 1)) //Va en haut a droite
+    if ((directionX == 0) && (directionY == 1)) // Va en haut a droite
     {
+        canard_sens = true;
+
         if (pos_actuelle.rx() >= 1200)
         {
             directionX = 1;
@@ -177,7 +186,7 @@ void Duck::timerEvent(QTimerEvent *event)
         }
     }
 
-    if ((directionX == 1) && (directionY == 0)) //va en bas a gauche
+    if ((directionX == 1) && (directionY == 0)) // va en bas a gauche
     {
         if (pos_actuelle.rx() <= 0)
         {
@@ -192,7 +201,7 @@ void Duck::timerEvent(QTimerEvent *event)
             setPos(pos_actuelle + QPointF(-vitesseX, hauteur_rng));
         }
     }
-    if ((directionX == 0) && (directionY == 0)) //va en bas a droite
+    if ((directionX == 0) && (directionY == 0)) // va en bas a droite
     {
         if (pos_actuelle.rx() >= 1200)
         {

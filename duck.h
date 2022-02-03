@@ -54,6 +54,15 @@
 #include <QGraphicsObject>
 #include <QLabel>
 #include <QMovie>
+#include <QGraphicsScene>
+#include <QPainter>
+#include <QRandomGenerator>
+#include <QStyleOption>
+#include <qmath.h>
+#include <QDialog>
+#include <QPixmap>
+#include <QGraphicsVideoItem>
+#include <QMediaPlayer>
 
 class Duck : public QGraphicsObject
 {
@@ -70,7 +79,7 @@ public:
     void detruireLeCanard();
 
     QPointF positionDuck;
-
+    
 protected:
     void timerEvent(QTimerEvent *event) override;
 
@@ -80,5 +89,7 @@ private:
     qreal mouseEyeDirection = 0;
     QColor color;
     bool canard_tempo = true;
+    bool canard_sens;
+    bool canard_rotate = false;
 };
 #endif

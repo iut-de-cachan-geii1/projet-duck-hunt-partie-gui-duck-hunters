@@ -4,8 +4,13 @@
         <file>images/canard.png</file>
         <file>images/canard1.png</file>
         <file>images/canard2.png</file>
+        <file>images/canard1_inverse.png</file>
+        <file>images/canard2_inverse.png</file>
         <file>images/foreground.png</file>
         <file>images/duck_animated.gif</file>
         <file>images/crosshair.png</file>
+        <file>images/canard_mort.png</file>
+        <file>images/canard_mort_tombe.png</file>
+        <file>images/canard_mort_tombe_inverse.png</file>
     </qresource>
 </RCC>
