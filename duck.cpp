@@ -50,18 +50,6 @@
 
 #include "duck.h"
 
-#include <QGraphicsScene>
-#include <QPainter>
-#include <QRandomGenerator>
-#include <QStyleOption>
-#include <qmath.h>
-#include <QMovie>
-#include <QLabel>
-#include <QDialog>
-#include <QPixmap>
-#include <QGraphicsVideoItem>
-#include <QMediaPlayer>
-
 #define Droite 1205
 #define Gauche 0
 #define Haut 0
@@ -92,13 +80,13 @@ QRectF Duck::boundingRect() const
 {
     qreal adjust = 0.5;
     return QRectF(-18 - adjust, -22 - adjust,
-                  36 + adjust, 60 + adjust);
+                  75 + adjust, 71 + adjust);
 }
 
 QPainterPath Duck::shape() const
 {
     QPainterPath path;
-    path.addRect(0, 0, 75, 71);
+    path.addRect(boundingRect());
     return path;
 }
 

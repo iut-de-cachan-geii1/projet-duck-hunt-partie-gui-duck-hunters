@@ -54,6 +54,15 @@
 #include <QGraphicsObject>
 #include <QLabel>
 #include <QMovie>
+#include <QGraphicsScene>
+#include <QPainter>
+#include <QRandomGenerator>
+#include <QStyleOption>
+#include <qmath.h>
+#include <QDialog>
+#include <QPixmap>
+#include <QGraphicsVideoItem>
+#include <QMediaPlayer>
 
 class Duck : public QGraphicsObject
 {
