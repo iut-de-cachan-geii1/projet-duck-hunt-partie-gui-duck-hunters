@@ -177,8 +177,8 @@ void Duck::timerEvent(QTimerEvent *event)
     static int directionX = QRandomGenerator::global()->bounded(0, 2); //si 1 va a gauche, si 0 va a droitre
     static int directionY = 1;                                         //si 1 va en haut, si 0 va en bas
     static int hauteur_rng = QRandomGenerator::global()->bounded(2, 10);
-
-    if ((directionX == 1) && (directionY == 1) && (isDead == false)) // va en haut vers la gauche
+    static bool compare = true;
+    if ((directionX == 1) && (directionY == 1) && (isDead == !compare)) // va en haut vers la gauche
     {
         canard_sens = false;
         if (pos_actuelle.rx() <= 0)
@@ -195,7 +195,7 @@ void Duck::timerEvent(QTimerEvent *event)
             setPos(pos_actuelle + QPointF(-vitesseX, -hauteur_rng));
         }
     }
-    if ((directionX == 0) && (directionY == 1) && (isDead == false)) //Va en haut a droite
+    if ((directionX == 0) && (directionY == 1) && (isDead == !compare)) //Va en haut a droite
     {
         canard_sens = true;
         if (pos_actuelle.rx() >= 1200)
@@ -213,7 +213,7 @@ void Duck::timerEvent(QTimerEvent *event)
         }
     }
 
-    if ((directionX == 1) && (directionY == 0) && (isDead == false)) //va en bas a gauche
+    if ((directionX == 1) && (directionY == 0) && (isDead == !compare)) //va en bas a gauche
     {
         if (pos_actuelle.rx() <= 0)
         {
@@ -229,7 +229,7 @@ void Duck::timerEvent(QTimerEvent *event)
             setPos(pos_actuelle + QPointF(-vitesseX, hauteur_rng));
         }
     }
-    if ((directionX == 0) && (directionY == 0) && (isDead == false)) //va en bas a droite
+    if ((directionX == 0) && (directionY == 0) && (isDead == !compare)) //va en bas a droite
     {
         if (pos_actuelle.rx() >= 1200)
         {
@@ -245,7 +245,7 @@ void Duck::timerEvent(QTimerEvent *event)
             setPos(pos_actuelle + QPointF(vitesseX, hauteur_rng));
         }
     }
-    if ((isDead == true) && (isDead2 == false))
+    if ((isDead == compare) && (isDead2 == !compare))
     {
         cptMort++;
         if (cptMort == 15)
@@ -255,7 +255,7 @@ void Duck::timerEvent(QTimerEvent *event)
             cptMort = 0;
         }
     }
-    if ((isDead == false) && (isDead2 == true))
+    if ((isDead == !compare) && (isDead2 == compare))
     {
         if (pos_actuelle.ry() <= 560)
         {
