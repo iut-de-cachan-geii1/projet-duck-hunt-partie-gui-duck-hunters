@@ -74,9 +74,7 @@ protected:
     void timerEvent(QTimerEvent *event) override;
 
 private:
-    qreal angle = 0;
-    qreal speed = 0;
-    
+
 };
 
 #endif

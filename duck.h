@@ -66,10 +66,12 @@ public:
     QPainterPath shape() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
                QWidget *widget) override;
-    
-    void detruireLeCanard();
 
+    void detruireLeCanard();
+    
     QPointF positionDuck;
+    bool isDead = false;
+    bool isDead2 = false;
 
 protected:
     void timerEvent(QTimerEvent *event) override;
@@ -80,5 +82,7 @@ private:
     qreal mouseEyeDirection = 0;
     QColor color;
     bool canard_tempo = true;
+    bool canard_rotate = true;
+    bool canard_sens ;
 };
 #endif

@@ -67,11 +67,6 @@
 #define Bas 600
 #define vitesseX 8
 
-static qreal normalizeAngle(qreal angle)
-{
-    return angle;
-}
-
 Crosshair::Crosshair()
 {
     startTimer(1000 / 33);

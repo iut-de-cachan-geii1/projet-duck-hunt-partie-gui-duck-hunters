@@ -48,46 +48,55 @@
 **
 ****************************************************************************/
 
-
 #include "graphicsview.h"
 
 #include <QScrollBar>
 #include <QTouchEvent>
+#include "duck.h"
+
+#define decalageLargeur 75 //75
+#define decalageHauteur 68 //68
 
 GraphicsView::GraphicsView(QGraphicsScene *scene, QWidget *parent)
     : QGraphicsView(scene, parent)
 {
     viewport()->setAttribute(Qt::WA_AcceptTouchEvents);
     setDragMode(ScrollHandDrag);
-    startTimer(1000/500);
-    setFixedSize(1280,769);
+    startTimer(1000 / 500);
+    setFixedSize(1280, 769);
     setMouseTracking(true);
 }
 
 void GraphicsView::attachCrosshair(Crosshair *parametreCrosshair)
 {
-    this-> crosshair = parametreCrosshair;
+    this->crosshair = parametreCrosshair;
 }
 void GraphicsView::attachDuck(Duck *DuckQuiFautAttacher)
 {
-    this-> duck = DuckQuiFautAttacher;
+    this->duck = DuckQuiFautAttacher;
 }
 void GraphicsView::mouseMoveEvent(QMouseEvent *event)
 {
-    crosshair -> coordinateMouse = event->pos();
+    crosshair->coordinateMouse = event->pos();
 }
 
-//============BOUM BOUM LE CANARD============
+//==================BOUM BOUM LE CANARD==================
 
 void GraphicsView::mousePressEvent(QMouseEvent *event)
 {
-    if((crosshair-> coordinateMouse) == (duck->positionDuck))
+    if (event->buttons() == Qt::LeftButton)
     {
-        duck -> detruireLeCanard();
+        if (((crosshair->coordinateMouse.rx()) >= (duck->positionDuck.rx())) && ((crosshair->coordinateMouse.rx()) <= (duck->positionDuck.rx() + decalageLargeur)))
+        {
+            if (((crosshair->coordinateMouse.ry()) >= (duck->positionDuck.ry())) && ((crosshair->coordinateMouse.ry()) <= (duck->positionDuck.ry() + decalageHauteur)))
+            {
+                duck->isDead = true;
+            }
+        }
     }
 }
 
-//============BOUM BOUM LE CANARD============
+//==================BOUM BOUM LE CANARD==================
 
 bool GraphicsView::viewportEvent(QEvent *event)
 {

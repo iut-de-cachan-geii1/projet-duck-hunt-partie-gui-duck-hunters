@@ -59,6 +59,7 @@
 #include <QPainterPath>
 #include <QMediaPlayer>
 
+
 static constexpr int DuckCount = 2;
 
 int main(int argc, char **argv)
@@ -75,11 +76,13 @@ int main(int argc, char **argv)
     duck->setPos(pos_random, 570);
     crosshair->setPos(640, 384);
     scene.addItem(duck);
+    scene.addItem(duck);
     scene.addItem(crosshair);
     // scene.addRect(0,0,1201,600);
 
     GraphicsView view(&scene);
     view.setRenderHint(QPainter::Antialiasing);
+    //Creation des 
     view.setBackgroundBrush(QPixmap(":/images/background.png"));
     view.setForegroundBrush(QPixmap(":/images/foreground.png"));
 
@@ -87,6 +90,7 @@ int main(int argc, char **argv)
     view.setViewportUpdateMode(QGraphicsView::QGraphicsView::FullViewportUpdate);
 
     view.attachCrosshair(crosshair);
+    view.attachDuck(duck);
 
     view.setWindowTitle(QT_TRANSLATE_NOOP(QGraphicsView, "Duck hunt"));
 
