@@ -114,7 +114,7 @@ void Duck::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
     }
     else
     {
-        if (isDead2 == false)
+        if (isDead2 == !compare)
         {
             if (canard_tempo == compare) // tempo qui change le sprite du canard regulierement pour donner
             {                            //l'illusion qu'il bat des ailes
