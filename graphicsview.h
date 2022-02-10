@@ -77,4 +77,5 @@ private:
     Crosshair* crosshair;
     QList<Duck*> *ducks;
     int pos_random;
+    bool compare;
 };

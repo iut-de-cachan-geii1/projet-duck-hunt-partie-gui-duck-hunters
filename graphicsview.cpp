@@ -62,7 +62,8 @@
 GraphicsView::GraphicsView(QGraphicsScene *scene, QWidget *parent)
     : QGraphicsView(scene, parent),
       DuckCount(2),
-      pos_random()
+      pos_random(),
+      compare(true)
 {
     viewport()->setAttribute(Qt::WA_AcceptTouchEvents);
     setDragMode(ScrollHandDrag);
@@ -111,11 +112,11 @@ void GraphicsView::mousePressEvent(QMouseEvent *event)
 
 void GraphicsView::timerEvent(QTimerEvent *event)
 {
-    if (!ducks->isEmpty() > 0)
+    if (!ducks->size() > 0)
     {
         for (int i = 0; i < DuckCount; i++)
         {
-            if ((ducks->at(i)->vraimentMort) == true)
+            if ((ducks->at(i)->vraimentMort) == compare)
             {
                 delete ducks->at(i);
                 ducks->removeAt(i);
