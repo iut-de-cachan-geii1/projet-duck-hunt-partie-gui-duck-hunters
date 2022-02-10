@@ -72,7 +72,7 @@ int main(int argc, char **argv)
     scene.setItemIndexMethod(QGraphicsScene::NoIndex);
 
     Duck *duck = new Duck;
-    listDuck.emplaceBack(duck);
+    listDuck.emplace_back(duck);
 
     Crosshair *crosshair = new Crosshair;
     static int pos_random = QRandomGenerator::global()->bounded(200, 900);
