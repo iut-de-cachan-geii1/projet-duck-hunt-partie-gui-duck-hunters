@@ -97,10 +97,10 @@ void GraphicsView::mousePressEvent(QMouseEvent *event)
             {
                 if (((crosshair->coordinateMouse.ry()) >= (ducks->at(i)->positionDuck.ry())) && ((crosshair->coordinateMouse.ry()) <= (ducks->at(i)->positionDuck.ry() + decalageHauteur)))
                 {
-                    if (ducks->at(i)->cliqueDessus == false)
+                    if (ducks->at(i)->cliqueDessus == !compare)
                     {
-                        ducks->at(i)->isDead = true;
-                        ducks->at(i)->cliqueDessus = true;
+                        ducks->at(i)->isDead = compare;
+                        ducks->at(i)->cliqueDessus = compare;
                     }
                 }
             }
