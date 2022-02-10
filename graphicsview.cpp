@@ -56,8 +56,8 @@
 
 #include "duck.h"
 
-#define decalageLargeur 75 //75
-#define decalageHauteur 68 //68
+#define decalageLargeur 75 // 75
+#define decalageHauteur 68 // 68
 
 GraphicsView::GraphicsView(QGraphicsScene *scene, QWidget *parent)
     : QGraphicsView(scene, parent),
@@ -112,7 +112,21 @@ void GraphicsView::mousePressEvent(QMouseEvent *event)
 
 void GraphicsView::timerEvent(QTimerEvent *event)
 {
-    if (!ducks->isEmpty())
+    if (ducks->isEmpty())
+    {
+        DuckCount = QRandomGenerator::global()->bounded(1, 3);
+
+        for (int i = 0; i < DuckCount; i++)
+        {
+            ducks->push_back(new Duck);
+
+            this->scene()->addItem(ducks->back());
+
+            pos_random = QRandomGenerator::global()->bounded(300, 900);
+            ducks->back()->setPos(pos_random, 570);
+        }
+    }
+    else
     {
         for (int i = 0; i < DuckCount; i++)
         {
@@ -123,15 +137,6 @@ void GraphicsView::timerEvent(QTimerEvent *event)
                 (this->DuckCount)--;
             }
         }
-    }
-    else if (ducks->isEmpty())
-    {
-        ducks->push_back(new Duck);
-
-        // this->&(scene.addItem(ducks->back()));
-
-        pos_random = QRandomGenerator::global()->bounded(300, 900);
-        ducks->back()->setPos(pos_random, 570);
     }
 }
 
