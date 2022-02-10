@@ -60,15 +60,17 @@ class GraphicsView : public QGraphicsView
 public:
     GraphicsView(QGraphicsScene *scene = nullptr, QWidget *parent = nullptr);
     void attachCrosshair(Crosshair *parametreCrosshair);
-    void attachDuck(Duck *DuckQuiFautAttacher);
+    void attachDucks(QList<Duck*> DucksQuiFautAttacher);
     void mouseMoveEvent(QMouseEvent *event) override;
 
     bool viewportEvent(QEvent *event) override;
 
     void mousePressEvent(QMouseEvent *event) override;
 
+    bool respawn = false;
+
 private:
     qreal totalScaleFactor = 1;
     Crosshair* crosshair;
-    Duck *duck;
+    QList<Duck*> ducks;
 };

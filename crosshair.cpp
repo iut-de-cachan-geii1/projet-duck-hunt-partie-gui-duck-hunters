@@ -88,7 +88,7 @@ QPainterPath Crosshair::shape() const
 
 void Crosshair::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    QPixmap imageDeCrosshair(":/images/crosshair.png");
+    QPixmap imageDeCrosshair(":/images/crosshair.png"); 
     painter->drawPixmap(QPoint(-30, -30), imageDeCrosshair);
 }
 

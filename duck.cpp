@@ -106,7 +106,7 @@ void Duck::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
         {
             if (canard_tempo == compare) // tempo qui change le sprite du canard regulierement pour donner
             {                            //l'illusion qu'il bat des ailes
-                if (canard_sens == compare)
+                if (canard_sens == compare) 
                 {
                     QPixmap imageDeCanard(":/images/canard1.png");
                     painter->drawPixmap(QPoint(0, 0), imageDeCanard);
@@ -158,9 +158,10 @@ void Duck::timerEvent(QTimerEvent *event)
         canard_tempo = !canard_tempo;
         cpt = 0;
     }
-
+     
     QPointF pos_actuelle = pos();
     positionDuck = pos_actuelle;
+    
 
     static int directionX = QRandomGenerator::global()->bounded(0, 2); //si 1 va a gauche, si 0 va a droitre
     static int directionY = 1;                                         //si 1 va en haut, si 0 va en bas
@@ -252,6 +253,8 @@ void Duck::timerEvent(QTimerEvent *event)
         else
         {
             delete this;
+            isDead = false;
+            isDead2 = false;
         }
     }
 }

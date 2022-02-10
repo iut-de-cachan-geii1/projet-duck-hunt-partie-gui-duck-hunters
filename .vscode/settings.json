@@ -13,5 +13,11 @@
         "Qt6CoreTools_DIR": "C:\\Qt\\6.2.3\\mingw_64\\lib\\cmake",
         "Qt6GUITools_DIR": "C:\\Qt\\6.2.3\\mingw_64\\lib\\cmake",
         "QT_DIR": "C:\\Qt\\6.2.3\\mingw_64\\lib\\cmake"
+    },
+    "files.associations": {
+        "*.tcc": "cpp",
+        "deque": "cpp",
+        "vector": "cpp",
+        "qrandomgenerator": "cpp"
     }
 }

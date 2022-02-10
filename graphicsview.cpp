@@ -71,9 +71,9 @@ void GraphicsView::attachCrosshair(Crosshair *parametreCrosshair)
 {
     this->crosshair = parametreCrosshair;
 }
-void GraphicsView::attachDuck(Duck *DuckQuiFautAttacher)
+void GraphicsView::attachDucks(QList<Duck*> DucksQuiFautAttacher)
 {
-    this->duck = DuckQuiFautAttacher;
+    this->ducks = DucksQuiFautAttacher;
 }
 void GraphicsView::mouseMoveEvent(QMouseEvent *event)
 {
@@ -86,11 +86,12 @@ void GraphicsView::mousePressEvent(QMouseEvent *event)
 {
     if (event->buttons() == Qt::LeftButton)
     {
-        if (((crosshair->coordinateMouse.rx()) >= (duck->positionDuck.rx())) && ((crosshair->coordinateMouse.rx()) <= (duck->positionDuck.rx() + decalageLargeur)))
+        if (((crosshair->coordinateMouse.rx()) >= (ducks[0]->positionDuck.rx())) && ((crosshair->coordinateMouse.rx()) <= (ducks[0]->positionDuck.rx() + decalageLargeur)))
         {
-            if (((crosshair->coordinateMouse.ry()) >= (duck->positionDuck.ry())) && ((crosshair->coordinateMouse.ry()) <= (duck->positionDuck.ry() + decalageHauteur)))
+            if (((crosshair->coordinateMouse.ry()) >= (ducks[0]->positionDuck.ry())) && ((crosshair->coordinateMouse.ry()) <= (ducks[0]->positionDuck.ry() + decalageHauteur)))
             {
-                duck->isDead = true;
+                ducks[0]->isDead = true;
+                respawn = true;
             }
         }
     }
