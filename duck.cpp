@@ -66,7 +66,7 @@
 #define Gauche 0
 #define Haut 0
 #define Bas 600
-#define vitesseX 7
+#define vitesseX 10
 
 static qreal normalizeAngle(qreal angle)
 {
@@ -84,29 +84,47 @@ static qreal normalizeAngle(qreal angle)
 }
 
 Duck::Duck()
+:   positionDuck(),
+    isDead(false),
+    isDead2(false),
+    vraimentMort(false),
+    cliqueDessus(false),
+    angle(0),
+    speed(0),
+    mouseEyeDirection(0),
+    color(),
+    canard_tempo(true),
+    canard_rotate(true),
+    canard_sens(false),
+    cpt(0),
+    cptMort(0),
+    directionX(QRandomGenerator::global()->bounded(0, 2)), //si 1 va a gauche, si 0 va a droitre
+    directionY(1),                                       //si 1 va en haut, si 0 va en bas
+    hauteur_rng(QRandomGenerator::global()->bounded(2, 11)),
+    compare(true)
 {
     startTimer(1000 / 33);
 }
 
 QRectF Duck::boundingRect() const
 {
-    qreal adjust = 0.5;
-    return QRectF(-18 - adjust, -22 - adjust,
-                  36 + adjust, 60 + adjust);
+    // qreal adjust = 0.5;
+    // return QRectF(-18 - adjust, -22 - adjust,
+    //               36 + adjust, 60 + adjust);
 }
 
 QPainterPath Duck::shape() const
 {
-    QPainterPath path;
-    path.addRect(0, 0, 75, 71);
-    return path;
+    // QPainterPath path;
+    // path.addRect(0, 0, 75, 71);
+    // return path;
 }
 
 void Duck::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     bool compare = true;
-    QLineF lineCenterToDestination(QPoint(0, 0), mapFromScene(650, 350));
-    //painter->drawLine(lineCenterToDestination);
+    // QLineF lineCenterToDestination(QPoint(0, 0), mapFromScene(650, 350));
+    // painter->drawLine(lineCenterToDestination);
     if (isDead == compare)
     {
         QPixmap imageDeCanard(":/images/canard_mort.png");
@@ -159,25 +177,20 @@ void Duck::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
     }
 }
 
+
 void Duck::timerEvent(QTimerEvent *event)
 {
-    static int cpt = 0;
-    static int cptMort = 0;
-    cpt++;
+    (this->cpt)++;
 
-    if (cpt == 7) //diviser l'horloge du timer par 7 pour battre des ailes moins vite
+    if ((this->cpt) == 7) //diviser l'horloge du timer par 7 pour battre des ailes moins vite
     {
         canard_tempo = !canard_tempo;
-        cpt = 0;
+        (this->cpt) = 0;
     }
 
     QPointF pos_actuelle = pos();
-    positionDuck = pos_actuelle;
+    this->positionDuck = pos_actuelle;
 
-    static int directionX = QRandomGenerator::global()->bounded(0, 2); //si 1 va a gauche, si 0 va a droitre
-    static int directionY = 1;                                         //si 1 va en haut, si 0 va en bas
-    static int hauteur_rng = QRandomGenerator::global()->bounded(2, 10);
-    static bool compare = true;
     if ((directionX == 1) && (directionY == 1) && (isDead == !compare)) // va en haut vers la gauche
     {
         canard_sens = false;
@@ -248,7 +261,7 @@ void Duck::timerEvent(QTimerEvent *event)
     if ((isDead == compare) && (isDead2 == !compare))
     {
         cptMort++;
-        if (cptMort == 15)
+        if (cptMort == 12)
         {
             isDead2 = true;
             isDead = false;
@@ -263,7 +276,9 @@ void Duck::timerEvent(QTimerEvent *event)
         }
         else
         {
-            delete this;
+            isDead2 = false;
+            isDead = true;
+            vraimentMort = compare;
         }
     }
 }

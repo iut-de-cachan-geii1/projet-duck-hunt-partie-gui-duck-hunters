@@ -13,5 +13,12 @@
         "Qt6CoreTools_DIR": "C:\\Qt\\6.2.3\\mingw_64\\lib\\cmake",
         "Qt6GUITools_DIR": "C:\\Qt\\6.2.3\\mingw_64\\lib\\cmake",
         "QT_DIR": "C:\\Qt\\6.2.3\\mingw_64\\lib\\cmake"
+    },
+    "files.associations": {
+        "array": "cpp",
+        "string_view": "cpp",
+        "deque": "cpp",
+        "list": "cpp",
+        "vector": "cpp"
     }
 }

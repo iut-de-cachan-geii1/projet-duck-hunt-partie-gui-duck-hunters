@@ -65,7 +65,7 @@
 #define Gauche 0
 #define Haut 0
 #define Bas 600
-#define vitesseX 8
+#define vitesseX 0
 
 Crosshair::Crosshair()
 {
