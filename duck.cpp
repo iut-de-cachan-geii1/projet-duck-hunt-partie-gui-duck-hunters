@@ -96,15 +96,15 @@ Duck::Duck()
 
 QRectF Duck::boundingRect() const
 {
-    // qreal adjust = 0.5;
+    qreal adjust = 0.5;
     return QRectF(-18 - adjust, -22 - adjust,
                   36 + adjust, 60 + adjust);
 }
 
 QPainterPath Duck::shape() const
 {
-    // QPainterPath path;
-    // path.addRect(0, 0, 75, 71);
+    QPainterPath path;
+    path.addRect(0, 0, 75, 71);
     return path;
 }
 
