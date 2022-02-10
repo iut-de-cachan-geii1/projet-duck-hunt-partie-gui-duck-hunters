@@ -70,6 +70,8 @@ public:
 
   
 
+    bool respawn = false;
+
 private:
     qreal totalScaleFactor = 1;
     Crosshair* crosshair;

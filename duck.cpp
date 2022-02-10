@@ -50,18 +50,6 @@
 
 #include "duck.h"
 
-#include <QGraphicsScene>
-#include <QPainter>
-#include <QRandomGenerator>
-#include <QStyleOption>
-#include <qmath.h>
-#include <QMovie>
-#include <QLabel>
-#include <QDialog>
-#include <QPixmap>
-#include <QGraphicsVideoItem>
-#include <QMediaPlayer>
-
 #define Droite 1205
 #define Gauche 0
 #define Haut 0
@@ -136,7 +124,7 @@ void Duck::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
         {
             if (canard_tempo == compare) // tempo qui change le sprite du canard regulierement pour donner
             {                            //l'illusion qu'il bat des ailes
-                if (canard_sens == compare)
+                if (canard_sens == compare) 
                 {
                     QPixmap imageDeCanard(":/images/canard1.png");
                     painter->drawPixmap(QPoint(0, 0), imageDeCanard);
@@ -187,7 +175,7 @@ void Duck::timerEvent(QTimerEvent *event)
         canard_tempo = !canard_tempo;
         (this->cpt) = 0;
     }
-
+     
     QPointF pos_actuelle = pos();
     this->positionDuck = pos_actuelle;
 

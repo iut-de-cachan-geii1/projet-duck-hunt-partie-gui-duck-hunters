@@ -99,11 +99,11 @@ int main(int argc, char **argv)
     view.setCacheMode(QGraphicsView::CacheBackground);
     view.setViewportUpdateMode(QGraphicsView::QGraphicsView::FullViewportUpdate);
 
+    view.attachDucks(listDuck);
     view.attachCrosshair(crosshair);
 
     view.setWindowTitle(QT_TRANSLATE_NOOP(QGraphicsView, "Duck hunt"));
 
     view.showNormal();
-
     return QApplication::exec();
 }
