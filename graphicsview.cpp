@@ -111,14 +111,14 @@ void GraphicsView::mousePressEvent(QMouseEvent *event)
 
 void GraphicsView::timerEvent(QTimerEvent *event)
 {
-    if (ducks->size() > 0)
+    if (!ducks->isEmpty() > 0)
     {
         for (int i = 0; i < DuckCount; i++)
         {
             if ((ducks->at(i)->vraimentMort) == true)
             {
                 delete ducks->at(i);
-                ducks->remove(i);
+                ducks->removeAt(i);
                 (this->DuckCount)--;
             }
         }
