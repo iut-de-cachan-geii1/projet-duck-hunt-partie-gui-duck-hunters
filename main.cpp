@@ -84,6 +84,9 @@ int main(int argc, char **argv)
         listeDeCanard->back()->setPos(pos_random, 570);
     }
     view.attachDucks(listeDeCanard);
+  
+  
+
 
     Crosshair *crosshair = new Crosshair;
 
