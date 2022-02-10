@@ -123,7 +123,7 @@ void GraphicsView::timerEvent(QTimerEvent *event)
             }
         }
     }
-    else if (ducks->size() == 0)
+    else if (ducks->isEmpty())
     {
         ducks->push_back(new Duck);
 
