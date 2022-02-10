@@ -81,17 +81,26 @@ public:
     QPointF positionDuck;
     bool isDead = false;
     bool isDead2 = false;
+    bool vraimentMort;
+    bool cliqueDessus;
 
 protected:
     void timerEvent(QTimerEvent *event) override;
 
 private:
-    qreal angle = 0;
-    qreal speed = 0;
-    qreal mouseEyeDirection = 0;
+    qreal angle;
+    qreal speed;
+    qreal mouseEyeDirection;
     QColor color;
-    bool canard_tempo = true;
-    bool canard_rotate = true;
-    bool canard_sens ;
+    bool canard_tempo;
+    bool canard_rotate;
+    bool canard_sens;
+    int cpt;
+    int cptMort;
+    int directionX;
+    int directionY;
+    int hauteur_rng;
+    bool compare;
+    
 };
 #endif

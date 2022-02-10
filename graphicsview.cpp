@@ -52,13 +52,18 @@
 
 #include <QScrollBar>
 #include <QTouchEvent>
+#include <QRandomGenerator>
+
 #include "duck.h"
 
 #define decalageLargeur 75 //75
 #define decalageHauteur 68 //68
 
 GraphicsView::GraphicsView(QGraphicsScene *scene, QWidget *parent)
-    : QGraphicsView(scene, parent)
+    : QGraphicsView(scene, parent),
+      DuckCount(2),
+      pos_random(),
+      compare(true)
 {
     viewport()->setAttribute(Qt::WA_AcceptTouchEvents);
     setDragMode(ScrollHandDrag);
@@ -71,7 +76,7 @@ void GraphicsView::attachCrosshair(Crosshair *parametreCrosshair)
 {
     this->crosshair = parametreCrosshair;
 }
-void GraphicsView::attachDucks(QList<Duck*> DucksQuiFautAttacher)
+void GraphicsView::attachDucks(QList<Duck *> *DucksQuiFautAttacher)
 {
     this->ducks = DucksQuiFautAttacher;
 }
@@ -86,18 +91,49 @@ void GraphicsView::mousePressEvent(QMouseEvent *event)
 {
     if (event->buttons() == Qt::LeftButton)
     {
-        if (((crosshair->coordinateMouse.rx()) >= (ducks[0]->positionDuck.rx())) && ((crosshair->coordinateMouse.rx()) <= (ducks[0]->positionDuck.rx() + decalageLargeur)))
+        for (int i = 0; i < DuckCount; i++)
         {
-            if (((crosshair->coordinateMouse.ry()) >= (ducks[0]->positionDuck.ry())) && ((crosshair->coordinateMouse.ry()) <= (ducks[0]->positionDuck.ry() + decalageHauteur)))
+            if (((crosshair->coordinateMouse.rx()) >= ((ducks->at(i)->positionDuck.rx())) && ((crosshair->coordinateMouse.rx()) <= (ducks->at(i)->positionDuck.rx() + decalageLargeur))))
             {
-                ducks[0]->isDead = true;
-                respawn = true;
+                if (((crosshair->coordinateMouse.ry()) >= (ducks->at(i)->positionDuck.ry())) && ((crosshair->coordinateMouse.ry()) <= (ducks->at(i)->positionDuck.ry() + decalageHauteur)))
+                {
+                    if (ducks->at(i)->cliqueDessus == !compare)
+                    {
+                        ducks->at(i)->isDead = compare;
+                        ducks->at(i)->cliqueDessus = compare;
+                    }
+                }
             }
         }
     }
 }
 
 //==================BOUM BOUM LE CANARD==================
+
+void GraphicsView::timerEvent(QTimerEvent *event)
+{
+    if (!ducks->isEmpty())
+    {
+        for (int i = 0; i < DuckCount; i++)
+        {
+            if ((ducks->at(i)->vraimentMort) == compare)
+            {
+                delete ducks->at(i);
+                ducks->removeAt(i);
+                (this->DuckCount)--;
+            }
+        }
+    }
+    else if (ducks->isEmpty())
+    {
+        ducks->push_back(new Duck);
+
+        // this->&(scene.addItem(ducks->back()));
+
+        pos_random = QRandomGenerator::global()->bounded(300, 900);
+        ducks->back()->setPos(pos_random, 570);
+    }
+}
 
 bool GraphicsView::viewportEvent(QEvent *event)
 {
@@ -135,4 +171,3 @@ bool GraphicsView::viewportEvent(QEvent *event)
     }*/
     return QGraphicsView::viewportEvent(event);
 }
-

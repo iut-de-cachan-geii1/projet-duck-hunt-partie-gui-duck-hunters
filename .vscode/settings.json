@@ -15,9 +15,11 @@
         "QT_DIR": "C:\\Qt\\6.2.3\\mingw_64\\lib\\cmake"
     },
     "files.associations": {
-        "*.tcc": "cpp",
+        "array": "cpp",
+        "string_view": "cpp",
         "deque": "cpp",
+        "list": "cpp",
         "vector": "cpp",
-        "qrandomgenerator": "cpp"
+        "new": "cpp"
     }
 }

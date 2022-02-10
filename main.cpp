@@ -60,38 +60,48 @@
 #include <QMediaPlayer>
 #include <QList>
 
-static constexpr int DuckCount = 2;
-QList<Duck *> listDuck;
-
 int main(int argc, char **argv)
 {
-    QApplication app(argc, argv);
+     QApplication app(argc, argv);
 
     QGraphicsScene scene;
+    GraphicsView view(&scene);
+
+    QList<Duck*> *listeDeCanard = new QList<Duck*>;
+
     scene.setSceneRect(0, 0, 1280, 769);
     scene.setItemIndexMethod(QGraphicsScene::NoIndex);
 
-    Duck *duck = new Duck;
+    static int pos_random;
+
+    for (int i = 0; i < view.DuckCount; i++)
+    {
+        listeDeCanard->push_back(new Duck);
+
+        scene.addItem(listeDeCanard->back());
+
+        pos_random = QRandomGenerator::global()->bounded(300, 900);
+        listeDeCanard->back()->setPos(pos_random, 570);
+    }
+    view.attachDucks(listeDeCanard);
+  
   
 
+
     Crosshair *crosshair = new Crosshair;
-    static int pos_random = QRandomGenerator::global()->bounded(200, 900);
-    duck->setPos(pos_random, 570);
+
     crosshair->setPos(640, 384);
-    scene.addItem(listDuck.at(0));
     scene.addItem(crosshair);
     // scene.addRect(0,0,1201,600);
 
-    GraphicsView view(&scene);
     view.setRenderHint(QPainter::Antialiasing);
-    // Creation des
+    //Creation des images de premier et dernier plan
     view.setBackgroundBrush(QPixmap(":/images/background.png"));
     view.setForegroundBrush(QPixmap(":/images/foreground.png"));
 
     view.setCacheMode(QGraphicsView::CacheBackground);
     view.setViewportUpdateMode(QGraphicsView::QGraphicsView::FullViewportUpdate);
 
-    view.attachDucks(listDuck);
     view.attachCrosshair(crosshair);
 
     view.setWindowTitle(QT_TRANSLATE_NOOP(QGraphicsView, "Duck hunt"));
