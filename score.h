@@ -48,44 +48,36 @@
 **
 ****************************************************************************/
 
-#pragma once
-#include <QGraphicsView>
-#include "crosshair.h"
-#include "duck.h"
-#include "munition.h"
-#include "score.h"
-#include "ecran_acceuil.h"
+#ifndef SCORE_H
+#define SCORE_H
 
+#include <QGraphicsObject>
+#include <QLabel>
+#include <QMovie>
+#include <QGraphicsScene>
+#include <QPainter>
+#include <QRandomGenerator>
+#include <QStyleOption>
+#include <qmath.h>
+#include <QDialog>
+#include <QPixmap>
+#include <QGraphicsVideoItem>
+#include <QMediaPlayer>
+#include <QLabel>
+#include <QGraphicsTextItem>
 
-class GraphicsView : public QGraphicsView
+class Score : public QGraphicsObject
 {
-    Q_OBJECT
-
 public:
-    GraphicsView(QGraphicsScene *scene = nullptr, QWidget *parent = nullptr);
-    void attachCrosshair(Crosshair *parametreCrosshair);
-    void attachDucks(QList<Duck*> * DucksQuiFautAttacher);
-    void attachAmmo(Munition *munitionQuiFautAttacher);
-    void attachScore(Score *scoreQuiFautAttacher);
-    void mouseMoveEvent(QMouseEvent *event) override;
-    void timerEvent(QTimerEvent *event) override;
-    bool viewportEvent(QEvent *event) override;
-    void mousePressEvent(QMouseEvent *event) override;
-    void attach_ecran_acceuil(ecran_acceuil*ecran);
-    int DuckCount;
-    bool respawn = false;
-    bool has_pseudo;
+    Score();
+    QRectF boundingRect() const override;
+    QPainterPath shape() const override;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
+               QWidget *widget) override;
     
-private:
-    qreal totalScaleFactor = 1;
-    Crosshair* crosshair;
-    QList<Duck*> *ducks;
-    Munition *ammo;
-    Score *score;
-    int pos_random;
-    bool compare;
-    ecran_acceuil*ecran;
-    
-    QString pseudo;
+    int scoreCpt;
 
+private:
+    QLabel *label;
 };
+#endif

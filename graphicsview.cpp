@@ -72,7 +72,7 @@ GraphicsView::GraphicsView(QGraphicsScene *scene, QWidget *parent)
     startTimer(1000 / 500);
     setFixedSize(1280, 769);
     setMouseTracking(true);
-    
+    QCursor cursor(Qt::BlankCursor);
 }
 
 void GraphicsView::attachCrosshair(Crosshair *parametreCrosshair)
@@ -86,6 +86,14 @@ void GraphicsView::attachDucks(QList<Duck *> *DucksQuiFautAttacher)
 void GraphicsView::mouseMoveEvent(QMouseEvent *event)
 {
     crosshair->coordinateMouse = event->pos();
+}
+void GraphicsView::attachAmmo(Munition *munitionQuiFautAttacher)
+{
+    this->ammo = munitionQuiFautAttacher;
+}
+void GraphicsView::attachScore(Score *scoreQuiFautAttacher)
+{
+    this->score = scoreQuiFautAttacher;
 }
 
 void GraphicsView::attach_ecran_acceuil(ecran_acceuil*ecran)
@@ -119,10 +127,12 @@ void GraphicsView::mousePressEvent(QMouseEvent *event)
                     {
                         ducks->at(i)->isDead = compare;
                         ducks->at(i)->cliqueDessus = compare;
+                        (score->scoreCpt)++;
                     }
                 }
             }
         }
+        (ammo->cptMunition)--;
     }
 }
 
@@ -133,6 +143,7 @@ void GraphicsView::timerEvent(QTimerEvent *event)
     if (ducks->isEmpty())
     {
         DuckCount = QRandomGenerator::global()->bounded(1, 3);
+        ammo->cptMunition = 3;
 
         for (int i = 0; i < DuckCount; i++)
         {

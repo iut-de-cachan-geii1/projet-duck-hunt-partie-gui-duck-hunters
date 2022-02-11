@@ -51,6 +51,8 @@
 #include "graphicsview.h"
 #include "duck.h"
 #include "crosshair.h"
+#include "munition.h"
+#include "score.h"
 #include "ecran_acceuil.h"
 
 #include <QGraphicsVideoItem>
@@ -73,9 +75,10 @@ int main(int argc, char **argv)
 
     QGraphicsScene scene;
     GraphicsView view(&scene);
-
-
-    QList<Duck*> *listeDeCanard = new QList<Duck*>;
+    QList<Duck *> *listeDeCanard = new QList<Duck *>;
+    Crosshair *crosshair = new Crosshair;
+    Munition *ammo = new Munition;
+    Score *score = new Score;
 
     
 
@@ -97,11 +100,14 @@ int main(int argc, char **argv)
 
   
 
-
-    Crosshair *crosshair = new Crosshair;
+    view.attachDucks(listeDeCanard);
 
     crosshair->setPos(640, 384);
+    ammo->setPos(80, 650);
+    score->setPos(250,670);
     scene.addItem(crosshair);
+    scene.addItem(ammo);
+    scene.addItem(score);
     // scene.addRect(0,0,1201,600);
 
     view.setRenderHint(QPainter::Antialiasing);
@@ -113,8 +119,13 @@ int main(int argc, char **argv)
     view.setViewportUpdateMode(QGraphicsView::QGraphicsView::FullViewportUpdate);
 
     view.attachCrosshair(crosshair);
+    view.attachAmmo(ammo);
+    view.attachScore(score);
 
     view.setWindowTitle(QT_TRANSLATE_NOOP(QGraphicsView, "Duck hunt"));
+    view.setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    view.setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    view.setCursor(Qt::BlankCursor);
 
     ecran_acceuil pseudo_win;
     pseudo_win.show();

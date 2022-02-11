@@ -48,44 +48,41 @@
 **
 ****************************************************************************/
 
-#pragma once
-#include <QGraphicsView>
-#include "crosshair.h"
-#include "duck.h"
-#include "munition.h"
 #include "score.h"
-#include "ecran_acceuil.h"
+#include <QFont>
 
-
-class GraphicsView : public QGraphicsView
+Score::Score()
+    : scoreCpt(0),
+      label(new QLabel)
 {
-    Q_OBJECT
+}
 
-public:
-    GraphicsView(QGraphicsScene *scene = nullptr, QWidget *parent = nullptr);
-    void attachCrosshair(Crosshair *parametreCrosshair);
-    void attachDucks(QList<Duck*> * DucksQuiFautAttacher);
-    void attachAmmo(Munition *munitionQuiFautAttacher);
-    void attachScore(Score *scoreQuiFautAttacher);
-    void mouseMoveEvent(QMouseEvent *event) override;
-    void timerEvent(QTimerEvent *event) override;
-    bool viewportEvent(QEvent *event) override;
-    void mousePressEvent(QMouseEvent *event) override;
-    void attach_ecran_acceuil(ecran_acceuil*ecran);
-    int DuckCount;
-    bool respawn = false;
-    bool has_pseudo;
-    
-private:
-    qreal totalScaleFactor = 1;
-    Crosshair* crosshair;
-    QList<Duck*> *ducks;
-    Munition *ammo;
-    Score *score;
-    int pos_random;
-    bool compare;
-    ecran_acceuil*ecran;
-    
-    QString pseudo;
+QRectF Score::boundingRect() const
+{
+    qreal adjust = 0.5;
+    return QRectF(-18 - adjust, -22 - adjust,
+                  36 + adjust, 60 + adjust);
+}
 
-};
+QPainterPath Score::shape() const
+{
+    QPainterPath path;
+    path.addRect(0, 0, 75, 71);
+    return path;
+}
+
+void Score::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+{
+    QFont font = painter->font();
+    const QRect rectangle = QRect(0, 0, 200, 50);
+    QRect boundingRect;
+    font.setPixelSize(38);
+    painter->setFont(font);
+    //painter->drawText(QPointF(0, 0), QString("Score = ") + QString::number(scoreCpt));
+    painter->drawText(rectangle, 0, QString("Score = ") + QString::number(scoreCpt), &boundingRect);
+
+    QPen pen = painter->pen();
+    pen.setStyle(Qt::SolidLine);
+    painter->setPen(pen);
+    painter->drawRect(boundingRect.adjusted(0, 0, -pen.width(), -pen.width()));
+}

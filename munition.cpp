@@ -48,44 +48,49 @@
 **
 ****************************************************************************/
 
-#pragma once
-#include <QGraphicsView>
-#include "crosshair.h"
-#include "duck.h"
 #include "munition.h"
-#include "score.h"
-#include "ecran_acceuil.h"
 
-
-class GraphicsView : public QGraphicsView
+Munition::Munition()
+    : positionMunition(),
+      cptMunition(3)
 {
-    Q_OBJECT
+    startTimer(1000 / 33);
+}
 
-public:
-    GraphicsView(QGraphicsScene *scene = nullptr, QWidget *parent = nullptr);
-    void attachCrosshair(Crosshair *parametreCrosshair);
-    void attachDucks(QList<Duck*> * DucksQuiFautAttacher);
-    void attachAmmo(Munition *munitionQuiFautAttacher);
-    void attachScore(Score *scoreQuiFautAttacher);
-    void mouseMoveEvent(QMouseEvent *event) override;
-    void timerEvent(QTimerEvent *event) override;
-    bool viewportEvent(QEvent *event) override;
-    void mousePressEvent(QMouseEvent *event) override;
-    void attach_ecran_acceuil(ecran_acceuil*ecran);
-    int DuckCount;
-    bool respawn = false;
-    bool has_pseudo;
-    
-private:
-    qreal totalScaleFactor = 1;
-    Crosshair* crosshair;
-    QList<Duck*> *ducks;
-    Munition *ammo;
-    Score *score;
-    int pos_random;
-    bool compare;
-    ecran_acceuil*ecran;
-    
-    QString pseudo;
+QRectF Munition::boundingRect() const
+{
+    qreal adjust = 0.5;
+    return QRectF(-18 - adjust, -22 - adjust,
+                  36 + adjust, 60 + adjust);
+}
 
-};
+QPainterPath Munition::shape() const
+{
+    QPainterPath path;
+    path.addRect(-10, -20, 75, 71);
+    return path;
+}
+
+void Munition::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+{
+    if (cptMunition == 3)
+    {
+        QPixmap munition(":/images/3munitions.png");
+        painter->drawPixmap(QPoint(0, 0), munition);
+    }
+    else if (cptMunition == 2)
+    {
+        QPixmap munition(":/images/2munitions.png");
+        painter->drawPixmap(QPoint(0, 0), munition);
+    }
+    else if (cptMunition == 1)
+    {
+        QPixmap munition(":/images/1munition.png");
+        painter->drawPixmap(QPoint(0, 0), munition);
+    }
+}
+
+void Munition::timerEvent(QTimerEvent *event)
+{
+    
+}

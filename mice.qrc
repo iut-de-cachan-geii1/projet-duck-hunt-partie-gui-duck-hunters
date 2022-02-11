@@ -14,6 +14,9 @@
         <file>images/canard_mort_tombe.png</file>
         <file>images/canard_mort_tombe_inverse.png</file>
         <file>images/munition.png</file>
+        <file>images/1munition.png</file>
+        <file>images/2munitions.png</file>
+        <file>images/3munitions.png</file>
         <file>images/Duck_Hunt_Logo.png</file>
         <file>images/stage.png</file>
     </qresource>
