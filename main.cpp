@@ -51,6 +51,7 @@
 #include "graphicsview.h"
 #include "duck.h"
 #include "crosshair.h"
+#include "ecran_acceuil.h"
 
 #include <QGraphicsVideoItem>
 #include <QRandomGenerator>
@@ -60,14 +61,23 @@
 #include <QMediaPlayer>
 #include <QList>
 
+
+
+
+
+
+
 int main(int argc, char **argv)
 {
-     QApplication app(argc, argv);
+    QApplication app(argc, argv);
 
     QGraphicsScene scene;
     GraphicsView view(&scene);
 
+
     QList<Duck*> *listeDeCanard = new QList<Duck*>;
+
+    
 
     scene.setSceneRect(0, 0, 1280, 769);
     scene.setItemIndexMethod(QGraphicsScene::NoIndex);
@@ -80,11 +90,11 @@ int main(int argc, char **argv)
 
         scene.addItem(listeDeCanard->back());
 
-        pos_random = QRandomGenerator::global()->bounded(300, 900);
+        pos_random = QRandomGenerator::global()->bounded(100, 1100);
         listeDeCanard->back()->setPos(pos_random, 570);
     }
     view.attachDucks(listeDeCanard);
-  
+
   
 
 
@@ -106,6 +116,9 @@ int main(int argc, char **argv)
 
     view.setWindowTitle(QT_TRANSLATE_NOOP(QGraphicsView, "Duck hunt"));
 
-    view.showNormal();
+    ecran_acceuil pseudo_win;
+    pseudo_win.show();
+    view.attach_ecran_acceuil(&pseudo_win);
+
     return QApplication::exec();
 }

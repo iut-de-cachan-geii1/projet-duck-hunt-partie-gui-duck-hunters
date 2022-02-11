@@ -52,6 +52,8 @@
 #include <QGraphicsView>
 #include "crosshair.h"
 #include "duck.h"
+#include "ecran_acceuil.h"
+
 
 class GraphicsView : public QGraphicsView
 {
@@ -64,18 +66,20 @@ public:
     void mouseMoveEvent(QMouseEvent *event) override;
     void timerEvent(QTimerEvent *event) override;
     bool viewportEvent(QEvent *event) override;
-
     void mousePressEvent(QMouseEvent *event) override;
+    void attach_ecran_acceuil(ecran_acceuil*ecran);
     int DuckCount;
-
-  
-
     bool respawn = false;
-
+    bool has_pseudo;
+    
 private:
     qreal totalScaleFactor = 1;
     Crosshair* crosshair;
     QList<Duck*> *ducks;
     int pos_random;
     bool compare;
+    ecran_acceuil*ecran;
+    
+    QString pseudo;
+
 };

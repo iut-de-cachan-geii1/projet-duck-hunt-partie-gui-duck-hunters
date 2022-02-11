@@ -53,7 +53,7 @@
 #include <QScrollBar>
 #include <QTouchEvent>
 #include <QRandomGenerator>
-
+#include "ecran_acceuil.h"
 #include "duck.h"
 
 #define decalageLargeur 75 // 75
@@ -61,15 +61,18 @@
 
 GraphicsView::GraphicsView(QGraphicsScene *scene, QWidget *parent)
     : QGraphicsView(scene, parent),
-      DuckCount(2),
+      DuckCount(1),
       pos_random(),
-      compare(true)
+      compare(true),
+      has_pseudo(false),
+      pseudo()
 {
     viewport()->setAttribute(Qt::WA_AcceptTouchEvents);
     setDragMode(ScrollHandDrag);
     startTimer(1000 / 500);
     setFixedSize(1280, 769);
     setMouseTracking(true);
+    
 }
 
 void GraphicsView::attachCrosshair(Crosshair *parametreCrosshair)
@@ -83,6 +86,21 @@ void GraphicsView::attachDucks(QList<Duck *> *DucksQuiFautAttacher)
 void GraphicsView::mouseMoveEvent(QMouseEvent *event)
 {
     crosshair->coordinateMouse = event->pos();
+}
+
+void GraphicsView::attach_ecran_acceuil(ecran_acceuil*ecran)
+{
+    this->ecran = ecran;
+    connect(ecran, &ecran_acceuil::pseudo_to_send, this, 
+
+        [this](QString username)            //fonction lambda
+        {
+            pseudo = username;
+            has_pseudo = true;
+            this->showNormal();
+            this->ecran->hide();
+        }
+    );
 }
 
 //==================BOUM BOUM LE CANARD==================
