@@ -53,15 +53,19 @@
 #include <QScrollBar>
 #include <QTouchEvent>
 #include <QRandomGenerator>
+#include "ecran_acceuil.h"
+#include "duck.h"
 
-#define decalageLargeur 75 //75
-#define decalageHauteur 68 //68
+#define decalageLargeur 75 // 75
+#define decalageHauteur 68 // 68
 
 GraphicsView::GraphicsView(QGraphicsScene *scene, QWidget *parent)
     : QGraphicsView(scene, parent),
-      DuckCount(2),
+      DuckCount(1),
       pos_random(),
-      compare(true)
+      compare(true),
+      has_pseudo(false),
+      pseudo()
 {
     viewport()->setAttribute(Qt::WA_AcceptTouchEvents);
     setDragMode(ScrollHandDrag);
@@ -90,6 +94,21 @@ void GraphicsView::attachAmmo(Munition *munitionQuiFautAttacher)
 void GraphicsView::attachScore(Score *scoreQuiFautAttacher)
 {
     this->score = scoreQuiFautAttacher;
+}
+
+void GraphicsView::attach_ecran_acceuil(ecran_acceuil*ecran)
+{
+    this->ecran = ecran;
+    connect(ecran, &ecran_acceuil::pseudo_to_send, this, 
+
+        [this](QString username)            //fonction lambda
+        {
+            pseudo = username;
+            has_pseudo = true;
+            this->showNormal();
+            this->ecran->hide();
+        }
+    );
 }
 
 //==================BOUM BOUM LE CANARD==================

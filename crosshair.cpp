@@ -68,6 +68,7 @@
 #define vitesseX 0
 
 Crosshair::Crosshair()
+
 {
     startTimer(1000 / 33);
 }

@@ -53,6 +53,7 @@
 #include "crosshair.h"
 #include "munition.h"
 #include "score.h"
+#include "ecran_acceuil.h"
 
 #include <QGraphicsVideoItem>
 #include <QRandomGenerator>
@@ -61,6 +62,12 @@
 #include <QPainterPath>
 #include <QMediaPlayer>
 #include <QList>
+
+
+
+
+
+
 
 int main(int argc, char **argv)
 {
@@ -73,6 +80,8 @@ int main(int argc, char **argv)
     Munition *ammo = new Munition;
     Score *score = new Score;
 
+    
+
     scene.setSceneRect(0, 0, 1280, 769);
     scene.setItemIndexMethod(QGraphicsScene::NoIndex);
 
@@ -84,9 +93,12 @@ int main(int argc, char **argv)
 
         scene.addItem(listeDeCanard->back());
 
-        pos_random = QRandomGenerator::global()->bounded(300, 900);
+        pos_random = QRandomGenerator::global()->bounded(100, 1100);
         listeDeCanard->back()->setPos(pos_random, 570);
     }
+    view.attachDucks(listeDeCanard);
+
+  
 
     view.attachDucks(listeDeCanard);
 
@@ -115,6 +127,9 @@ int main(int argc, char **argv)
     view.setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     view.setCursor(Qt::BlankCursor);
 
-    view.showNormal();
+    ecran_acceuil pseudo_win;
+    pseudo_win.show();
+    view.attach_ecran_acceuil(&pseudo_win);
+
     return QApplication::exec();
 }

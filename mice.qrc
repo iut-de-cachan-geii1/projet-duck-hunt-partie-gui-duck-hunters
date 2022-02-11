@@ -8,6 +8,7 @@
         <file>images/canard2_inverse.png</file>
         <file>images/foreground.png</file>
         <file>images/duck_animated.gif</file>
+        <file>images/main_menu.gif</file>
         <file>images/crosshair.png</file>
         <file>images/canard_mort.png</file>
         <file>images/canard_mort_tombe.png</file>
@@ -16,5 +17,7 @@
         <file>images/1munition.png</file>
         <file>images/2munitions.png</file>
         <file>images/3munitions.png</file>
+        <file>images/Duck_Hunt_Logo.png</file>
+        <file>images/stage.png</file>
     </qresource>
 </RCC>
