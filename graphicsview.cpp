@@ -87,7 +87,10 @@ void GraphicsView::attachAmmo(Munition *munitionQuiFautAttacher)
 {
     this->ammo = munitionQuiFautAttacher;
 }
-
+void GraphicsView::attachScore(Score *scoreQuiFautAttacher)
+{
+    this->score = scoreQuiFautAttacher;
+}
 //==================BOUM BOUM LE CANARD==================
 
 void GraphicsView::mousePressEvent(QMouseEvent *event)
@@ -104,6 +107,7 @@ void GraphicsView::mousePressEvent(QMouseEvent *event)
                     {
                         ducks->at(i)->isDead = compare;
                         ducks->at(i)->cliqueDessus = compare;
+                        (score->cptScore)++;
                     }
                 }
             }

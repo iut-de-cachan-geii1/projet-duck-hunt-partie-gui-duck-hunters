@@ -83,6 +83,6 @@ protected:
     void timerEvent(QTimerEvent *event) override;
 
 private:
-    QLabel *scoreDisp:
+
 };
 #endif

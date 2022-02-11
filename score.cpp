@@ -1,6 +1,6 @@
-#include "munition.h"
+#include "score.h"
 
-Munition::Munition()
+SCore::Score()
     : positionScore(),
       cptSCore(0)
 {
@@ -24,7 +24,7 @@ QPainterPath Score::shape() const
 void Score::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     QLabel *label = new QLabel(this);
-
+    label->setText("Score = %d",cptScore);
 }
 
 void Score::timerEvent(QTimerEvent *event)
