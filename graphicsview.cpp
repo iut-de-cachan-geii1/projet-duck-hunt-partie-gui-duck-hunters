@@ -59,7 +59,7 @@
 
 GraphicsView::GraphicsView(QGraphicsScene *scene, QWidget *parent)
     : QGraphicsView(scene, parent),
-      DuckCount(1),
+      DuckCount(2),
       pos_random(),
       compare(true)
 {
@@ -68,7 +68,7 @@ GraphicsView::GraphicsView(QGraphicsScene *scene, QWidget *parent)
     startTimer(1000 / 500);
     setFixedSize(1280, 769);
     setMouseTracking(true);
-    //QCursor cursor(Qt::BlankCursor);
+    QCursor cursor(Qt::BlankCursor);
 }
 
 void GraphicsView::attachCrosshair(Crosshair *parametreCrosshair)
@@ -91,6 +91,7 @@ void GraphicsView::attachScore(Score *scoreQuiFautAttacher)
 {
     this->score = scoreQuiFautAttacher;
 }
+
 //==================BOUM BOUM LE CANARD==================
 
 void GraphicsView::mousePressEvent(QMouseEvent *event)
@@ -107,7 +108,7 @@ void GraphicsView::mousePressEvent(QMouseEvent *event)
                     {
                         ducks->at(i)->isDead = compare;
                         ducks->at(i)->cliqueDessus = compare;
-                        (score->cptScore)++;
+                        (score->scoreCpt)++;
                     }
                 }
             }

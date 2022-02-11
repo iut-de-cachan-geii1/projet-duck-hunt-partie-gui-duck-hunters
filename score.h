@@ -64,25 +64,20 @@
 #include <QGraphicsVideoItem>
 #include <QMediaPlayer>
 #include <QLabel>
+#include <QGraphicsTextItem>
 
 class Score : public QGraphicsObject
 {
-    Q_OBJECT
-
 public:
     Score();
     QRectF boundingRect() const override;
     QPainterPath shape() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
                QWidget *widget) override;
-
-    QPointF positionScore;
-    int cptScore;
-
-protected:
-    void timerEvent(QTimerEvent *event) override;
+    
+    int scoreCpt;
 
 private:
-
+    QLabel *label;
 };
 #endif

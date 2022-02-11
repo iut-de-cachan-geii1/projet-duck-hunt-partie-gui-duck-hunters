@@ -64,12 +64,14 @@
 
 int main(int argc, char **argv)
 {
-     QApplication app(argc, argv);
+    QApplication app(argc, argv);
 
     QGraphicsScene scene;
     GraphicsView view(&scene);
-
-    QList<Duck*> *listeDeCanard = new QList<Duck*>;
+    QList<Duck *> *listeDeCanard = new QList<Duck *>;
+    Crosshair *crosshair = new Crosshair;
+    Munition *ammo = new Munition;
+    Score *score = new Score;
 
     scene.setSceneRect(0, 0, 1280, 769);
     scene.setItemIndexMethod(QGraphicsScene::NoIndex);
@@ -88,13 +90,9 @@ int main(int argc, char **argv)
 
     view.attachDucks(listeDeCanard);
 
-    Crosshair *crosshair = new Crosshair;
-    Munition *ammo = new Munition;
-    Score *score = new Score;
-
     crosshair->setPos(640, 384);
-    ammo->setPos(80,650);
-    score->setPos(80,100);
+    ammo->setPos(80, 650);
+    score->setPos(250,670);
     scene.addItem(crosshair);
     scene.addItem(ammo);
     scene.addItem(score);
@@ -110,8 +108,12 @@ int main(int argc, char **argv)
 
     view.attachCrosshair(crosshair);
     view.attachAmmo(ammo);
+    view.attachScore(score);
 
     view.setWindowTitle(QT_TRANSLATE_NOOP(QGraphicsView, "Duck hunt"));
+    view.setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    view.setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    view.setCursor(Qt::BlankCursor);
 
     view.showNormal();
     return QApplication::exec();
