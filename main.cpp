@@ -91,7 +91,7 @@ int main(int argc, char **argv)
     Munition *ammo = new Munition;
 
     crosshair->setPos(640, 384);
-    ammo->setPos(100,620);
+    ammo->setPos(80,650);
     scene.addItem(crosshair);
     scene.addItem(ammo);
     // scene.addRect(0,0,1201,600);
@@ -105,6 +105,7 @@ int main(int argc, char **argv)
     view.setViewportUpdateMode(QGraphicsView::QGraphicsView::FullViewportUpdate);
 
     view.attachCrosshair(crosshair);
+    view.attachAmmo(ammo);
 
     view.setWindowTitle(QT_TRANSLATE_NOOP(QGraphicsView, "Duck hunt"));
 

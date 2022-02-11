@@ -48,8 +48,8 @@
 **
 ****************************************************************************/
 
-#ifndef MUNITION_H
-#define MUNITION_H
+#ifndef SCORE_H
+#define SCORE_H
 
 #include <QGraphicsObject>
 #include <QLabel>
@@ -63,23 +63,26 @@
 #include <QPixmap>
 #include <QGraphicsVideoItem>
 #include <QMediaPlayer>
+#include <QLabel>
 
-class Munition : public QGraphicsObject
+class Score : public QGraphicsObject
 {
     Q_OBJECT
 
 public:
-    Munition();
+    Score();
     QRectF boundingRect() const override;
     QPainterPath shape() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
                QWidget *widget) override;
 
-    QPointF positionMunition;
-    int cptMunition;
+    QPointF positionScore;
+    int cptScore;
 
 protected:
     void timerEvent(QTimerEvent *event) override;
 
+private:
+    QLabel *scoreDisp:
 };
 #endif

@@ -54,8 +54,6 @@
 #include <QTouchEvent>
 #include <QRandomGenerator>
 
-#include "duck.h"
-
 #define decalageLargeur 75 //75
 #define decalageHauteur 68 //68
 
@@ -110,6 +108,7 @@ void GraphicsView::mousePressEvent(QMouseEvent *event)
                 }
             }
         }
+        (ammo->cptMunition)--;
     }
 }
 
@@ -120,6 +119,7 @@ void GraphicsView::timerEvent(QTimerEvent *event)
     if (ducks->isEmpty())
     {
         DuckCount = QRandomGenerator::global()->bounded(1, 3);
+        ammo->cptMunition = 3;
 
         for (int i = 0; i < DuckCount; i++)
         {
