@@ -48,66 +48,36 @@
 **
 ****************************************************************************/
 
-#include "graphicsview.h"
-#include "duck.h"
-#include "crosshair.h"
-#include "munition.h"
+#ifndef MUNITION_H
+#define MUNITION_H
 
-#include <QGraphicsVideoItem>
+#include <QGraphicsObject>
+#include <QLabel>
+#include <QMovie>
+#include <QGraphicsScene>
+#include <QPainter>
 #include <QRandomGenerator>
-#include <QApplication>
-#include <cmath>
-#include <QPainterPath>
+#include <QStyleOption>
+#include <qmath.h>
+#include <QDialog>
+#include <QPixmap>
+#include <QGraphicsVideoItem>
 #include <QMediaPlayer>
-#include <QList>
 
-int main(int argc, char **argv)
+class Munition : public QGraphicsObject
 {
-     QApplication app(argc, argv);
+    Q_OBJECT
 
-    QGraphicsScene scene;
-    GraphicsView view(&scene);
+public:
+    Munition();
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
+               QWidget *widget) override;
 
-    QList<Duck*> *listeDeCanard = new QList<Duck*>;
+    QPointF positionMunition;
+    int cptMunition;
 
-    scene.setSceneRect(0, 0, 1280, 769);
-    scene.setItemIndexMethod(QGraphicsScene::NoIndex);
+protected:
+    void timerEvent(QTimerEvent *event) override;
 
-    static int pos_random;
-
-    for (int i = 0; i < view.DuckCount; i++)
-    {
-        listeDeCanard->push_back(new Duck);
-
-        scene.addItem(listeDeCanard->back());
-
-        pos_random = QRandomGenerator::global()->bounded(300, 900);
-        listeDeCanard->back()->setPos(pos_random, 570);
-    }
-
-    view.attachDucks(listeDeCanard);
-
-    Crosshair *crosshair = new Crosshair;
-    Munition *ammo = new Munition;
-
-    crosshair->setPos(640, 384);
-    ammo->setPos(100,620);
-    scene.addItem(crosshair);
-    scene.addItem(ammo);
-    // scene.addRect(0,0,1201,600);
-
-    view.setRenderHint(QPainter::Antialiasing);
-    //Creation des images de premier et dernier plan
-    view.setBackgroundBrush(QPixmap(":/images/background.png"));
-    view.setForegroundBrush(QPixmap(":/images/foreground.png"));
-
-    view.setCacheMode(QGraphicsView::CacheBackground);
-    view.setViewportUpdateMode(QGraphicsView::QGraphicsView::FullViewportUpdate);
-
-    view.attachCrosshair(crosshair);
-
-    view.setWindowTitle(QT_TRANSLATE_NOOP(QGraphicsView, "Duck hunt"));
-
-    view.showNormal();
-    return QApplication::exec();
-}
+};
+#endif

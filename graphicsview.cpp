@@ -61,7 +61,7 @@
 
 GraphicsView::GraphicsView(QGraphicsScene *scene, QWidget *parent)
     : QGraphicsView(scene, parent),
-      DuckCount(2),
+      DuckCount(1),
       pos_random(),
       compare(true)
 {
@@ -70,6 +70,7 @@ GraphicsView::GraphicsView(QGraphicsScene *scene, QWidget *parent)
     startTimer(1000 / 500);
     setFixedSize(1280, 769);
     setMouseTracking(true);
+    //QCursor cursor(Qt::BlankCursor);
 }
 
 void GraphicsView::attachCrosshair(Crosshair *parametreCrosshair)
@@ -83,6 +84,10 @@ void GraphicsView::attachDucks(QList<Duck *> *DucksQuiFautAttacher)
 void GraphicsView::mouseMoveEvent(QMouseEvent *event)
 {
     crosshair->coordinateMouse = event->pos();
+}
+void GraphicsView::attachAmmo(Munition *munitionQuiFautAttacher)
+{
+    this->ammo = munitionQuiFautAttacher;
 }
 
 //==================BOUM BOUM LE CANARD==================
@@ -112,7 +117,21 @@ void GraphicsView::mousePressEvent(QMouseEvent *event)
 
 void GraphicsView::timerEvent(QTimerEvent *event)
 {
-    if (!ducks->isEmpty())
+    if (ducks->isEmpty())
+    {
+        DuckCount = QRandomGenerator::global()->bounded(1, 3);
+
+        for (int i = 0; i < DuckCount; i++)
+        {
+            ducks->push_back(new Duck);
+
+            this->scene()->addItem(ducks->back());
+
+            pos_random = QRandomGenerator::global()->bounded(300, 900);
+            ducks->back()->setPos(pos_random, 570);
+        }
+    }
+    else
     {
         for (int i = 0; i < DuckCount; i++)
         {
@@ -123,15 +142,6 @@ void GraphicsView::timerEvent(QTimerEvent *event)
                 (this->DuckCount)--;
             }
         }
-    }
-    else if (ducks->isEmpty())
-    {
-        ducks->push_back(new Duck);
-
-        // this->&(scene.addItem(ducks->back()));
-
-        pos_random = QRandomGenerator::global()->bounded(300, 900);
-        ducks->back()->setPos(pos_random, 570);
     }
 }
 
