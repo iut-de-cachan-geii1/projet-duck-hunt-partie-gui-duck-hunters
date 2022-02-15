@@ -55,6 +55,7 @@
 #include <QRandomGenerator>
 #include "ecran_acceuil.h"
 #include "duck.h"
+#include "QPushButton"
 
 #define decalageLargeur 75 // 75
 #define decalageHauteur 68 // 68
@@ -67,10 +68,10 @@ GraphicsView::GraphicsView(QGraphicsScene *scene, QWidget *parent)
       has_pseudo(false),
       pseudo()
 {
-    viewport()->setAttribute(Qt::WA_AcceptTouchEvents);
+    viewport()->setAttribute(Qt::WA_AcceptTouchEvents); 
     setDragMode(ScrollHandDrag);
     startTimer(1000 / 500);
-    setFixedSize(1280, 769);
+    setFixedSize(1280,769);
     setMouseTracking(true);
     QCursor cursor(Qt::BlankCursor);
 }

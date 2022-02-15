@@ -19,5 +19,6 @@
         <file>images/3munitions.png</file>
         <file>images/Duck_Hunt_Logo.png</file>
         <file>images/stage.png</file>
+        <file>images/arrow.png</file>
     </qresource>
 </RCC>

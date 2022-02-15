@@ -85,7 +85,6 @@ private:
     int pos_random;
     bool compare;
     ecran_acceuil*ecran;
-    
-    QString pseudo;
 
+    QString pseudo;
 };

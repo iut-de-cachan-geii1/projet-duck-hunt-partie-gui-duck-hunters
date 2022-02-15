@@ -98,8 +98,6 @@ int main(int argc, char **argv)
     }
     view.attachDucks(listeDeCanard);
 
-  
-
     view.attachDucks(listeDeCanard);
 
     crosshair->setPos(640, 384);
