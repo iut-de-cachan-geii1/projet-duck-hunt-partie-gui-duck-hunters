@@ -56,6 +56,8 @@
 #include "ecran_acceuil.h"
 #include "duck.h"
 #include "QPushButton"
+#include "choix_level.h"
+#include "ui_choix_level.h"
 
 #define decalageLargeur 75 // 75
 #define decalageHauteur 68 // 68
@@ -66,7 +68,9 @@ GraphicsView::GraphicsView(QGraphicsScene *scene, QWidget *parent)
       pos_random(),
       compare(true),
       has_pseudo(false),
-      pseudo()
+      pseudo(),
+      maps(0),
+      levels(0)
 {
     viewport()->setAttribute(Qt::WA_AcceptTouchEvents); 
     setDragMode(ScrollHandDrag);
@@ -106,8 +110,60 @@ void GraphicsView::attach_ecran_acceuil(ecran_acceuil*ecran)
         {
             pseudo = username;
             has_pseudo = true;
-            this->showNormal();
+            this->level->showNormal();
             this->ecran->hide();
+        }
+    );
+}
+
+void GraphicsView::attach_choix_level(choix_level* level)
+{
+    this->level = level;
+
+    connect(level, &choix_level::map_to_send, this, 
+
+        [this](int map_choix)            //fonction lambda
+        {
+           maps = map_choix;
+            if(maps == 0)
+            {
+                this->setBackgroundBrush(QPixmap(":/images/background.png"));
+                this->setForegroundBrush(QPixmap(":/images/foreground.png"));
+            }
+            if (maps == 1)
+            {
+                this->setBackgroundBrush(QPixmap(":/images/background_momo.png"));
+                this->setForegroundBrush(QPixmap(":/images/foreground_momo.png"));
+            }
+            if (maps == 2)
+            {
+                this->setBackgroundBrush(QPixmap(":/images/background_nuit.png"));
+                this->setForegroundBrush(QPixmap(":/images/foreground_nuit.png"));
+            }
+            this->level->hide();
+            this->showNormal();
+        }
+    );
+
+     connect(level, &choix_level::level_to_send, this, 
+
+        [this](int level_choix)            //fonction lambda
+        {
+            level_choix = levels;
+            if(level_choix == 0)
+            {
+               
+            }
+            if (level_choix == 1)
+            {
+               
+            }
+            if (level_choix == 2)
+            {
+                
+            }
+            this->level->hide();
+            this->showNormal();
         }
     );
 }

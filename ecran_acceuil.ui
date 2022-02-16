@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Menu principal</string>
   </property>
   <property name="windowOpacity">
    <double>1.000000000000000</double>
@@ -33,12 +33,18 @@
    </property>
    <property name="font">
     <font>
+     <family>Terminal</family>
      <pointsize>14</pointsize>
      <bold>true</bold>
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">color: qlineargradient(spread:pad, x1:1, y1:0, x2:1, y2:0, stop:0 rgba(0, 0, 0, 255), stop:1 rgba(255, 255, 255, 255));</string>
+    <string notr="true">border-style: outset;
+     border-width: 3px;
+     border-color: grey;
+background-color: rgb(255, 255, 255);
+
+</string>
    </property>
    <property name="text">
     <string>Entrer</string>
@@ -635,6 +641,7 @@
    </property>
    <property name="font">
     <font>
+     <family>Terminal</family>
      <pointsize>14</pointsize>
      <bold>true</bold>
     </font>
@@ -646,8 +653,9 @@
     <enum>Qt::DefaultContextMenu</enum>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(223, 223, 223);
-border-color: rgb(220, 220, 220);</string>
+    <string notr="true">border-style: outset;
+     border-width: 3px;
+     border-color: grey;</string>
    </property>
    <property name="inputMask">
     <string/>
@@ -718,7 +726,7 @@ border-color: rgb(220, 220, 220);</string>
     <enum>QFrame::Sunken</enum>
    </property>
    <property name="pixmap">
-    <pixmap resource="mice.qrc">:/images/stage.png</pixmap>
+    <pixmap resource="mice.qrc">:/images/stage_grand.png</pixmap>
    </property>
    <property name="scaledContents">
     <bool>false</bool>

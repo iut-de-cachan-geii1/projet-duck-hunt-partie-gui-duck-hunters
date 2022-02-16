@@ -55,6 +55,7 @@
 #include "munition.h"
 #include "score.h"
 #include "ecran_acceuil.h"
+#include "choix_level.h"
 
 
 class GraphicsView : public QGraphicsView
@@ -72,6 +73,7 @@ public:
     bool viewportEvent(QEvent *event) override;
     void mousePressEvent(QMouseEvent *event) override;
     void attach_ecran_acceuil(ecran_acceuil*ecran);
+    void attach_choix_level(choix_level* level);
     int DuckCount;
     bool respawn = false;
     bool has_pseudo;
@@ -85,6 +87,8 @@ private:
     int pos_random;
     bool compare;
     ecran_acceuil*ecran;
-
+    choix_level* level;
+    int maps;
+    int levels;
     QString pseudo;
 };

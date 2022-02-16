@@ -22,10 +22,3 @@ ecran_acceuil::~ecran_acceuil()
 {   
     delete ui;
 }
-
-void press_button()
-{
-
-  
-
-}
