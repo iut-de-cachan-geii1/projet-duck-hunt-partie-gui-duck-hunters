@@ -1,12 +1,16 @@
 <RCC>
     <qresource prefix="/">
         <file>images/background.png</file>
+        <file>images/background_momo.png</file>
+        <file>images/background_nuit.png</file>
         <file>images/canard.png</file>
         <file>images/canard1.png</file>
         <file>images/canard2.png</file>
         <file>images/canard1_inverse.png</file>
         <file>images/canard2_inverse.png</file>
         <file>images/foreground.png</file>
+        <file>images/foreground_momo.png</file>
+        <file>images/foreground_nuit.png</file>
         <file>images/duck_animated.gif</file>
         <file>images/main_menu.gif</file>
         <file>images/crosshair.png</file>
@@ -19,5 +23,8 @@
         <file>images/3munitions.png</file>
         <file>images/Duck_Hunt_Logo.png</file>
         <file>images/stage.png</file>
+        <file>images/gayme_overrre.png</file>
+        <file>images/chien_canard1.png</file>
+        <file>images/chien_canard2.png</file>
     </qresource>
 </RCC>

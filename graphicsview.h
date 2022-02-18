@@ -55,6 +55,7 @@
 #include "munition.h"
 #include "score.h"
 #include "ecran_acceuil.h"
+#include "chien.h"
 
 
 class GraphicsView : public QGraphicsView
@@ -67,6 +68,7 @@ public:
     void attachDucks(QList<Duck*> * DucksQuiFautAttacher);
     void attachAmmo(Munition *munitionQuiFautAttacher);
     void attachScore(Score *scoreQuiFautAttacher);
+    void attachChien(Chien *chienQuiFautAttacher);
     void mouseMoveEvent(QMouseEvent *event) override;
     void timerEvent(QTimerEvent *event) override;
     bool viewportEvent(QEvent *event) override;
@@ -82,10 +84,10 @@ private:
     QList<Duck*> *ducks;
     Munition *ammo;
     Score *score;
+    Chien *chien;
     int pos_random;
     bool compare;
     ecran_acceuil*ecran;
     
     QString pseudo;
-
 };

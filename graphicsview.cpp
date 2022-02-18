@@ -95,20 +95,23 @@ void GraphicsView::attachScore(Score *scoreQuiFautAttacher)
 {
     this->score = scoreQuiFautAttacher;
 }
+void GraphicsView::attachChien(Chien *chienQuiFautAttacher)
+{
+    this->chien = chienQuiFautAttacher;
+}
 
-void GraphicsView::attach_ecran_acceuil(ecran_acceuil*ecran)
+void GraphicsView::attach_ecran_acceuil(ecran_acceuil *ecran)
 {
     this->ecran = ecran;
-    connect(ecran, &ecran_acceuil::pseudo_to_send, this, 
+    connect(ecran, &ecran_acceuil::pseudo_to_send, this,
 
-        [this](QString username)            //fonction lambda
-        {
-            pseudo = username;
-            has_pseudo = true;
-            this->showNormal();
-            this->ecran->hide();
-        }
-    );
+            [this](QString username) //fonction lambda
+            {
+                pseudo = username;
+                has_pseudo = true;
+                this->showNormal();
+                this->ecran->hide();
+            });
 }
 
 //==================BOUM BOUM LE CANARD==================
@@ -140,7 +143,7 @@ void GraphicsView::mousePressEvent(QMouseEvent *event)
 
 void GraphicsView::timerEvent(QTimerEvent *event)
 {
-    if (ducks->isEmpty())
+    if (ducks->isEmpty() && (chien->chien_fini == true))
     {
         DuckCount = QRandomGenerator::global()->bounded(1, 3);
         ammo->cptMunition = 3;
@@ -161,11 +164,24 @@ void GraphicsView::timerEvent(QTimerEvent *event)
         {
             if ((ducks->at(i)->vraimentMort) == compare)
             {
+                if (ducks->size() == 1)
+                {
+                    chien->positionChien = ducks->at(i)->positionDuck + QPointF(0, 0);
+                    chien->tout_les_canards_sont_mort = true;
+                }
                 delete ducks->at(i);
                 ducks->removeAt(i);
                 (this->DuckCount)--;
             }
         }
+    }
+    if ((ammo->cptMunition <= 0) && (ducks->size() >= 1) && (ducks->at(0)->isDead == false) && (ducks->at(0)->isDead2 == false) && (ducks->at(0)->vraimentMort == false))
+    {
+        this->setForegroundBrush(QPixmap(":/images/gayme_overrre.png"));
+    }
+    else
+    {
+        this->setForegroundBrush(QPixmap(":/images/foreground_momo.png"));
     }
 }
 
