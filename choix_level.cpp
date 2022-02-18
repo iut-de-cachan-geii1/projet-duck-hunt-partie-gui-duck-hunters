@@ -9,7 +9,7 @@ choix_level::choix_level(QWidget *parent) :
     numero_diff(0)
 {
     ui->setupUi(this);
-
+    setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
      connect(ui->enter_button, &QPushButton::clicked, this, 
     
         [this]()

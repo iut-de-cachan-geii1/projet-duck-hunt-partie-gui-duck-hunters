@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Game_over</class>
+ <widget class="QDialog" name="Game_over">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>590</width>
+    <height>330</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <widget class="QPushButton" name="retouraumenu">
+   <property name="geometry">
+    <rect>
+     <x>310</x>
+     <y>250</y>
+     <width>181</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Terminal</family>
+     <pointsize>14</pointsize>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">border-style: outset;
+     border-width: 6px;
+     border-color: grey;
+background-color: rgb(255, 255, 255);
+
+</string>
+   </property>
+   <property name="text">
+    <string>Retour au menu</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>600</width>
+     <height>337</height>
+    </rect>
+   </property>
+   <property name="autoFillBackground">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="pixmap">
+    <pixmap resource="mice.qrc">:/images/game_over.png</pixmap>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="rejouer">
+   <property name="geometry">
+    <rect>
+     <x>120</x>
+     <y>250</y>
+     <width>171</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Terminal</family>
+     <pointsize>14</pointsize>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">border-style: outset;
+     border-width: 6px;
+     border-color: grey;
+background-color: rgb(255, 255, 255);
+
+</string>
+   </property>
+   <property name="text">
+    <string>Rejouer</string>
+   </property>
+  </widget>
+  <zorder>label</zorder>
+  <zorder>rejouer</zorder>
+  <zorder>retouraumenu</zorder>
+ </widget>
+ <resources>
+  <include location="mice.qrc"/>
+ </resources>
+ <connections/>
+</ui>

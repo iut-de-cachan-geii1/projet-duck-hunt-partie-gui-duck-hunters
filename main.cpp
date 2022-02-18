@@ -55,6 +55,7 @@
 #include "score.h"
 #include "ecran_acceuil.h"
 #include "choix_level.h"
+#include "game_over.h"
 
 #include <QGraphicsVideoItem>
 #include <QRandomGenerator>
@@ -63,11 +64,7 @@
 #include <QPainterPath>
 #include <QMediaPlayer>
 #include <QList>
-
-
-
-
-
+#include <fstream>
 
 
 int main(int argc, char **argv)
@@ -115,9 +112,12 @@ int main(int argc, char **argv)
     ecran_acceuil pseudo_win;
     pseudo_win.show();
     choix_level choix_niveau;
+    Game_over loose;
+    view.setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
 
     view.attach_ecran_acceuil(&pseudo_win);
     view.attach_choix_level(&choix_niveau);
+    view.attach_perdre(&loose);
    
     // view.setBackgroundBrush(QPixmap(":/images/background.png"));
     // view.setForegroundBrush(QPixmap(":/images/foreground.png"));
