@@ -53,6 +53,7 @@
 
 Score::Score()
     : scoreCpt(0),
+      nombreCanardTue(0),
       label(new QLabel)
 {
 }
@@ -79,7 +80,7 @@ void Score::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWi
     font.setPixelSize(38);
     painter->setFont(font);
     //painter->drawText(QPointF(0, 0), QString("Score = ") + QString::number(scoreCpt));
-    painter->drawText(rectangle, 0, QString("分数 = ") + QString::number(scoreCpt), &boundingRect);
+    painter->drawText(rectangle, 0, QString("score = ") + QString::number(scoreCpt), &boundingRect);
 
     QPen pen = painter->pen();
     pen.setStyle(Qt::SolidLine);

@@ -48,85 +48,36 @@
 **
 ****************************************************************************/
 
-#include "graphicsview.h"
-#include "duck.h"
-#include "crosshair.h"
-#include "munition.h"
-#include "score.h"
-#include "ecran_acceuil.h"
-#include "round.h"
+#ifndef ROUND_H
+#define ROUND_H
 
-#include <QGraphicsVideoItem>
+#include <QGraphicsObject>
+#include <QLabel>
+#include <QMovie>
+#include <QGraphicsScene>
+#include <QPainter>
 #include <QRandomGenerator>
-#include <QApplication>
-#include <cmath>
-#include <QPainterPath>
+#include <QStyleOption>
+#include <qmath.h>
+#include <QDialog>
+#include <QPixmap>
+#include <QGraphicsVideoItem>
 #include <QMediaPlayer>
-#include <QList>
+#include <QLabel>
+#include <QGraphicsTextItem>
 
-int main(int argc, char **argv)
+class Round : public QGraphicsObject
 {
-    QApplication app(argc, argv);
+public:
+    Round();
+    QRectF boundingRect() const override;
+    QPainterPath shape() const override;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
+               QWidget *widget) override;
+    
+    int roundCpt;
 
-    QGraphicsScene scene;
-    GraphicsView view(&scene);
-    QList<Duck *> *listeDeCanard = new QList<Duck *>;
-    Crosshair *crosshair = new Crosshair;
-    Munition *ammo = new Munition;
-    Score *score = new Score;
-    Round *round = new Round;
-    //Chien *chien = new Chien;
-
-    scene.setSceneRect(0, 0, 1280, 769);
-    scene.setItemIndexMethod(QGraphicsScene::NoIndex);
-
-    static int pos_random;
-
-    for (int i = 0; i < view.DuckCount; i++)
-    {
-        listeDeCanard->push_back(new Duck);
-
-        scene.addItem(listeDeCanard->back());
-
-        pos_random = QRandomGenerator::global()->bounded(100, 1100);
-        listeDeCanard->back()->setPos(pos_random, 570);
-    }
-    view.attachDucks(listeDeCanard);
-
-    crosshair->setPos(640, 384);
-    ammo->setPos(80, 650);
-    score->setPos(250,670);
-    round->setPos(750,670);
-    scene.addItem(crosshair);
-    scene.addItem(ammo);
-    scene.addItem(score);
-    scene.addItem(round);
-    //scene.addItem(chien);
-    // scene.addRect(0,0,1201,600);
-
-    view.setRenderHint(QPainter::Antialiasing);
-    //Creation des images de premier et dernier plan
-    view.setBackgroundBrush(QPixmap(":/images/background.png"));
-    view.setForegroundBrush(QPixmap(":/images/foreground.png"));
-
-    view.setCacheMode(QGraphicsView::CacheBackground);
-    view.setViewportUpdateMode(QGraphicsView::QGraphicsView::FullViewportUpdate);
-
-    view.attachCrosshair(crosshair);
-    view.attachAmmo(ammo);
-    view.attachScore(score);
-    view.attachRound(round);
-    //view.attachChien(chien);
-
-    view.setWindowTitle(QT_TRANSLATE_NOOP(QGraphicsView, "Duck hunt"));
-    view.setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    view.setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    view.setCursor(Qt::BlankCursor);
-
-    ecran_acceuil pseudo_win;
-    pseudo_win.show();
-    view.attach_ecran_acceuil(&pseudo_win);
-   // view.setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
-
-    return QApplication::exec();
-}
+private:
+    QLabel *label;
+};
+#endif

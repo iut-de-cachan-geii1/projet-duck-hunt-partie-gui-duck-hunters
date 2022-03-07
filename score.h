@@ -76,6 +76,7 @@ public:
                QWidget *widget) override;
     
     int scoreCpt;
+    int nombreCanardTue;
 
 private:
     QLabel *label;
