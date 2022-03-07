@@ -133,6 +133,25 @@ void GraphicsView::attach_choix_level(choix_level *level)
             [this](int map_choix) // fonction lambda
             {
                 maps = map_choix;
+                score->scoreCpt = 0;
+
+            for (int i = 0; i < DuckCount; i++)
+                {  
+                    delete ducks -> at(i);
+                    ducks -> removeAt(i);
+                   
+                }
+
+            for (int i = 0; i < DuckCount; i++)
+                {  
+                    ducks->push_back(new Duck);
+
+                    this->scene()->addItem(ducks->back());
+
+                    pos_random = QRandomGenerator::global()->bounded(300, 900);
+                    ducks->back()->setPos(pos_random, 570);
+                } 
+
                 if (maps == 0)
                 {
                     this->setBackgroundBrush(QPixmap(":/images/background.png"));
@@ -159,12 +178,15 @@ void GraphicsView::attach_choix_level(choix_level *level)
                 level_choix = levels;
                 if (level_choix == 0)
                 {
+                  
                 }
                 if (level_choix == 1)
                 {
+                    
                 }
                 if (level_choix == 2)
                 {
+                   
                 }
                 this->level->hide();
                 this->showNormal();
@@ -179,17 +201,37 @@ void GraphicsView::attach_perdre(Game_over *looser)
 
             [this]() // fonction lambda
             {
-                // for(int i = 0;i<ducks->size();i++)
-                // {
-                //     delete (ducks->at(i));         
-                // }
-                // ducks->empty();
-
                 this->showNormal();
                 this->loose->hide();
                 ammo->cptMunition = 3;
-                
-                
+                score->scoreCpt = 0;
+
+                for (int i = 0; i < DuckCount; i++)
+                {  
+                    delete ducks -> at(i);
+                    ducks -> removeAt(i);
+                   
+                }
+
+            for (int i = 0; i < DuckCount; i++)
+                {  
+                    ducks->push_back(new Duck);
+
+                    this->scene()->addItem(ducks->back());
+
+                    pos_random = QRandomGenerator::global()->bounded(300, 900);
+                    ducks->back()->setPos(pos_random, 570);
+                } 
+
+            });
+    
+     connect(loose, &Game_over::return_menu, this,
+
+            [this]() // fonction lambda
+            {
+                this->loose->hide();  
+                this->level->showNormal();
+                ammo->cptMunition = 3;
             });
 }
 
@@ -254,9 +296,6 @@ void GraphicsView::timerEvent(QTimerEvent *event)
     {
         loose->show();
         this->hide();
-
-        
-
     }
 }
 

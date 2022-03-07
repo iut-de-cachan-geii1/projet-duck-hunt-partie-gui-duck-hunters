@@ -17,7 +17,8 @@ public:
 
 signals : 
     void perdu();
-
+    void return_menu();
+    
 private:
     Ui::Game_over *ui;
 };

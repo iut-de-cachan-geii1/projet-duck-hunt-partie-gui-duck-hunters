@@ -15,6 +15,14 @@ Game_over::Game_over(QWidget *parent) :
             emit Game_over::perdu();
         }    
     );
+
+    connect(ui->retouraumenu, &QPushButton::clicked, this, 
+    
+        [this]()
+        {
+            emit Game_over::return_menu();
+        }    
+    );
 }
 
 Game_over::~Game_over()

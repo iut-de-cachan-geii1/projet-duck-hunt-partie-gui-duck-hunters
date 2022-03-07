@@ -97,6 +97,7 @@ private:
     QString pseudo;
     Game_over* loose;
     bool vraiment_perdu;
+    
 
     // std::ofstream sauvegarde;
 };
