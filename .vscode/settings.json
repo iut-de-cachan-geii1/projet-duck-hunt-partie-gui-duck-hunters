@@ -21,6 +21,7 @@
         "list": "cpp",
         "vector": "cpp",
         "new": "cpp",
+        "qapplication": "cpp"
         "atomic": "cpp",
         "bit": "cpp",
         "*.tcc": "cpp",

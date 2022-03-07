@@ -48,31 +48,30 @@
 **
 ****************************************************************************/
 
-#include "score.h"
+#include "round.h"
 #include <QFont>
 
-Score::Score()
-    : scoreCpt(0),
-      nombreCanardTue(0),
+Round::Round()
+    : roundCpt(0),
       label(new QLabel)
 {
 }
 
-QRectF Score::boundingRect() const
+QRectF Round::boundingRect() const
 {
     qreal adjust = 0.5;
     return QRectF(-18 - adjust, -22 - adjust,
                   36 + adjust, 60 + adjust);
 }
 
-QPainterPath Score::shape() const
+QPainterPath Round::shape() const
 {
     QPainterPath path;
     path.addRect(0, 0, 75, 71);
     return path;
 }
 
-void Score::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+void Round::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     QFont font = painter->font();
     const QRect rectangle = QRect(0, 0, 400, 50);
@@ -80,7 +79,7 @@ void Score::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWi
     font.setPixelSize(38);
     painter->setFont(font);
     //painter->drawText(QPointF(0, 0), QString("Score = ") + QString::number(scoreCpt));
-    painter->drawText(rectangle, 0, QString("score = ") + QString::number(scoreCpt), &boundingRect);
+    painter->drawText(rectangle, 0, QString("round = ") + QString::number(roundCpt), &boundingRect);
 
     QPen pen = painter->pen();
     pen.setStyle(Qt::SolidLine);

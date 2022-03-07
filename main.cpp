@@ -54,6 +54,7 @@
 #include "munition.h"
 #include "score.h"
 #include "ecran_acceuil.h"
+#include "round.h"
 #include "choix_level.h"
 #include "game_over.h"
 
@@ -77,8 +78,8 @@ int main(int argc, char **argv)
     Crosshair *crosshair = new Crosshair;
     Munition *ammo = new Munition;
     Score *score = new Score;
-
-    
+    Round *round = new Round;
+    //Chien *chien = new Chien;
 
     scene.setSceneRect(0, 0, 1280, 769);
     scene.setItemIndexMethod(QGraphicsScene::NoIndex);
@@ -101,9 +102,12 @@ int main(int argc, char **argv)
     crosshair->setPos(640, 384);
     ammo->setPos(80, 650);
     score->setPos(250,670);
+    round->setPos(750,670);
     scene.addItem(crosshair);
     scene.addItem(ammo);
     scene.addItem(score);
+    scene.addItem(round);
+    //scene.addItem(chien);
     // scene.addRect(0,0,1201,600);
 
     view.setRenderHint(QPainter::Antialiasing);
@@ -128,6 +132,8 @@ int main(int argc, char **argv)
     view.attachCrosshair(crosshair);
     view.attachAmmo(ammo);
     view.attachScore(score);
+    view.attachRound(round);
+    //view.attachChien(chien);
 
     view.setWindowTitle(QT_TRANSLATE_NOOP(QGraphicsView, "Duck hunt"));
     view.setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);

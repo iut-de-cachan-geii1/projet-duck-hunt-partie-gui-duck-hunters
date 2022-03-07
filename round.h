@@ -48,42 +48,36 @@
 **
 ****************************************************************************/
 
-#include "score.h"
-#include <QFont>
+#ifndef ROUND_H
+#define ROUND_H
 
-Score::Score()
-    : scoreCpt(0),
-      nombreCanardTue(0),
-      label(new QLabel)
+#include <QGraphicsObject>
+#include <QLabel>
+#include <QMovie>
+#include <QGraphicsScene>
+#include <QPainter>
+#include <QRandomGenerator>
+#include <QStyleOption>
+#include <qmath.h>
+#include <QDialog>
+#include <QPixmap>
+#include <QGraphicsVideoItem>
+#include <QMediaPlayer>
+#include <QLabel>
+#include <QGraphicsTextItem>
+
+class Round : public QGraphicsObject
 {
-}
+public:
+    Round();
+    QRectF boundingRect() const override;
+    QPainterPath shape() const override;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
+               QWidget *widget) override;
+    
+    int roundCpt;
 
-QRectF Score::boundingRect() const
-{
-    qreal adjust = 0.5;
-    return QRectF(-18 - adjust, -22 - adjust,
-                  36 + adjust, 60 + adjust);
-}
-
-QPainterPath Score::shape() const
-{
-    QPainterPath path;
-    path.addRect(0, 0, 75, 71);
-    return path;
-}
-
-void Score::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
-{
-    QFont font = painter->font();
-    const QRect rectangle = QRect(0, 0, 400, 50);
-    QRect boundingRect;
-    font.setPixelSize(38);
-    painter->setFont(font);
-    //painter->drawText(QPointF(0, 0), QString("Score = ") + QString::number(scoreCpt));
-    painter->drawText(rectangle, 0, QString("score = ") + QString::number(scoreCpt), &boundingRect);
-
-    QPen pen = painter->pen();
-    pen.setStyle(Qt::SolidLine);
-    painter->setPen(pen);
-    painter->drawRect(boundingRect.adjusted(0, 0, -pen.width(), -pen.width()));
-}
+private:
+    QLabel *label;
+};
+#endif

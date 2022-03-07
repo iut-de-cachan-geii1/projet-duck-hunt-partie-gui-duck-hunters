@@ -109,6 +109,14 @@ void GraphicsView::attachScore(Score *scoreQuiFautAttacher)
 {
     this->score = scoreQuiFautAttacher;
 }
+// void GraphicsView::attachChien(Chien *chienQuiFautAttacher)
+// {
+//     this->chien = chienQuiFautAttacher;
+// }
+void GraphicsView::attachRound(Round *roundQuiFautAttacher)
+{
+    this->round = roundQuiFautAttacher;
+}
 
 void GraphicsView::attach_ecran_acceuil(ecran_acceuil *ecran)
 {
@@ -251,7 +259,9 @@ void GraphicsView::mousePressEvent(QMouseEvent *event)
                     {
                         ducks->at(i)->isDead = compare;
                         ducks->at(i)->cliqueDessus = compare;
-                        (score->scoreCpt)++;
+                        (score->nombreCanardTue)++;
+                        score->scoreCpt = score->nombreCanardTue * 1;
+                        round->roundCpt = score->nombreCanardTue / 10;
                     }
                 }
             }
@@ -264,7 +274,7 @@ void GraphicsView::mousePressEvent(QMouseEvent *event)
 
 void GraphicsView::timerEvent(QTimerEvent *event)
 {
-    if (ducks->isEmpty())
+    if (ducks->isEmpty() /*&& (chien->chien_fini == true)*/)
     {
         DuckCount = QRandomGenerator::global()->bounded(1, 3);
         ammo->cptMunition = 3;
@@ -285,6 +295,11 @@ void GraphicsView::timerEvent(QTimerEvent *event)
         {
             if (ducks->at(i)->vraimentMort)
             {
+                if (ducks->size() == 1)
+                {
+                    //chien->positionChien = ducks->at(i)->positionDuck + QPointF(0, 0);
+                    //chien->tout_les_canards_sont_mort = true;
+                }
                 delete ducks->at(i);
                 ducks->removeAt(i);
                 (this->DuckCount)--;
@@ -301,38 +316,7 @@ void GraphicsView::timerEvent(QTimerEvent *event)
 
 bool GraphicsView::viewportEvent(QEvent *event)
 {
-    /*
-    switch (event->type()) {
-    case QEvent::TouchBegin:
-    case QEvent::TouchUpdate:
-    case QEvent::TouchEnd:
-    {
-        QTouchEvent *touchEvent = static_cast<QTouchEvent *>(event);
-        QList<QTouchEvent::TouchPoint> touchPoints = touchEvent->touchPoints();
-        if (touchPoints.count() == 2)
-        {
-            // determine scale factor
-            const QTouchEvent::TouchPoint &touchPoint0 = touchPoints.first();
-            const QTouchEvent::TouchPoint &touchPoint1 = touchPoints.last();
-            qreal currentScaleFactor =
-                    QLineF(touchPoint0.pos(), touchPoint1.pos()).length()
-                    / QLineF(touchPoint0.startPos(), touchPoint1.startPos()).length();
-           if ( (touchEvent->touchPointStates() & Qt::TouchPointReleased) != 0u)
-            {
-                // if one of the fingers is released, remember the current scale
-                // factor so that adding another finger later will continue zooming
-                // by adding new scale factor to the existing remembered value.
-                totalScaleFactor *= currentScaleFactor;
-                currentScaleFactor = 1;
-            }
-            setTransform(QTransform::fromScale(totalScaleFactor * currentScaleFactor,
-                                               totalScaleFactor * currentScaleFactor));
-        }
-        return true;
-    }
-    default:
-        break;
-    }*/
+    
     return QGraphicsView::viewportEvent(event);
 }
 

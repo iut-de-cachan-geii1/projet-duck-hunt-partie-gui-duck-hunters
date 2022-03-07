@@ -55,6 +55,8 @@
 #include "munition.h"
 #include "score.h"
 #include "ecran_acceuil.h"
+#include "chien.h"
+#include "round.h"
 #include "choix_level.h"
 #include "game_over.h"
 #include <fstream>
@@ -66,10 +68,19 @@ class GraphicsView : public QGraphicsView
 
 public:
     GraphicsView(QGraphicsScene *scene = nullptr, QWidget *parent = nullptr);
+
+//=============Fonction attache================================
+
     void attachCrosshair(Crosshair *parametreCrosshair);
     void attachDucks(QList<Duck*> * DucksQuiFautAttacher);
     void attachAmmo(Munition *munitionQuiFautAttacher);
     void attachScore(Score *scoreQuiFautAttacher);
+    void attachChien(Chien *chienQuiFautAttacher);
+    //void attachChien(Chien *chienQuiFautAttacher);
+    void attachRound(Round *roundQuiFautAttacher);
+
+//=============Fonction attache fin===========================
+
     void mouseMoveEvent(QMouseEvent *event) override;
     void timerEvent(QTimerEvent *event) override;
     bool viewportEvent(QEvent *event) override;
@@ -88,6 +99,8 @@ private:
     QList<Duck*> *ducks;
     Munition *ammo;
     Score *score;
+    Chien *chien;
+    Round *round;
     int pos_random;
     bool compare;
     ecran_acceuil*ecran;
