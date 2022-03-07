@@ -84,6 +84,7 @@ public:
     bool vraimentMort;
     bool cliqueDessus;
 
+
 protected:
     void timerEvent(QTimerEvent *event) override;
 
@@ -101,6 +102,7 @@ private:
     int directionY;
     int hauteur_rng;
     bool compare;
+    
     
 };
 #endif

@@ -14,10 +14,7 @@ class ecran_acceuil : public QDialog
 public:
     explicit ecran_acceuil(QWidget *parent = nullptr);
     ~ecran_acceuil();
-
-protected :
-    void press_button();
-
+    
 signals : 
     void pseudo_to_send(QString pseudo);
 

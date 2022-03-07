@@ -55,6 +55,8 @@
 #include "score.h"
 #include "ecran_acceuil.h"
 #include "round.h"
+#include "choix_level.h"
+#include "game_over.h"
 
 #include <QGraphicsVideoItem>
 #include <QRandomGenerator>
@@ -63,6 +65,8 @@
 #include <QPainterPath>
 #include <QMediaPlayer>
 #include <QList>
+#include <fstream>
+
 
 int main(int argc, char **argv)
 {
@@ -93,6 +97,8 @@ int main(int argc, char **argv)
     }
     view.attachDucks(listeDeCanard);
 
+    view.attachDucks(listeDeCanard);
+
     crosshair->setPos(640, 384);
     ammo->setPos(80, 650);
     score->setPos(250,670);
@@ -106,8 +112,19 @@ int main(int argc, char **argv)
 
     view.setRenderHint(QPainter::Antialiasing);
     //Creation des images de premier et dernier plan
-    view.setBackgroundBrush(QPixmap(":/images/background.png"));
-    view.setForegroundBrush(QPixmap(":/images/foreground.png"));
+
+    ecran_acceuil pseudo_win;
+    pseudo_win.show();
+    choix_level choix_niveau;
+    Game_over loose;
+    view.setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
+
+    view.attach_ecran_acceuil(&pseudo_win);
+    view.attach_choix_level(&choix_niveau);
+    view.attach_perdre(&loose);
+   
+    // view.setBackgroundBrush(QPixmap(":/images/background.png"));
+    // view.setForegroundBrush(QPixmap(":/images/foreground.png"));
 
     view.setCacheMode(QGraphicsView::CacheBackground);
     view.setViewportUpdateMode(QGraphicsView::QGraphicsView::FullViewportUpdate);
@@ -123,10 +140,7 @@ int main(int argc, char **argv)
     view.setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     view.setCursor(Qt::BlankCursor);
 
-    ecran_acceuil pseudo_win;
-    pseudo_win.show();
-    view.attach_ecran_acceuil(&pseudo_win);
-   // view.setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
+   
 
     return QApplication::exec();
 }

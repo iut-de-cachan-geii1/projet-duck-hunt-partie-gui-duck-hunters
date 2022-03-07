@@ -90,6 +90,7 @@ Duck::Duck()
     directionY(1),                                       //si 1 va en haut, si 0 va en bas
     hauteur_rng(QRandomGenerator::global()->bounded(2, 11)),
     compare(true)
+  
 {
     startTimer(1000 / 33);
 }
@@ -193,7 +194,7 @@ void Duck::timerEvent(QTimerEvent *event)
         }
         else
         {
-            setPos(pos_actuelle + QPointF(-vitesseX, -hauteur_rng));
+            setPos(pos_actuelle + QPointF(-vitesseX , -hauteur_rng));
         }
     }
     if ((directionX == 0) && (directionY == 1) && (isDead == !compare)) //Va en haut a droite
@@ -210,7 +211,7 @@ void Duck::timerEvent(QTimerEvent *event)
         }
         else
         {
-            setPos(pos_actuelle + QPointF(vitesseX, -hauteur_rng));
+            setPos(pos_actuelle + QPointF(vitesseX , -hauteur_rng));
         }
     }
 
@@ -227,7 +228,7 @@ void Duck::timerEvent(QTimerEvent *event)
         }
         else
         {
-            setPos(pos_actuelle + QPointF(-vitesseX, hauteur_rng));
+            setPos(pos_actuelle + QPointF(-vitesseX , hauteur_rng));
         }
     }
     if ((directionX == 0) && (directionY == 0) && (isDead == !compare)) //va en bas a droite

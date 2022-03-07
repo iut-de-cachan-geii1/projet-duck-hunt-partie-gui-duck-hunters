@@ -55,6 +55,13 @@
 #include <QRandomGenerator>
 #include "ecran_acceuil.h"
 #include "duck.h"
+#include "QPushButton"
+#include "choix_level.h"
+#include "ui_choix_level.h"
+#include "game_over.h"
+
+#include <string>
+#include <QString>
 
 #define decalageLargeur 75 // 75
 #define decalageHauteur 68 // 68
@@ -65,7 +72,12 @@ GraphicsView::GraphicsView(QGraphicsScene *scene, QWidget *parent)
       pos_random(),
       compare(true),
       has_pseudo(false),
-      pseudo()
+      pseudo(),
+      maps(0),
+      levels(0),
+      vraiment_perdu(false)
+    //   sauvegarde("sauvegarde.json")
+      
 {
     viewport()->setAttribute(Qt::WA_AcceptTouchEvents);
     setDragMode(ScrollHandDrag);
@@ -73,6 +85,8 @@ GraphicsView::GraphicsView(QGraphicsScene *scene, QWidget *parent)
     setFixedSize(1280, 769);
     setMouseTracking(true);
     QCursor cursor(Qt::BlankCursor);
+    // sauvegarde<<"pseudo : "<<"Hello World !"<<"\n";
+    // sauvegarde.close();
 }
 
 void GraphicsView::attachCrosshair(Crosshair *parametreCrosshair)
@@ -109,12 +123,123 @@ void GraphicsView::attach_ecran_acceuil(ecran_acceuil *ecran)
     this->ecran = ecran;
     connect(ecran, &ecran_acceuil::pseudo_to_send, this,
 
-            [this](QString username) //fonction lambda
+            [this](QString username) // fonction lambda
             {
                 pseudo = username;
                 has_pseudo = true;
-                this->showNormal();
+                this->level->showNormal();
                 this->ecran->hide();
+            });
+}
+
+void GraphicsView::attach_choix_level(choix_level *level)
+{
+    this->level = level;
+
+    connect(level, &choix_level::map_to_send, this,
+
+            [this](int map_choix) // fonction lambda
+            {
+                maps = map_choix;
+                score->scoreCpt = 0;
+
+            for (int i = 0; i < DuckCount; i++)
+                {  
+                    delete ducks -> at(i);
+                    ducks -> removeAt(i);
+                   
+                }
+
+            for (int i = 0; i < DuckCount; i++)
+                {  
+                    ducks->push_back(new Duck);
+
+                    this->scene()->addItem(ducks->back());
+
+                    pos_random = QRandomGenerator::global()->bounded(300, 900);
+                    ducks->back()->setPos(pos_random, 570);
+                } 
+
+                if (maps == 0)
+                {
+                    this->setBackgroundBrush(QPixmap(":/images/background.png"));
+                    this->setForegroundBrush(QPixmap(":/images/foreground.png"));
+                }
+                if (maps == 1)
+                {
+                    this->setBackgroundBrush(QPixmap(":/images/background_momo.png"));
+                    this->setForegroundBrush(QPixmap(":/images/foreground_momo.png"));
+                }
+                if (maps == 2)
+                {
+                    this->setBackgroundBrush(QPixmap(":/images/background_nuit.png"));
+                    this->setForegroundBrush(QPixmap(":/images/foreground_nuit.png"));
+                }
+                this->level->hide();
+                this->showNormal();
+            });
+
+    connect(level, &choix_level::level_to_send, this,
+
+            [this](int level_choix) // fonction lambda
+            {
+                level_choix = levels;
+                if (level_choix == 0)
+                {
+                  
+                }
+                if (level_choix == 1)
+                {
+                    
+                }
+                if (level_choix == 2)
+                {
+                   
+                }
+                this->level->hide();
+                this->showNormal();
+            });
+}
+
+void GraphicsView::attach_perdre(Game_over *looser)
+{
+    loose = looser;
+
+     connect(loose, &Game_over::perdu, this,
+
+            [this]() // fonction lambda
+            {
+                this->showNormal();
+                this->loose->hide();
+                ammo->cptMunition = 3;
+                score->scoreCpt = 0;
+
+                for (int i = 0; i < DuckCount; i++)
+                {  
+                    delete ducks -> at(i);
+                    ducks -> removeAt(i);
+                   
+                }
+
+            for (int i = 0; i < DuckCount; i++)
+                {  
+                    ducks->push_back(new Duck);
+
+                    this->scene()->addItem(ducks->back());
+
+                    pos_random = QRandomGenerator::global()->bounded(300, 900);
+                    ducks->back()->setPos(pos_random, 570);
+                } 
+
+            });
+    
+     connect(loose, &Game_over::return_menu, this,
+
+            [this]() // fonction lambda
+            {
+                this->loose->hide();  
+                this->level->showNormal();
+                ammo->cptMunition = 3;
             });
 }
 
@@ -168,7 +293,7 @@ void GraphicsView::timerEvent(QTimerEvent *event)
     {
         for (int i = 0; i < DuckCount; i++)
         {
-            if ((ducks->at(i)->vraimentMort) == compare)
+            if (ducks->at(i)->vraimentMort)
             {
                 if (ducks->size() == 1)
                 {
@@ -181,13 +306,11 @@ void GraphicsView::timerEvent(QTimerEvent *event)
             }
         }
     }
-    if ((ammo->cptMunition <= 0) && (ducks->size() >= 1) && (ducks->at(0)->isDead == !compare) && (ducks->at(0)->isDead2 == !compare) && (ducks->at(0)->vraimentMort == !compare))
+
+    if ((ammo->cptMunition <= 0) && (ducks->size() >= 1) && (ducks->at(0)->isDead == false) && (ducks->at(0)->isDead2 == false) && (ducks->at(0)->vraimentMort == false))
     {
-        this->setForegroundBrush(QPixmap(":/images/gayme_overrre.png"));
-    }
-    else
-    {
-        this->setForegroundBrush(QPixmap(":/images/foreground.png"));
+        loose->show();
+        this->hide();
     }
 }
 

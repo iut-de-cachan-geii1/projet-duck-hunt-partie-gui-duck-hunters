@@ -8,7 +8,7 @@ ecran_acceuil::ecran_acceuil(QWidget *parent) :
     ui(new Ui::ecran_acceuil)
 {
     ui->setupUi(this);
-
+    setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
     connect(ui->enter_button, &QPushButton::clicked, this, 
     
         [this]()
@@ -21,11 +21,4 @@ ecran_acceuil::ecran_acceuil(QWidget *parent) :
 ecran_acceuil::~ecran_acceuil()
 {   
     delete ui;
-}
-
-void press_button()
-{
-
-  
-
 }

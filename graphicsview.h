@@ -57,6 +57,9 @@
 #include "ecran_acceuil.h"
 #include "chien.h"
 #include "round.h"
+#include "choix_level.h"
+#include "game_over.h"
+#include <fstream>
 
 
 class GraphicsView : public QGraphicsView
@@ -83,9 +86,12 @@ public:
     bool viewportEvent(QEvent *event) override;
     void mousePressEvent(QMouseEvent *event) override;
     void attach_ecran_acceuil(ecran_acceuil*ecran);
+    void attach_choix_level(choix_level* level);
+    void attach_perdre(Game_over* looser);
     int DuckCount;
     bool respawn = false;
     bool has_pseudo;
+
     
 private:
     qreal totalScaleFactor = 1;
@@ -98,6 +104,13 @@ private:
     int pos_random;
     bool compare;
     ecran_acceuil*ecran;
-    
+    choix_level* level;
+    int maps;
+    int levels;
     QString pseudo;
+    Game_over* loose;
+    bool vraiment_perdu;
+    
+
+    // std::ofstream sauvegarde;
 };
