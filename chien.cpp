@@ -113,7 +113,7 @@ void Chien::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWi
 
 void Chien::timerEvent(QTimerEvent *event)
 {
-    if (tout_les_canards_sont_mort == true)
+    if (tout_les_canards_sont_mort)
     {
         if (positionChien.ry() > 0)
         {
