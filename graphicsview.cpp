@@ -181,7 +181,7 @@ void GraphicsView::timerEvent(QTimerEvent *event)
             }
         }
     }
-    if ((ammo->cptMunition <= 0) && (ducks->size() >= 1) && (ducks->at(0)->isDead == false) && (ducks->at(0)->isDead2 == false) && (ducks->at(0)->vraimentMort == false))
+    if ((ammo->cptMunition <= 0) && (ducks->size() >= 1) && (ducks->at(0)->isDead == !compare) && (ducks->at(0)->isDead2 == !compare) && (ducks->at(0)->vraimentMort == !compare))
     {
         this->setForegroundBrush(QPixmap(":/images/gayme_overrre.png"));
     }
