@@ -76,8 +76,8 @@ GraphicsView::GraphicsView(QGraphicsScene *scene, QWidget *parent)
       maps(0),
       levels(0),
       vraiment_perdu(false)
-    //   sauvegarde("sauvegarde.json")
-      
+//   sauvegarde("sauvegarde.json")
+
 {
     viewport()->setAttribute(Qt::WA_AcceptTouchEvents);
     setDragMode(ScrollHandDrag);
@@ -142,23 +142,25 @@ void GraphicsView::attach_choix_level(choix_level *level)
             {
                 maps = map_choix;
                 score->scoreCpt = 0;
+                score->scoreCpt = 0;
+                score->nombreCanardTue = 0;
+                round->roundCpt = 0;
 
-            for (int i = 0; i < DuckCount; i++)
-                {  
-                    delete ducks -> at(i);
-                    ducks -> removeAt(i);
-                   
+                for (int i = 0; i < DuckCount; i++)
+                {
+                    delete ducks->at(i);
+                    ducks->removeAt(i);
                 }
 
-            for (int i = 0; i < DuckCount; i++)
-                {  
+                for (int i = 0; i < DuckCount; i++)
+                {
                     ducks->push_back(new Duck);
 
                     this->scene()->addItem(ducks->back());
 
                     pos_random = QRandomGenerator::global()->bounded(300, 900);
                     ducks->back()->setPos(pos_random, 570);
-                } 
+                }
 
                 if (maps == 0)
                 {
@@ -186,15 +188,12 @@ void GraphicsView::attach_choix_level(choix_level *level)
                 level_choix = levels;
                 if (level_choix == 0)
                 {
-                  
                 }
                 if (level_choix == 1)
                 {
-                    
                 }
                 if (level_choix == 2)
                 {
-                   
                 }
                 this->level->hide();
                 this->showNormal();
@@ -205,7 +204,7 @@ void GraphicsView::attach_perdre(Game_over *looser)
 {
     loose = looser;
 
-     connect(loose, &Game_over::perdu, this,
+    connect(loose, &Game_over::perdu, this,
 
             [this]() // fonction lambda
             {
@@ -213,31 +212,40 @@ void GraphicsView::attach_perdre(Game_over *looser)
                 this->loose->hide();
                 ammo->cptMunition = 3;
                 score->scoreCpt = 0;
+                score->nombreCanardTue = 0;
+                round->roundCpt = 0;
 
-                for (int i = 0; i < DuckCount; i++)
-                {  
-                    delete ducks -> at(i);
-                    ducks -> removeAt(i);
-                   
+                if (ducks->size() == 2)
+                {
+                    delete ducks->at(1);
+                    ducks->removeAt(1);
+                    delete ducks->at(0);
+                    ducks->removeAt(0);
+                }
+                else if (ducks->size() == 1)
+                {
+                    delete ducks->at(0);
+                    ducks->removeAt(0);
                 }
 
-            for (int i = 0; i < DuckCount; i++)
-                {  
+                DuckCount = QRandomGenerator::global()->bounded(1, 3);
+
+                for (int i = 0; i < DuckCount; i++)
+                {
                     ducks->push_back(new Duck);
 
                     this->scene()->addItem(ducks->back());
 
                     pos_random = QRandomGenerator::global()->bounded(300, 900);
                     ducks->back()->setPos(pos_random, 570);
-                } 
-
+                }
             });
-    
-     connect(loose, &Game_over::return_menu, this,
+
+    connect(loose, &Game_over::return_menu, this,
 
             [this]() // fonction lambda
             {
-                this->loose->hide();  
+                this->loose->hide();
                 this->level->showNormal();
                 ammo->cptMunition = 3;
             });
@@ -316,6 +324,6 @@ void GraphicsView::timerEvent(QTimerEvent *event)
 
 bool GraphicsView::viewportEvent(QEvent *event)
 {
-    
+
     return QGraphicsView::viewportEvent(event);
 }

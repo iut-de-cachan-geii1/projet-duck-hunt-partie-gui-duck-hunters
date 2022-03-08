@@ -77,6 +77,7 @@ void Round::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWi
     const QRect rectangle = QRect(0, 0, 400, 50);
     QRect boundingRect;
     font.setPixelSize(38);
+    font.setStyleHint(QFont::Helvetica);
     painter->setFont(font);
     //painter->drawText(QPointF(0, 0), QString("Score = ") + QString::number(scoreCpt));
     painter->drawText(rectangle, 0, QString("round = ") + QString::number(roundCpt), &boundingRect);

@@ -84,7 +84,6 @@ public:
     bool vraimentMort;
     bool cliqueDessus;
 
-
 protected:
     void timerEvent(QTimerEvent *event) override;
 
