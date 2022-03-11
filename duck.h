@@ -83,6 +83,8 @@ public:
     bool isDead2 = false;
     bool vraimentMort;
     bool cliqueDessus;
+    float difficulte_coin;
+    float difficulte_round;
 
 protected:
     void timerEvent(QTimerEvent *event) override;
@@ -103,7 +105,8 @@ private:
     bool compare;
     int difficulte;
     
-    
+signals:
+void canardVraimentMort(Duck* canardEnvoye);
     
 };
 #endif

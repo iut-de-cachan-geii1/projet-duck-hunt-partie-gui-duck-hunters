@@ -14,8 +14,9 @@ choix_level::choix_level(QWidget *parent) :
     
         [this]()
         {
-            emit choix_level::map_to_send(numero_map);
             emit choix_level::level_to_send(numero_diff);
+            emit choix_level::map_to_send(numero_map);
+            
         }    
     );
     connect(ui->right_map, &QPushButton::clicked, this, 
@@ -97,7 +98,7 @@ choix_level::choix_level(QWidget *parent) :
                 numero_diff = 2;
                 ui->difficulte->setPixmap(QPixmap(":/images/mode_difficile.png"));
             }
-        // emit choix_level::level_to_send(numero_diff);
+         //emit choix_level::level_to_send(numero_diff);
         }    
     );
 

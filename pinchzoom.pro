@@ -1,6 +1,7 @@
 QT += widgets multimedia multimediawidgets serialport
 
 HEADERS += \
+        chien.h \
         choix_level.h \
         crosshair.h \
         duck.h \
@@ -13,6 +14,7 @@ HEADERS += \
         round.h \
         score.h
 SOURCES += \
+    chien.cpp \
     choix_level.cpp \
     crosshair.cpp \
     duck.cpp \
