@@ -60,7 +60,12 @@
 #include "choix_level.h"
 #include "game_over.h"
 #include <fstream>
+#include <string>
+#include <iostream>
 
+using std::cout; using std::ofstream;
+using std::endl; using std::string;
+using std::fstream;
 
 class GraphicsView : public QGraphicsView
 {
@@ -110,7 +115,7 @@ private:
     QString pseudo;
     Game_over* loose;
     bool vraiment_perdu;
-    int difficultee;
+    float difficulte;
     
 
     // std::ofstream sauvegarde;

@@ -67,7 +67,7 @@
 #include <QList>
 #include <fstream>
 #include <QSoundEffect>
-
+#include <QMediaPlayer>
 
 int main(int argc, char **argv)
 {
@@ -95,6 +95,7 @@ int main(int argc, char **argv)
 
         pos_random = QRandomGenerator::global()->bounded(100, 1100);
         listeDeCanard->back()->setPos(pos_random, 570);
+        listeDeCanard->at(i)->difficulte_coin;
     }
     view.attachDucks(listeDeCanard);
 
@@ -102,8 +103,8 @@ int main(int argc, char **argv)
 
     crosshair->setPos(640, 384);
     ammo->setPos(80, 650);
-    score->setPos(250,670);
-    round->setPos(750,670);
+    score->setPos(250, 670);
+    round->setPos(750, 670);
     scene.addItem(crosshair);
     scene.addItem(ammo);
     scene.addItem(score);
@@ -112,7 +113,6 @@ int main(int argc, char **argv)
     // scene.addRect(0,0,1201,600);
 
     view.setRenderHint(QPainter::Antialiasing);
-    //Creation des images de premier et dernier plan
 
     ecran_acceuil pseudo_win;
     pseudo_win.show();
@@ -123,7 +123,7 @@ int main(int argc, char **argv)
     view.attach_ecran_acceuil(&pseudo_win);
     view.attach_choix_level(&choix_niveau);
     view.attach_perdre(&loose);
-   
+
     // view.setBackgroundBrush(QPixmap(":/images/background.png"));
     // view.setForegroundBrush(QPixmap(":/images/foreground.png"));
 
@@ -140,11 +140,6 @@ int main(int argc, char **argv)
     view.setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     view.setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     view.setCursor(Qt::BlankCursor);
-
-    // QSoundEffect effect;
-    // effect.setSource(QUrl::fromUserInput("qrc:/images/oui_tir.wav"));
-    // effect.setVolume(10.0);
-    // effect.play();
-
+    
     return QApplication::exec();
 }

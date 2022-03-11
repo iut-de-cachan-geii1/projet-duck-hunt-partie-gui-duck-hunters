@@ -60,11 +60,14 @@
 #include "ui_choix_level.h"
 #include "game_over.h"
 
-#include <string>
 #include <QString>
+#include <QSoundEffect>
+#include <fstream>
+#include <string>
+#include <iostream>
 #include <QTimer>
 #include <QtMultimedia/QMediaPlayer>
-#include <QSoundEffect>
+
 
 #define decalageLargeur 75 // 75
 #define decalageHauteur 68 // 68
@@ -78,8 +81,8 @@ GraphicsView::GraphicsView(QGraphicsScene *scene, QWidget *parent)
       pseudo(),
       maps(0),
       levels(0),
-      vraiment_perdu(false)
-
+      vraiment_perdu(false),
+      difficulte(1)
 //   sauvegarde("sauvegarde.json")
 
 {
@@ -129,8 +132,6 @@ void GraphicsView::attach_ecran_acceuil(ecran_acceuil *ecran)
 
             [this](QString username) // fonction lambda
             {
-                pseudo = username;
-                has_pseudo = true;
                 this->level->showNormal();
                 this->ecran->hide();
 
@@ -151,10 +152,17 @@ void GraphicsView::attach_choix_level(choix_level *level)
                 score->nombreCanardTue = 0;
                 round->roundCpt = 0;
 
-                for (int i = 0; i < DuckCount; i++)
+                if (ducks->size() == 2)
                 {
-                    delete ducks->at(i);
-                    ducks->removeAt(i);
+                    delete ducks->at(1);
+                    ducks->removeAt(1);
+                    delete ducks->at(0);
+                    ducks->removeAt(0);
+                }
+                else if (ducks->size() == 1)
+                {
+                    delete ducks->at(0);
+                    ducks->removeAt(0);
                 }
 
                 for (int i = 0; i < DuckCount; i++)
@@ -165,6 +173,10 @@ void GraphicsView::attach_choix_level(choix_level *level)
 
                     pos_random = QRandomGenerator::global()->bounded(300, 900);
                     ducks->back()->setPos(pos_random, 570);
+
+                    ducks->at(i)->difficulte_coin = difficulte;
+
+                    ducks->at(i)->difficulte_round = ducks->at(i)->difficulte_round + round->roundCpt / 10;
                 }
 
                 if (maps == 0)
@@ -195,15 +207,18 @@ void GraphicsView::attach_choix_level(choix_level *level)
 
             [this](int level_choix) // fonction lambda
             {
-                level_choix = levels;
+                levels = level_choix;
                 if (level_choix == 0)
                 {
+                    difficulte = 1;
                 }
-                if (level_choix == 1)
+                else if (level_choix == 1)
                 {
+                    difficulte = 1.5;
                 }
-                if (level_choix == 2)
+                else if (level_choix == 2)
                 {
+                    difficulte = 2.25;
                 }
                 this->level->hide();
                 this->showNormal();
@@ -248,6 +263,10 @@ void GraphicsView::attach_perdre(Game_over *looser)
 
                     pos_random = QRandomGenerator::global()->bounded(300, 900);
                     ducks->back()->setPos(pos_random, 570);
+
+                    ducks->at(i)->difficulte_coin = difficulte;
+
+                    ducks->at(i)->difficulte_round = ducks->at(i)->difficulte_round + round->roundCpt / 10;
                 }
             });
 
@@ -271,10 +290,11 @@ void GraphicsView::mousePressEvent(QMouseEvent *event)
     
     if (event->buttons() == Qt::LeftButton)
     {
-        
-
-    effect.play();
-
+        // QSoundEffect effect;
+        // effect.setSource(QUrl::fromLocalFile("Z:\s4\projet er\projet-duck-hunt-partie-gui-duck-hunters"));
+        // effect.setLoopCount(0);
+        // effect.setVolume(0.25f);
+        // effect.play();
         for (int i = 0; i < DuckCount; i++)
         {
             if (((crosshair->coordinateMouse.rx()) >= ((ducks->at(i)->positionDuck.rx())) && ((crosshair->coordinateMouse.rx()) <= (ducks->at(i)->positionDuck.rx() + decalageLargeur))))
@@ -314,6 +334,8 @@ void GraphicsView::timerEvent(QTimerEvent *event)
 
             pos_random = QRandomGenerator::global()->bounded(300, 900);
             ducks->back()->setPos(pos_random, 570);
+            ducks->at(i)->difficulte_coin = difficulte;
+            ducks->at(i)->difficulte_round = ducks->at(i)->difficulte_round + round->roundCpt / 10;
         }
     }
     else
