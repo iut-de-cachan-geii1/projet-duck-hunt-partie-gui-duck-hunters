@@ -24,7 +24,7 @@ private:
 
 signals :
     void map_to_send(int maps);
-    void level_to_send(int level);
+    void level_to_send(int levels);
 
 };
 

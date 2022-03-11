@@ -39,5 +39,6 @@
         <file>images/mode_medium.png</file>
         <file>images/mode_difficile.png</file>
         <file>images/game_over.png</file>
+        <file>images/bruit_tir.wav</file>
     </qresource>
 </RCC>
