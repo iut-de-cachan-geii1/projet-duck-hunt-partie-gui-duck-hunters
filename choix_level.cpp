@@ -125,9 +125,18 @@ choix_level::choix_level(QWidget *parent) :
             {
                 numero_diff = 0;
                 ui->difficulte->setPixmap(QPixmap(":/images/mode_facile.png"));
+               
             }
-        // emit choix_level::level_to_send(numero_diff);
+        
         }    
+    );
+
+    connect(ui->mode_doom, &QPushButton::clicked, this, 
+    
+        [this]()
+        {
+            emit choix_level::map_to_send(numero_map = 666); 
+        }
     );
 }
 

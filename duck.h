@@ -103,6 +103,8 @@ private:
     int directionY;
     int hauteur_rng;
     bool compare;
+    int difficulte;
+    
     
     
 };
