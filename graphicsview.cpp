@@ -68,7 +68,6 @@
 #include <QTimer>
 #include <QtMultimedia/QMediaPlayer>
 
-
 #define decalageLargeur 75 // 75
 #define decalageHauteur 68 // 68
 
@@ -134,8 +133,6 @@ void GraphicsView::attach_ecran_acceuil(ecran_acceuil *ecran)
             {
                 this->level->showNormal();
                 this->ecran->hide();
-
-                    
             });
 }
 
@@ -169,6 +166,8 @@ void GraphicsView::attach_choix_level(choix_level *level)
                 {
                     ducks->push_back(new Duck);
 
+                    connect(ducks->back(), &Duck::canardVraimentMort, this, &GraphicsView::lesCanardsDoiventRespawn);
+
                     this->scene()->addItem(ducks->back());
 
                     pos_random = QRandomGenerator::global()->bounded(300, 900);
@@ -194,7 +193,7 @@ void GraphicsView::attach_choix_level(choix_level *level)
                     this->setBackgroundBrush(QPixmap(":/images/background_nuit.png"));
                     this->setForegroundBrush(QPixmap(":/images/foreground_nuit.png"));
                 }
-                if (maps == 666 ) 
+                if (maps == 666)
                 {
                     this->setBackgroundBrush(QPixmap(":/images/hell_background.jpg"));
                     //this->setForegroundBrush(QPixmap(":/images/foreground.png"));
@@ -223,6 +222,38 @@ void GraphicsView::attach_choix_level(choix_level *level)
                 this->level->hide();
                 this->showNormal();
             });
+}
+
+void GraphicsView::lesCanardsDoiventRespawn(Duck *canardATuer)
+{
+    for (int i = 0; i < DuckCount; i++)
+    {
+        if (canardATuer == ducks->at(i))
+        {
+            delete ducks->at(i);
+            ducks->removeAt(i);
+            (this->DuckCount)--;
+        }
+    }
+    if (ducks->isEmpty())
+    {
+        ammo->cptMunition = 3;
+        DuckCount = QRandomGenerator::global()->bounded(1, 3);
+
+        for (int i = 0; i < DuckCount; i++)
+        {
+            ducks->push_back(new Duck);
+            connect(ducks->back(), &Duck::canardVraimentMort, this, &GraphicsView::lesCanardsDoiventRespawn);
+            this->scene()->addItem(ducks->back());
+
+            pos_random = QRandomGenerator::global()->bounded(300, 900);
+            ducks->back()->setPos(pos_random, 570);
+
+            ducks->at(i)->difficulte_coin = difficulte;
+
+            ducks->at(i)->difficulte_round = ducks->at(i)->difficulte_round + round->roundCpt / 10;
+        }
+    }
 }
 
 void GraphicsView::attach_perdre(Game_over *looser)
@@ -259,6 +290,8 @@ void GraphicsView::attach_perdre(Game_over *looser)
                 {
                     ducks->push_back(new Duck);
 
+                    connect(ducks->back(), &Duck::canardVraimentMort, this, &GraphicsView::lesCanardsDoiventRespawn);
+
                     this->scene()->addItem(ducks->back());
 
                     pos_random = QRandomGenerator::global()->bounded(300, 900);
@@ -284,17 +317,8 @@ void GraphicsView::attach_perdre(Game_over *looser)
 
 void GraphicsView::mousePressEvent(QMouseEvent *event)
 {
-    QSoundEffect effect;
-    effect.setSource(QUrl::fromUserInput("qrc:/images/oui_tir.wav"));
-    effect.setVolume(10.0);
-    
     if (event->buttons() == Qt::LeftButton)
     {
-        // QSoundEffect effect;
-        // effect.setSource(QUrl::fromLocalFile("Z:\s4\projet er\projet-duck-hunt-partie-gui-duck-hunters"));
-        // effect.setLoopCount(0);
-        // effect.setVolume(0.25f);
-        // effect.play();
         for (int i = 0; i < DuckCount; i++)
         {
             if (((crosshair->coordinateMouse.rx()) >= ((ducks->at(i)->positionDuck.rx())) && ((crosshair->coordinateMouse.rx()) <= (ducks->at(i)->positionDuck.rx() + decalageLargeur))))
@@ -320,47 +344,10 @@ void GraphicsView::mousePressEvent(QMouseEvent *event)
 
 void GraphicsView::timerEvent(QTimerEvent *event)
 {
-    if (ducks->isEmpty() /*&& (chien->chien_fini == true)*/)
-    {
-        DuckCount = QRandomGenerator::global()->bounded(1, 3); 
-        ammo->cptMunition = 3;
-
-
-        for (int i = 0; i < DuckCount; i++)
-        {
-            ducks->push_back(new Duck);
-
-            this->scene()->addItem(ducks->back());
-
-            pos_random = QRandomGenerator::global()->bounded(300, 900);
-            ducks->back()->setPos(pos_random, 570);
-            ducks->at(i)->difficulte_coin = difficulte;
-            ducks->at(i)->difficulte_round = ducks->at(i)->difficulte_round + round->roundCpt / 10;
-        }
-    }
-    else
-    {
-        for (int i = 0; i < DuckCount; i++)
-        {
-            if (ducks->at(i)->vraimentMort)
-            {
-                if (ducks->size() == 1)
-                {
-                    // chien->positionChien = ducks->at(i)->positionDuck + QPointF(0, 0);
-                    // chien->tout_les_canards_sont_mort = true;
-                }
-                delete ducks->at(i);
-                ducks->removeAt(i);
-                (this->DuckCount)--;
-            }
-        }
-    }
-
     if ((ammo->cptMunition <= 0) && (ducks->size() >= 1) && (ducks->at(0)->isDead == !compare) && (ducks->at(0)->isDead2 == !compare) && (ducks->at(0)->vraimentMort == !compare))
     {
         loose->show();
         this->hide();
-       
     }
 }
 

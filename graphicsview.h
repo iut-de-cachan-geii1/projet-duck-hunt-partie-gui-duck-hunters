@@ -93,6 +93,9 @@ public:
     void attach_ecran_acceuil(ecran_acceuil*ecran);
     void attach_choix_level(choix_level* level);
     void attach_perdre(Game_over* looser);
+    void lesCanardsSontMorts(Duck* canardRecu);
+
+
     int DuckCount;
     bool respawn = false;
     bool has_pseudo;
@@ -116,7 +119,12 @@ private:
     Game_over* loose;
     bool vraiment_perdu;
     float difficulte;
-    
+    Duck* veryDead;
 
-    // std::ofstream sauvegarde;
+signals:
+// void ilFautFaireRespawnLesCanards();
+
+public slots:
+void lesCanardsDoiventRespawn(Duck* canardATuer);
+
 };
