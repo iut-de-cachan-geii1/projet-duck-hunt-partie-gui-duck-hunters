@@ -62,6 +62,9 @@
 
 #include <string>
 #include <QString>
+#include <QTimer>
+#include <QtMultimedia/QMediaPlayer>
+#include <QSoundEffect>
 
 #define decalageLargeur 75 // 75
 #define decalageHauteur 68 // 68
@@ -76,6 +79,7 @@ GraphicsView::GraphicsView(QGraphicsScene *scene, QWidget *parent)
       maps(0),
       levels(0),
       vraiment_perdu(false)
+
 //   sauvegarde("sauvegarde.json")
 
 {
@@ -129,6 +133,8 @@ void GraphicsView::attach_ecran_acceuil(ecran_acceuil *ecran)
                 has_pseudo = true;
                 this->level->showNormal();
                 this->ecran->hide();
+
+                    
             });
 }
 
@@ -141,7 +147,6 @@ void GraphicsView::attach_choix_level(choix_level *level)
             [this](int map_choix) // fonction lambda
             {
                 maps = map_choix;
-                score->scoreCpt = 0;
                 score->scoreCpt = 0;
                 score->nombreCanardTue = 0;
                 round->roundCpt = 0;
@@ -176,6 +181,11 @@ void GraphicsView::attach_choix_level(choix_level *level)
                 {
                     this->setBackgroundBrush(QPixmap(":/images/background_nuit.png"));
                     this->setForegroundBrush(QPixmap(":/images/foreground_nuit.png"));
+                }
+                if (maps == 666 ) 
+                {
+                    this->setBackgroundBrush(QPixmap(":/images/hell_background.jpg"));
+                    //this->setForegroundBrush(QPixmap(":/images/foreground.png"));
                 }
                 this->level->hide();
                 this->showNormal();
@@ -255,8 +265,16 @@ void GraphicsView::attach_perdre(Game_over *looser)
 
 void GraphicsView::mousePressEvent(QMouseEvent *event)
 {
+    QSoundEffect effect;
+    effect.setSource(QUrl::fromUserInput("qrc:/images/oui_tir.wav"));
+    effect.setVolume(10.0);
+    
     if (event->buttons() == Qt::LeftButton)
     {
+        
+
+    effect.play();
+
         for (int i = 0; i < DuckCount; i++)
         {
             if (((crosshair->coordinateMouse.rx()) >= ((ducks->at(i)->positionDuck.rx())) && ((crosshair->coordinateMouse.rx()) <= (ducks->at(i)->positionDuck.rx() + decalageLargeur))))
@@ -284,8 +302,9 @@ void GraphicsView::timerEvent(QTimerEvent *event)
 {
     if (ducks->isEmpty() /*&& (chien->chien_fini == true)*/)
     {
-        DuckCount = QRandomGenerator::global()->bounded(1, 3);
+        DuckCount = QRandomGenerator::global()->bounded(1, 3); 
         ammo->cptMunition = 3;
+
 
         for (int i = 0; i < DuckCount; i++)
         {
@@ -305,8 +324,8 @@ void GraphicsView::timerEvent(QTimerEvent *event)
             {
                 if (ducks->size() == 1)
                 {
-                    //chien->positionChien = ducks->at(i)->positionDuck + QPointF(0, 0);
-                    //chien->tout_les_canards_sont_mort = true;
+                    // chien->positionChien = ducks->at(i)->positionDuck + QPointF(0, 0);
+                    // chien->tout_les_canards_sont_mort = true;
                 }
                 delete ducks->at(i);
                 ducks->removeAt(i);
@@ -319,6 +338,7 @@ void GraphicsView::timerEvent(QTimerEvent *event)
     {
         loose->show();
         this->hide();
+       
     }
 }
 
@@ -327,4 +347,3 @@ bool GraphicsView::viewportEvent(QEvent *event)
 
     return QGraphicsView::viewportEvent(event);
 }
-

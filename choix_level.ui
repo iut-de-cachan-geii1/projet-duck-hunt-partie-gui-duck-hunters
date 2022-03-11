@@ -14,7 +14,8 @@
    <string>Choix du niveau</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: rgb(213, 213, 213);</string>
+   <string notr="true">
+background-color: rgb(166, 163, 200);</string>
   </property>
   <widget class="QLabel" name="map">
    <property name="geometry">
@@ -134,22 +135,26 @@ image: url(:/images/arrow.png);</string>
   <widget class="QLabel" name="label_3">
    <property name="geometry">
     <rect>
-     <x>340</x>
-     <y>40</y>
-     <width>481</width>
+     <x>270</x>
+     <y>30</y>
+     <width>521</width>
      <height>31</height>
     </rect>
    </property>
    <property name="font">
     <font>
+     <family>Terminal</family>
      <pointsize>14</pointsize>
      <italic>false</italic>
-     <bold>false</bold>
+     <bold>true</bold>
      <underline>false</underline>
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true"/>
+    <string notr="true">border-style: outset;
+     border-width: 3px;
+     border-color: grey;
+background-color: rgb(255, 255, 255);</string>
    </property>
    <property name="text">
     <string>Choisissez votre carte et mode de difficulte :</string>
@@ -172,6 +177,7 @@ image: url(:/images/arrow.png);</string>
    </property>
    <property name="font">
     <font>
+     <family>Terminal</family>
      <pointsize>14</pointsize>
      <bold>true</bold>
     </font>
@@ -186,6 +192,23 @@ background-color: rgb(255, 255, 255);
    </property>
    <property name="text">
     <string>Entrer</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="mode_doom">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>543</y>
+     <width>111</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">image: url(:/images/skull_doom.png);
+background-color: transparent;</string>
+   </property>
+   <property name="text">
+    <string/>
    </property>
   </widget>
  </widget>

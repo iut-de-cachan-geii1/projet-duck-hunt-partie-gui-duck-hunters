@@ -110,6 +110,7 @@ private:
     QString pseudo;
     Game_over* loose;
     bool vraiment_perdu;
+    int difficultee;
     
 
     // std::ofstream sauvegarde;

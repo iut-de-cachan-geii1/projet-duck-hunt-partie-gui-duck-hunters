@@ -66,6 +66,7 @@
 #include <QMediaPlayer>
 #include <QList>
 #include <fstream>
+#include <QSoundEffect>
 
 
 int main(int argc, char **argv)
@@ -140,7 +141,10 @@ int main(int argc, char **argv)
     view.setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     view.setCursor(Qt::BlankCursor);
 
-   
+    // QSoundEffect effect;
+    // effect.setSource(QUrl::fromUserInput("qrc:/images/oui_tir.wav"));
+    // effect.setVolume(10.0);
+    // effect.play();
 
     return QApplication::exec();
 }

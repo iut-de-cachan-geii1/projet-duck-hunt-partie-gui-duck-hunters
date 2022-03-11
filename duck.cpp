@@ -89,7 +89,8 @@ Duck::Duck()
     directionX(QRandomGenerator::global()->bounded(0, 2)), //si 1 va a gauche, si 0 va a droitre
     directionY(1),                                       //si 1 va en haut, si 0 va en bas
     hauteur_rng(QRandomGenerator::global()->bounded(2, 11)),
-    compare(true)
+    compare(true),
+    difficulte(1)
   
 {
     startTimer(1000 / 33);

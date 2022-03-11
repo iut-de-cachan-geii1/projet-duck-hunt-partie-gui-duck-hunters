@@ -35,9 +35,15 @@
         <file>images/background_nuit_menu.png</file>
         <file>images/background_nuit.png</file>
         <file>images/foreground_nuit.png</file>
+        <file>images/hell_background.jpg</file>
         <file>images/mode_facile.png</file>
         <file>images/mode_medium.png</file>
         <file>images/mode_difficile.png</file>
         <file>images/game_over.png</file>
+        <file>images/skull_doom.png</file>
+        <file>images/hell_background_gif.gif</file>
+        <file>images/bruit_tir.wav</file>
+        <file>images/oui_tir.wav</file>
+        <file>images/ak_shot.wav</file>
     </qresource>
 </RCC>

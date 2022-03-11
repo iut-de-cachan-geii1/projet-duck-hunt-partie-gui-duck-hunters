@@ -8,7 +8,10 @@ HEADERS += \
         game_over.h \
         graphicsview.h \
         menu.h \
-        mouse.h
+        mouse.h \
+        munition.h \
+        round.h \
+        score.h
 SOURCES += \
     choix_level.cpp \
     crosshair.cpp \
@@ -17,7 +20,10 @@ SOURCES += \
     game_over.cpp \
 	main.cpp \
         graphicsview.cpp \
-    menu.cpp
+    menu.cpp \
+    munition.cpp \
+    round.cpp \
+    score.cpp
 
 RESOURCES += \
 	mice.qrc
