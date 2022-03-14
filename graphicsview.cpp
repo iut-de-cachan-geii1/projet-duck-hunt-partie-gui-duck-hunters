@@ -152,6 +152,10 @@ void GraphicsView::attach_ecran_acceuil(ecran_acceuil *ecran)
             {
                 this->level->showNormal();
                 this->ecran->hide();
+                choose_map_song.setSource(QUrl::fromUserInput("qrc:/images/elevator_song.wav"));
+                choose_map_song.setLoopCount(QSoundEffect::Infinite);
+                choose_map_song.setVolume(0.1);
+                choose_map_song.play();
             });
 }
 
@@ -217,10 +221,11 @@ void GraphicsView::attach_choix_level(choix_level *level)
                 if (maps == 666)
                 {
                     this->setBackgroundBrush(QPixmap(":/images/hell_background.jpg"));
-                    //this->setForegroundBrush(QPixmap(":/images/foreground.png"));
+                    // this->setForegroundBrush(QPixmap(":/images/foreground.png"));
                 }
                 this->level->hide();
                 this->showNormal();
+                choose_map_song.stop();
             });
 
     connect(level, &choix_level::level_to_send, this,
@@ -238,7 +243,7 @@ void GraphicsView::attach_choix_level(choix_level *level)
                 }
                 else if (level_choix == 2)
                 {
-                    difficulte = 2.25;
+                    difficulte = 2;
                 }
                 this->level->hide();
                 this->showNormal();
@@ -348,6 +353,7 @@ void GraphicsView::attach_perdre(Game_over *looser)
 
 void GraphicsView::mousePressEvent(QMouseEvent *event)
 {
+
     if (event->buttons() == Qt::LeftButton)
     {
         panpan.play();

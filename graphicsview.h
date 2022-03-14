@@ -62,6 +62,7 @@
 #include <fstream>
 #include <string>
 #include <iostream>
+#include <QSoundEffect>
 
 #include<QSoundEffect>
 
@@ -116,6 +117,10 @@ private:
     Game_over* loose;
     bool vraiment_perdu;
     float difficulte;
+<<<<<<< HEAD
+    QSoundEffect panpan;
+    QSoundEffect choose_map_song;
+=======
     Duck* veryDead;
     QSoundEffect panpan;
     QSoundEffect dead;
@@ -127,5 +132,6 @@ signals:
 
 public slots:
 void lesCanardsDoiventRespawn(Duck* canardATuer);
+>>>>>>> 5c5e601faca680b9bd30c2c86dfdbfa31bc07654
 
 };

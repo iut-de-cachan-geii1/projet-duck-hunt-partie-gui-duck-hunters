@@ -49,5 +49,7 @@
         <file>images/ak_shot.wav</file>
         <file>images/canard_dead.wav</file>
         <file>images/click_wii.wav</file>
+        <file>images/minecraft_song.wav</file>
+        <file>images/elevator_song.wav</file>
     </qresource>
 </RCC>
