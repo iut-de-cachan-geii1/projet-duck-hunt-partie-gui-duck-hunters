@@ -172,6 +172,8 @@ void GraphicsView::attach_choix_level(choix_level *level)
                 {
                     ducks->push_back(new Duck);
 
+                    connect(ducks->back(), &Duck::canardVraimentMort, this, &GraphicsView::lesCanardsDoiventRespawn);
+
                     this->scene()->addItem(ducks->back());
 
                     pos_random = QRandomGenerator::global()->bounded(300, 900);
@@ -229,6 +231,38 @@ void GraphicsView::attach_choix_level(choix_level *level)
             });
 }
 
+void GraphicsView::lesCanardsDoiventRespawn(Duck *canardATuer)
+{
+    for (int i = 0; i < DuckCount; i++)
+    {
+        if (canardATuer == ducks->at(i))
+        {
+            delete ducks->at(i);
+            ducks->removeAt(i);
+            (this->DuckCount)--;
+        }
+    }
+    if (ducks->isEmpty())
+    {
+        ammo->cptMunition = 3;
+        DuckCount = QRandomGenerator::global()->bounded(1, 3);
+
+        for (int i = 0; i < DuckCount; i++)
+        {
+            ducks->push_back(new Duck);
+            connect(ducks->back(), &Duck::canardVraimentMort, this, &GraphicsView::lesCanardsDoiventRespawn);
+            this->scene()->addItem(ducks->back());
+
+            pos_random = QRandomGenerator::global()->bounded(300, 900);
+            ducks->back()->setPos(pos_random, 570);
+
+            ducks->at(i)->difficulte_coin = difficulte;
+
+            ducks->at(i)->difficulte_round = ducks->at(i)->difficulte_round + round->roundCpt / 10;
+        }
+    }
+}
+
 void GraphicsView::attach_perdre(Game_over *looser)
 {
     loose = looser;
@@ -262,6 +296,8 @@ void GraphicsView::attach_perdre(Game_over *looser)
                 for (int i = 0; i < DuckCount; i++)
                 {
                     ducks->push_back(new Duck);
+
+                    connect(ducks->back(), &Duck::canardVraimentMort, this, &GraphicsView::lesCanardsDoiventRespawn);
 
                     this->scene()->addItem(ducks->back());
 

@@ -94,6 +94,9 @@ public:
     void attach_ecran_acceuil(ecran_acceuil*ecran);
     void attach_choix_level(choix_level* level);
     void attach_perdre(Game_over* looser);
+    void lesCanardsSontMorts(Duck* canardRecu);
+
+
     int DuckCount;
     bool respawn = false;
     bool has_pseudo;
@@ -117,8 +120,17 @@ private:
     Game_over* loose;
     bool vraiment_perdu;
     float difficulte;
+<<<<<<< HEAD
     QSoundEffect panpan;
     QSoundEffect choose_map_song;
+=======
+    Duck* veryDead;
 
-    // std::ofstream sauvegarde;
+signals:
+// void ilFautFaireRespawnLesCanards();
+
+public slots:
+void lesCanardsDoiventRespawn(Duck* canardATuer);
+>>>>>>> 5c5e601faca680b9bd30c2c86dfdbfa31bc07654
+
 };

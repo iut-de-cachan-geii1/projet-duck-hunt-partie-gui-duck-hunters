@@ -105,7 +105,8 @@ private:
     bool compare;
     int difficulte;
     
-    
+signals:
+void canardVraimentMort(Duck* canardEnvoye);
     
 };
 #endif

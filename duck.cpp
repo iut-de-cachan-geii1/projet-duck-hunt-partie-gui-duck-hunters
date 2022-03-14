@@ -269,6 +269,7 @@ void Duck::timerEvent(QTimerEvent *event)
             isDead2 = false;
             isDead = true;
             vraimentMort = compare;
+            emit Duck::canardVraimentMort(this);
         }
     }
 }
