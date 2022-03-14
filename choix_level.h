@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <QCommonStyle>
+#include <QSoundEffect>
 
 namespace Ui {
 class choix_level;
@@ -21,6 +22,7 @@ public:
 
 private:
     Ui::choix_level *ui;
+    QSoundEffect click;
 
 signals :
     void map_to_send(int maps);

@@ -81,18 +81,37 @@ GraphicsView::GraphicsView(QGraphicsScene *scene, QWidget *parent)
       maps(0),
       levels(0),
       vraiment_perdu(false),
-      difficulte(1)
+      difficulte(1),
+      timer_escape(new QTimer(this)),
+      looseByEscape(false)
 //   sauvegarde("sauvegarde.json")
 
 {
+    connect(timer_escape, &QTimer::timeout, this, GraphicsView::escapadeDesCanards);
+    timer_escape->start(10000);
+
     viewport()->setAttribute(Qt::WA_AcceptTouchEvents);
     setDragMode(ScrollHandDrag);
     startTimer(1000 / 500);
     setFixedSize(1280, 769);
     setMouseTracking(true);
     QCursor cursor(Qt::BlankCursor);
+    panpan.setSource(QUrl::fromUserInput("qrc:/images/oui_tir.wav"));
+    panpan.setLoopCount(0);
+    panpan.setVolume(0.99f);
+    dead.setSource(QUrl::fromUserInput("qrc:/images/canard_dead.wav"));
+    dead.setLoopCount(0);
+    dead.setVolume(0.99f);
     // sauvegarde<<"pseudo : "<<"Hello World !"<<"\n";
     // sauvegarde.close();
+}
+
+void GraphicsView::escapadeDesCanards()
+{
+    for (int i = 0; i < DuckCount; i++)
+    {
+        ducks->at(i)->canardEscape = true;
+    }
 }
 
 void GraphicsView::attachCrosshair(Crosshair *parametreCrosshair)
@@ -177,6 +196,8 @@ void GraphicsView::attach_choix_level(choix_level *level)
 
                     ducks->at(i)->difficulte_round = ducks->at(i)->difficulte_round + round->roundCpt / 10;
                 }
+                looseByEscape = false;
+                timer_escape->start(10000); 
 
                 if (maps == 0)
                 {
@@ -230,6 +251,10 @@ void GraphicsView::lesCanardsDoiventRespawn(Duck *canardATuer)
     {
         if (canardATuer == ducks->at(i))
         {
+            if(canardATuer -> isCanardEscaped == true)
+            {
+                looseByEscape = true;
+            }
             delete ducks->at(i);
             ducks->removeAt(i);
             (this->DuckCount)--;
@@ -253,6 +278,8 @@ void GraphicsView::lesCanardsDoiventRespawn(Duck *canardATuer)
 
             ducks->at(i)->difficulte_round = ducks->at(i)->difficulte_round + round->roundCpt / 10;
         }
+        looseByEscape = false;
+        timer_escape->start(10000);
     }
 }
 
@@ -301,6 +328,8 @@ void GraphicsView::attach_perdre(Game_over *looser)
 
                     ducks->at(i)->difficulte_round = ducks->at(i)->difficulte_round + round->roundCpt / 10;
                 }
+                looseByEscape = false;
+                timer_escape->start(10000);
             });
 
     connect(loose, &Game_over::return_menu, this,
@@ -310,6 +339,8 @@ void GraphicsView::attach_perdre(Game_over *looser)
                 this->loose->hide();
                 this->level->showNormal();
                 ammo->cptMunition = 3;
+                looseByEscape = false;
+                timer_escape->start(10000);
             });
 }
 
@@ -319,6 +350,7 @@ void GraphicsView::mousePressEvent(QMouseEvent *event)
 {
     if (event->buttons() == Qt::LeftButton)
     {
+        panpan.play();
         for (int i = 0; i < DuckCount; i++)
         {
             if (((crosshair->coordinateMouse.rx()) >= ((ducks->at(i)->positionDuck.rx())) && ((crosshair->coordinateMouse.rx()) <= (ducks->at(i)->positionDuck.rx() + decalageLargeur))))
@@ -327,6 +359,7 @@ void GraphicsView::mousePressEvent(QMouseEvent *event)
                 {
                     if (ducks->at(i)->cliqueDessus == !compare)
                     {
+                        dead.play();
                         ducks->at(i)->isDead = compare;
                         ducks->at(i)->cliqueDessus = compare;
                         (score->nombreCanardTue)++;
@@ -344,7 +377,7 @@ void GraphicsView::mousePressEvent(QMouseEvent *event)
 
 void GraphicsView::timerEvent(QTimerEvent *event)
 {
-    if ((ammo->cptMunition <= 0) && (ducks->size() >= 1) && (ducks->at(0)->isDead == !compare) && (ducks->at(0)->isDead2 == !compare) && (ducks->at(0)->vraimentMort == !compare))
+    if (((ammo->cptMunition <= 0) && (ducks->size() >= 1) && (ducks->at(0)->isDead == !compare) && (ducks->at(0)->isDead2 == !compare) && (ducks->at(0)->vraimentMort == !compare)) || (looseByEscape == true))
     {
         loose->show();
         this->hide();

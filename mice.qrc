@@ -6,6 +6,8 @@
         <file>images/canard.png</file>
         <file>images/canard1.png</file>
         <file>images/canard2.png</file>
+        <file>images/canard_back1.png</file>
+        <file>images/canard_back2.png</file>
         <file>images/canard1_inverse.png</file>
         <file>images/canard2_inverse.png</file>
         <file>images/foreground.png</file>
@@ -45,5 +47,7 @@
         <file>images/bruit_tir.wav</file>
         <file>images/oui_tir.wav</file>
         <file>images/ak_shot.wav</file>
+        <file>images/canard_dead.wav</file>
+        <file>images/click_wii.wav</file>
     </qresource>
 </RCC>

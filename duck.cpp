@@ -79,6 +79,7 @@ Duck::Duck()
       cliqueDessus(false),
       difficulte_coin(1),
       difficulte_round(1),
+      canardEscape(false),
       angle(0),
       speed(0),
       mouseEyeDirection(0),
@@ -88,10 +89,11 @@ Duck::Duck()
       canard_sens(false),
       cpt(0),
       cptMort(0),
-      directionX(QRandomGenerator::global()->bounded(0, 2)), 
+      directionX(QRandomGenerator::global()->bounded(0, 2)),
       directionY(1),
       hauteur_rng(QRandomGenerator::global()->bounded(2, 11)),
-      compare(true)
+      compare(true),
+      isCanardEscaped(false)
 
 {
     startTimer(1000 / 33);
@@ -127,28 +129,54 @@ void Duck::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
         {
             if (canard_tempo == compare) // tempo qui change le sprite du canard regulierement pour donner
             {                            //l'illusion qu'il bat des ailes
-                if (canard_sens == compare)
+                if ((canard_sens == compare) && (canardEscape == false))
                 {
                     QPixmap imageDeCanard(":/images/canard1.png");
                     painter->drawPixmap(QPoint(0, 0), imageDeCanard);
                 }
+                else if ((canard_sens == compare) && (canardEscape == true))
+                {
+                    QPixmap imageDeCanard(":/images/canard_back1.png");
+                    painter->drawPixmap(QPoint(0, 0), imageDeCanard);
+                }
                 else
                 {
-                    QPixmap imageDeCanard(":/images/canard1_inverse.png");
-                    painter->drawPixmap(QPoint(0, 0), imageDeCanard);
+                    if (canardEscape == false)
+                    {
+                        QPixmap imageDeCanard(":/images/canard1_inverse.png");
+                        painter->drawPixmap(QPoint(0, 0), imageDeCanard);
+                    }
+                    else
+                    {
+                        QPixmap imageDeCanard(":/images/canard_back1.png");
+                        painter->drawPixmap(QPoint(0, 0), imageDeCanard);
+                    }
                 }
             }
             else
             {
-                if (canard_sens == compare)
+                if ((canard_sens == compare) && (canardEscape == false))
                 {
                     QPixmap imageDeCanard(":/images/canard2.png");
                     painter->drawPixmap(QPoint(0, 0), imageDeCanard);
                 }
+                else if ((canard_sens == compare) && (canardEscape == true))
+                {
+                    QPixmap imageDeCanard(":/images/canard_back2.png");
+                    painter->drawPixmap(QPoint(0, 0), imageDeCanard);
+                }
                 else
                 {
-                    QPixmap imageDeCanard(":/images/canard2_inverse.png");
-                    painter->drawPixmap(QPoint(0, 0), imageDeCanard);
+                    if (canardEscape == false)
+                    {
+                        QPixmap imageDeCanard(":/images/canard2_inverse.png");
+                        painter->drawPixmap(QPoint(0, 0), imageDeCanard);
+                    }
+                    else
+                    {
+                        QPixmap imageDeCanard(":/images/canard_back2.png");
+                        painter->drawPixmap(QPoint(0, 0), imageDeCanard);
+                    }
                 }
             }
         }
@@ -181,7 +209,7 @@ void Duck::timerEvent(QTimerEvent *event)
     QPointF pos_actuelle = pos();
     this->positionDuck = pos_actuelle;
 
-    if ((directionX == 1) && (directionY == 1) && (isDead == !compare)) // va en haut vers la gauche
+    if ((directionX == 1) && (directionY == 1) && (isDead == !compare) && (canardEscape == false)) // va en haut vers la gauche
     {
         canard_sens = false;
         if (pos_actuelle.rx() <= 0)
@@ -198,7 +226,7 @@ void Duck::timerEvent(QTimerEvent *event)
             setPos(pos_actuelle + QPointF(-vitesseX * difficulte_coin * difficulte_round, -hauteur_rng * difficulte_coin * difficulte_round));
         }
     }
-    if ((directionX == 0) && (directionY == 1) && (isDead == !compare)) //Va en haut a droite
+    if ((directionX == 0) && (directionY == 1) && (isDead == !compare) && (canardEscape == false)) //Va en haut a droite
     {
         canard_sens = true;
         if (pos_actuelle.rx() >= 1200)
@@ -216,7 +244,7 @@ void Duck::timerEvent(QTimerEvent *event)
         }
     }
 
-    if ((directionX == 1) && (directionY == 0) && (isDead == !compare)) //va en bas a gauche
+    if ((directionX == 1) && (directionY == 0) && (isDead == !compare) && (canardEscape == false)) //va en bas a gauche
     {
         if (pos_actuelle.rx() <= 0)
         {
@@ -232,7 +260,7 @@ void Duck::timerEvent(QTimerEvent *event)
             setPos(pos_actuelle + QPointF(-vitesseX * difficulte_coin * difficulte_round, hauteur_rng * difficulte_coin * difficulte_round));
         }
     }
-    if ((directionX == 0) && (directionY == 0) && (isDead == !compare)) //va en bas a droite
+    if ((directionX == 0) && (directionY == 0) && (isDead == !compare) && (canardEscape == false)) //va en bas a droite
     {
         if (pos_actuelle.rx() >= 1200)
         {
@@ -248,7 +276,7 @@ void Duck::timerEvent(QTimerEvent *event)
             setPos(pos_actuelle + QPointF(vitesseX * difficulte_coin * difficulte_round, hauteur_rng * difficulte_coin * difficulte_round));
         }
     }
-    if ((isDead == compare) && (isDead2 == !compare))
+    if ((isDead == compare) && (isDead2 == !compare) && (canardEscape == false))
     {
         cptMort++;
         if (cptMort == 12)
@@ -258,7 +286,7 @@ void Duck::timerEvent(QTimerEvent *event)
             cptMort = 0;
         }
     }
-    if ((isDead == !compare) && (isDead2 == compare))
+    if ((isDead == !compare) && (isDead2 == compare) && (canardEscape == false))
     {
         if (pos_actuelle.ry() <= 560)
         {
@@ -269,6 +297,21 @@ void Duck::timerEvent(QTimerEvent *event)
             isDead2 = false;
             isDead = true;
             vraimentMort = compare;
+            emit Duck::canardVraimentMort(this);
+        }
+    }
+    if (canardEscape == true)
+    {
+        isDead2 = false;
+        isDead = false;
+        if (pos_actuelle.ry() >= -50)
+        {
+            setPos(pos_actuelle + QPointF(0, -10));
+        }
+        else
+        {
+            vraimentMort = compare;
+            isCanardEscaped = true;
             emit Duck::canardVraimentMort(this);
         }
     }

@@ -63,9 +63,7 @@
 #include <string>
 #include <iostream>
 
-using std::cout; using std::ofstream;
-using std::endl; using std::string;
-using std::fstream;
+#include<QSoundEffect>
 
 class GraphicsView : public QGraphicsView
 {
@@ -94,13 +92,12 @@ public:
     void attach_choix_level(choix_level* level);
     void attach_perdre(Game_over* looser);
     void lesCanardsSontMorts(Duck* canardRecu);
-
+    void escapadeDesCanards();
 
     int DuckCount;
     bool respawn = false;
     bool has_pseudo;
 
-    
 private:
     qreal totalScaleFactor = 1;
     Crosshair* crosshair;
@@ -120,6 +117,10 @@ private:
     bool vraiment_perdu;
     float difficulte;
     Duck* veryDead;
+    QSoundEffect panpan;
+    QSoundEffect dead;
+    QTimer *timer_escape;
+    bool looseByEscape;
 
 signals:
 // void ilFautFaireRespawnLesCanards();
