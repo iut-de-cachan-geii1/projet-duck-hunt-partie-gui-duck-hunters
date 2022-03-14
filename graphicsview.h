@@ -62,6 +62,7 @@
 #include <fstream>
 #include <string>
 #include <iostream>
+#include <QSoundEffect>
 
 using std::cout; using std::ofstream;
 using std::endl; using std::string;
@@ -116,7 +117,8 @@ private:
     Game_over* loose;
     bool vraiment_perdu;
     float difficulte;
-    
+    QSoundEffect panpan;
+    QSoundEffect choose_map_song;
 
     // std::ofstream sauvegarde;
 };

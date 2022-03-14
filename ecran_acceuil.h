@@ -2,6 +2,7 @@
 #define ECRAN_ACCEUIL_H
 
 #include <QDialog>
+#include <QSoundEffect>
 
 namespace Ui {
 class ecran_acceuil;
@@ -20,6 +21,8 @@ signals :
 
 private:
     Ui::ecran_acceuil *ui;
+    QSoundEffect pseudo_song;
+
 };
 
 #endif // ECRAN_ACCEUIL_H

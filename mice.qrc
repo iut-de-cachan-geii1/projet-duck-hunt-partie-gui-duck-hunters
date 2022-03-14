@@ -45,5 +45,7 @@
         <file>images/bruit_tir.wav</file>
         <file>images/oui_tir.wav</file>
         <file>images/ak_shot.wav</file>
+        <file>images/minecraft_song.wav</file>
+        <file>images/elevator_song.wav</file>
     </qresource>
 </RCC>

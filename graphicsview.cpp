@@ -68,7 +68,6 @@
 #include <QTimer>
 #include <QtMultimedia/QMediaPlayer>
 
-
 #define decalageLargeur 75 // 75
 #define decalageHauteur 68 // 68
 
@@ -92,6 +91,8 @@ GraphicsView::GraphicsView(QGraphicsScene *scene, QWidget *parent)
     setFixedSize(1280, 769);
     setMouseTracking(true);
     QCursor cursor(Qt::BlankCursor);
+    panpan.setSource(QUrl::fromUserInput("qrc:/images/oui_tir.wav"));
+    panpan.setVolume(1.0);
     // sauvegarde<<"pseudo : "<<"Hello World !"<<"\n";
     // sauvegarde.close();
 }
@@ -134,8 +135,10 @@ void GraphicsView::attach_ecran_acceuil(ecran_acceuil *ecran)
             {
                 this->level->showNormal();
                 this->ecran->hide();
-
-                    
+                choose_map_song.setSource(QUrl::fromUserInput("qrc:/images/elevator_song.wav"));
+                choose_map_song.setLoopCount(QSoundEffect::Infinite);
+                choose_map_song.setVolume(0.1);
+                choose_map_song.play();
             });
 }
 
@@ -194,13 +197,14 @@ void GraphicsView::attach_choix_level(choix_level *level)
                     this->setBackgroundBrush(QPixmap(":/images/background_nuit.png"));
                     this->setForegroundBrush(QPixmap(":/images/foreground_nuit.png"));
                 }
-                if (maps == 666 ) 
+                if (maps == 666)
                 {
                     this->setBackgroundBrush(QPixmap(":/images/hell_background.jpg"));
-                    //this->setForegroundBrush(QPixmap(":/images/foreground.png"));
+                    // this->setForegroundBrush(QPixmap(":/images/foreground.png"));
                 }
                 this->level->hide();
                 this->showNormal();
+                choose_map_song.stop();
             });
 
     connect(level, &choix_level::level_to_send, this,
@@ -218,7 +222,7 @@ void GraphicsView::attach_choix_level(choix_level *level)
                 }
                 else if (level_choix == 2)
                 {
-                    difficulte = 2.25;
+                    difficulte = 2;
                 }
                 this->level->hide();
                 this->showNormal();
@@ -284,17 +288,12 @@ void GraphicsView::attach_perdre(Game_over *looser)
 
 void GraphicsView::mousePressEvent(QMouseEvent *event)
 {
-    QSoundEffect effect;
-    effect.setSource(QUrl::fromUserInput("qrc:/images/oui_tir.wav"));
-    effect.setVolume(10.0);
-    
+
     if (event->buttons() == Qt::LeftButton)
     {
-        // QSoundEffect effect;
-        // effect.setSource(QUrl::fromLocalFile("Z:\s4\projet er\projet-duck-hunt-partie-gui-duck-hunters"));
-        // effect.setLoopCount(0);
-        // effect.setVolume(0.25f);
-        // effect.play();
+     
+    panpan.play();
+
         for (int i = 0; i < DuckCount; i++)
         {
             if (((crosshair->coordinateMouse.rx()) >= ((ducks->at(i)->positionDuck.rx())) && ((crosshair->coordinateMouse.rx()) <= (ducks->at(i)->positionDuck.rx() + decalageLargeur))))
@@ -322,9 +321,9 @@ void GraphicsView::timerEvent(QTimerEvent *event)
 {
     if (ducks->isEmpty() /*&& (chien->chien_fini == true)*/)
     {
-        DuckCount = QRandomGenerator::global()->bounded(1, 3); 
-        ammo->cptMunition = 3;
 
+        DuckCount = QRandomGenerator::global()->bounded(1, 3);
+        ammo->cptMunition = 3;
 
         for (int i = 0; i < DuckCount; i++)
         {
@@ -360,7 +359,6 @@ void GraphicsView::timerEvent(QTimerEvent *event)
     {
         loose->show();
         this->hide();
-       
     }
 }
 
