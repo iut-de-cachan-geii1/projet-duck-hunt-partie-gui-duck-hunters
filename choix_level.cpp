@@ -10,10 +10,14 @@ choix_level::choix_level(QWidget *parent) :
 {
     ui->setupUi(this);
     setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
+    click.setSource(QUrl::fromUserInput("qrc:/images/click_wii.wav"));
+    click.setLoopCount(0);
+    click.setVolume(0.99f);
      connect(ui->enter_button, &QPushButton::clicked, this, 
     
         [this]()
         {
+            click.play();
             emit choix_level::level_to_send(numero_diff);
             emit choix_level::map_to_send(numero_map);
             
@@ -23,6 +27,7 @@ choix_level::choix_level(QWidget *parent) :
     
         [this]()
         {
+            click.play();
             numero_map ++;
 
             if(numero_map == 0)
@@ -49,6 +54,7 @@ choix_level::choix_level(QWidget *parent) :
     
         [this]()
         {
+            click.play();
             numero_map --;
 
            
@@ -77,6 +83,7 @@ choix_level::choix_level(QWidget *parent) :
     
         [this]()
         {
+            click.play();
             numero_diff --;
 
         
@@ -106,6 +113,7 @@ choix_level::choix_level(QWidget *parent) :
     
         [this]()
         {
+            click.play();
             numero_diff ++;
 
             
@@ -135,6 +143,7 @@ choix_level::choix_level(QWidget *parent) :
     
         [this]()
         {
+            click.play();
             emit choix_level::map_to_send(numero_map = 666); 
         }
     );

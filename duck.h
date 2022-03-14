@@ -85,6 +85,8 @@ public:
     bool cliqueDessus;
     float difficulte_coin;
     float difficulte_round;
+    bool canardEscape;
+    bool isCanardEscaped;
 
 protected:
     void timerEvent(QTimerEvent *event) override;
