@@ -79,14 +79,14 @@ void WorkerThread::run()
         // pos_x = -(fenetre->yaw_double * 23 ) ;
         // pos_y = -(fenetre->roll_double * 23 ) ;
 
-        pos_x = -(tan(ecran->yaw_double * coeff_teta)) * distance_metre * coeff_pixel;
-        pos_y = -(tan(ecran->roll_double * coeff_teta)) * distance_metre * coeff_pixel;
+        pos_x_th = -(tan(ecran->yaw_double * coeff_teta)) * distance_metre * coeff_pixel;
+        pos_y_th = -(tan(ecran->roll_double * coeff_teta)) * distance_metre * coeff_pixel;
 
-        viseur->setPos(QPointF(pos_x + 640, pos_y + 384));
+        viseur->setPos(QPointF(pos_x_th + 640, pos_y_th + 384));
 
-        viseur->fireInTheHole = ecran->fire;
-
- 
+        viseur->pos_x = pos_x_th;
+        viseur->pos_y = pos_y_th;
+        //viseur->fireInTheHole = ecran->fire;
     }
 }
 void WorkerThread::attachCrosshair(Crosshair *viseurQuiFautAttacher)
@@ -97,26 +97,4 @@ void WorkerThread::attachCrosshair(Crosshair *viseurQuiFautAttacher)
 void WorkerThread::attachEcran(ecran_acceuil *fenetre_qui_faut_attacher)
 {
     this->ecran = fenetre_qui_faut_attacher;
-}
-
-void WorkerThread::attachDucks(QList<Duck *> *DucksQuiFautAttacher)
-{
-    this->ducks = DucksQuiFautAttacher;
-}
-
-void WorkerThread::attachAmmo(Munition *munitionQuiFautAttacher)
-{
-    this->ammunition = munitionQuiFautAttacher;
-}
-void WorkerThread::attachScore(Score *scoreQuiFautAttacher)
-{
-    this->scorus = scoreQuiFautAttacher;
-}
-void WorkerThread::attachRound(Round *roundQuiFautAttacher)
-{
-    this->round = roundQuiFautAttacher;
-}
-void WorkerThread::attachVue(GraphicsView *vueQuiFautAttacher)
-{
-    this->vue = vueQuiFautAttacher;
 }

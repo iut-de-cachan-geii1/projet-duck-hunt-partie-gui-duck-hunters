@@ -68,21 +68,12 @@ class WorkerThread : public QThread
 public:
     void attachCrosshair(Crosshair* viseurQuiFautAttacher);
     void attachEcran(ecran_acceuil *fenetre_qui_faut_attacher);
-    void attachAmmo(Munition *munitionQuiFautAttacher);
-    void attachScore(Score *scoreQuiFautAttacher);
-    void attachRound(Round *roundQuiFautAttacher);
-    void attachDucks(QList<Duck *> *DucksQuiFautAttacher);
-    void attachVue(GraphicsView * vueQuiFautAttacher);
 
     Crosshair * viseur;
     ecran_acceuil * ecran;
-    Round * round;
-    Munition * ammunition;
-    Score * scorus;
-    QList<Duck *> *ducks;
-    GraphicsView* vue;
-    double pos_x;
-    double pos_y;
+
+    double pos_x_th;
+    double pos_y_th;
 };
 
 #endif

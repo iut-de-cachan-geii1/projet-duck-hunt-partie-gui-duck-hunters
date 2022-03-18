@@ -81,8 +81,7 @@ public:
     Score * scorus;
     QList<Duck *> *ducks;
     GraphicsView* vue;
-    double pos_x;
-    double pos_y;
+
 };
 
 #endif

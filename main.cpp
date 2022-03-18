@@ -149,11 +149,6 @@ int main(int argc, char **argv)
  
     workerThread->attachEcran(&pseudo_win);
     workerThread->attachCrosshair(crosshair);
-    workerThread->attachVue(&view);
-    workerThread->attachAmmo(ammo);
-    workerThread->attachRound(round);
-    workerThread->attachDucks(listeDeCanard);
-    workerThread->attachScore(score);
 
     fireThread->attachEcran(&pseudo_win);
     fireThread->attachCrosshair(crosshair);
