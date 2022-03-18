@@ -143,7 +143,6 @@ image: url(:/images/arrow.png);</string>
    </property>
    <property name="font">
     <font>
-     <family>Terminal</family>
      <pointsize>14</pointsize>
      <italic>false</italic>
      <bold>true</bold>
@@ -177,7 +176,6 @@ background-color: rgb(255, 255, 255);</string>
    </property>
    <property name="font">
     <font>
-     <family>Terminal</family>
      <pointsize>14</pointsize>
      <bold>true</bold>
     </font>

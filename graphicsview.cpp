@@ -349,6 +349,8 @@ void GraphicsView::timerEvent(QTimerEvent *event)
         loose->show();
         this->hide();
     }
+
+
 }
 
 bool GraphicsView::viewportEvent(QEvent *event)
