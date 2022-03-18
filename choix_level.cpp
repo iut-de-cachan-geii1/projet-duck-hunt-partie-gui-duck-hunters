@@ -138,7 +138,11 @@ choix_level::choix_level(QWidget *parent) :
             emit choix_level::map_to_send(numero_map = 666); 
         }
     );
+
+
 }
+
+
 
 choix_level::~choix_level()
 {

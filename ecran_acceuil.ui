@@ -33,7 +33,6 @@
    </property>
    <property name="font">
     <font>
-     <family>Terminal</family>
      <pointsize>14</pointsize>
      <bold>true</bold>
     </font>
@@ -641,7 +640,6 @@ background-color: rgb(255, 255, 255);
    </property>
    <property name="font">
     <font>
-     <family>Terminal</family>
      <pointsize>14</pointsize>
      <bold>true</bold>
     </font>
@@ -713,8 +711,8 @@ background-color: rgb(255, 255, 255);
   <widget class="QLabel" name="label_2">
    <property name="geometry">
     <rect>
-     <x>-330</x>
-     <y>-5</y>
+     <x>-380</x>
+     <y>-20</y>
      <width>1041</width>
      <height>631</height>
     </rect>
@@ -735,10 +733,21 @@ background-color: rgb(255, 255, 255);
     <bool>true</bool>
    </property>
   </widget>
+  <widget class="QComboBox" name="serialPortInfoListBox">
+   <property name="geometry">
+    <rect>
+     <x>260</x>
+     <y>450</y>
+     <width>72</width>
+     <height>24</height>
+    </rect>
+   </property>
+  </widget>
   <zorder>label_2</zorder>
   <zorder>enter_button</zorder>
   <zorder>pseudo</zorder>
   <zorder>label</zorder>
+  <zorder>serialPortInfoListBox</zorder>
  </widget>
  <resources>
   <include location="mice.qrc"/>

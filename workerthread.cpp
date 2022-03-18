@@ -49,8 +49,6 @@
 **
 ****************************************************************************/
 
-#include "crosshair.h"
-#include "ecran_acceuil.h"
 #include <QGraphicsScene>
 #include <QPainter>
 #include <QRandomGenerator>
@@ -61,63 +59,64 @@
 #include <QDialog>
 #include <QPixmap>
 
-#define Droite 1205
-#define Gauche 0
-#define Haut 0
-#define Bas 600
-#define vitesseX 0
+#include "workerthread.h"
+#include "graphicsview.h"
+
+#define decalageLargeur 85 // 75
+#define decalageHauteur 78 // 68
 
 constexpr qreal Pi = M_PI;
 constexpr qreal TwoPi = 2 * M_PI;
 
 constexpr float coeff_teta = Pi / 180.0f;
 constexpr float distance_metre = 0.40f; //40
-constexpr float coeff_pixel = 3779.5275591f;
+constexpr float coeff_pixel = 3779.5275591f;            
 
-Crosshair::Crosshair()
-    : fireInTheHole(0),
-      pos_x(640),
-      pos_y(384)
-
+void WorkerThread::run()
 {
-    startTimer(1000 / 33);
+    while (true)
+    {
+        // pos_x = -(fenetre->yaw_double * 23 ) ;
+        // pos_y = -(fenetre->roll_double * 23 ) ;
+
+        pos_x = -(tan(ecran->yaw_double * coeff_teta)) * distance_metre * coeff_pixel;
+        pos_y = -(tan(ecran->roll_double * coeff_teta)) * distance_metre * coeff_pixel;
+
+        viseur->setPos(QPointF(pos_x + 640, pos_y + 384));
+
+        viseur->fireInTheHole = ecran->fire;
+
+ 
+    }
+}
+void WorkerThread::attachCrosshair(Crosshair *viseurQuiFautAttacher)
+{
+    this->viseur = viseurQuiFautAttacher;
 }
 
-QRectF Crosshair::boundingRect() const
+void WorkerThread::attachEcran(ecran_acceuil *fenetre_qui_faut_attacher)
 {
-    qreal adjust = 0.5;
-    return QRectF(-18 - adjust, -22 - adjust,
-                  36 + adjust, 60 + adjust);
+    this->ecran = fenetre_qui_faut_attacher;
 }
 
-QPainterPath Crosshair::shape() const
+void WorkerThread::attachDucks(QList<Duck *> *DucksQuiFautAttacher)
 {
-    QPainterPath path;
-    path.addRect(-10, -20, 75, 71);
-    return path;
+    this->ducks = DucksQuiFautAttacher;
 }
 
-void Crosshair::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+void WorkerThread::attachAmmo(Munition *munitionQuiFautAttacher)
 {
-    QPixmap imageDeCrosshair(":/images/crosshair.png");
-    painter->drawPixmap(QPoint(-30, -30), imageDeCrosshair);
+    this->ammunition = munitionQuiFautAttacher;
 }
-
-void Crosshair::attach_window(ecran_acceuil *fenetre_qui_faut_attacher)
+void WorkerThread::attachScore(Score *scoreQuiFautAttacher)
 {
-    this->fenetre = fenetre_qui_faut_attacher;
+    this->scorus = scoreQuiFautAttacher;
 }
-
-void Crosshair::timerEvent(QTimerEvent *event)
+void WorkerThread::attachRound(Round *roundQuiFautAttacher)
 {
-    // // pos_x = -(fenetre->yaw_double * 23 ) ;
-    // // pos_y = -(fenetre->roll_double * 23 ) ;
-
-    // pos_x = -(tan(fenetre->yaw_double * coeff_teta)) * distance_metre * coeff_pixel;
-    // pos_y = -(tan(fenetre->roll_double * coeff_teta)) * distance_metre * coeff_pixel;
-    // //setPos(coordinateMouse);
-
-    // setPos(QPointF(pos_x + 640, pos_y + 384));
-
-    // fireInTheHole = fenetre->fire;
+    this->round = roundQuiFautAttacher;
+}
+void WorkerThread::attachVue(GraphicsView *vueQuiFautAttacher)
+{
+    this->vue = vueQuiFautAttacher;
 }

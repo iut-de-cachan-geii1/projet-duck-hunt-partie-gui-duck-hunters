@@ -4,6 +4,7 @@
 #include <QDialog>
 #include <QCommonStyle>
 
+
 namespace Ui {
 class choix_level;
 }
@@ -18,9 +19,9 @@ public:
     int numero_map;
     int numero_diff;
 
-
 private:
     Ui::choix_level *ui;
+
 
 signals :
     void map_to_send(int maps);

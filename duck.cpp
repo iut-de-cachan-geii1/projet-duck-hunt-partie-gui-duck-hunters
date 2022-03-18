@@ -54,7 +54,7 @@
 #define Gauche 0
 #define Haut 0
 #define Bas 600
-#define vitesseX 10
+#define vitesseX 1
 
 static qreal normalizeAngle(qreal angle)
 {
@@ -90,7 +90,7 @@ Duck::Duck()
       cptMort(0),
       directionX(QRandomGenerator::global()->bounded(0, 2)), 
       directionY(1),
-      hauteur_rng(QRandomGenerator::global()->bounded(2, 11)),
+      hauteur_rng(QRandomGenerator::global()->bounded(2, 3)),
       compare(true)
 
 {

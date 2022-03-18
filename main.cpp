@@ -57,6 +57,8 @@
 #include "round.h"
 #include "choix_level.h"
 #include "game_over.h"
+#include "workerthread.h"
+#include "firethread.h"
 
 #include <QGraphicsVideoItem>
 #include <QRandomGenerator>
@@ -135,11 +137,34 @@ int main(int argc, char **argv)
     view.attachScore(score);
     view.attachRound(round);
     //view.attachChien(chien);
+    crosshair->attach_window(&pseudo_win);
 
     view.setWindowTitle(QT_TRANSLATE_NOOP(QGraphicsView, "Duck hunt"));
     view.setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     view.setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     view.setCursor(Qt::BlankCursor);
+
+    WorkerThread *workerThread = new WorkerThread;
+    FireThread *fireThread = new FireThread;
+ 
+    workerThread->attachEcran(&pseudo_win);
+    workerThread->attachCrosshair(crosshair);
+    workerThread->attachVue(&view);
+    workerThread->attachAmmo(ammo);
+    workerThread->attachRound(round);
+    workerThread->attachDucks(listeDeCanard);
+    workerThread->attachScore(score);
+
+    fireThread->attachEcran(&pseudo_win);
+    fireThread->attachCrosshair(crosshair);
+    fireThread->attachVue(&view);
+    fireThread->attachAmmo(ammo);
+    fireThread->attachRound(round);
+    fireThread->attachDucks(listeDeCanard);
+    fireThread->attachScore(score);
+
+    workerThread->start();
+    fireThread->start();
     
     return QApplication::exec();
 }

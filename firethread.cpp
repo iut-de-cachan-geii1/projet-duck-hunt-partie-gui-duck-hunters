@@ -49,8 +49,6 @@
 **
 ****************************************************************************/
 
-#include "crosshair.h"
-#include "ecran_acceuil.h"
 #include <QGraphicsScene>
 #include <QPainter>
 #include <QRandomGenerator>
@@ -61,63 +59,80 @@
 #include <QDialog>
 #include <QPixmap>
 
-#define Droite 1205
-#define Gauche 0
-#define Haut 0
-#define Bas 600
-#define vitesseX 0
+#include "firethread.h"
+#include "graphicsview.h"
+
+#define decalageLargeur 85 // 75
+#define decalageHauteur 78 // 68
 
 constexpr qreal Pi = M_PI;
 constexpr qreal TwoPi = 2 * M_PI;
 
 constexpr float coeff_teta = Pi / 180.0f;
 constexpr float distance_metre = 0.40f; //40
-constexpr float coeff_pixel = 3779.5275591f;
+constexpr float coeff_pixel = 3779.5275591f;            
 
-Crosshair::Crosshair()
-    : fireInTheHole(0),
-      pos_x(640),
-      pos_y(384)
-
+void FireThread::run()
 {
-    startTimer(1000 / 33);
+    while (true)
+    {
+     viseur->fireInTheHole = ecran->fire;
+
+        if (ecran->m_serial->isOpen())
+        {
+            if (viseur->fireInTheHole == 1)
+            {
+                for (int i = 0; i < vue->DuckCount; i++)
+                {
+                    if (((viseur->pos_x) >= ((ducks->at(i)->positionDuck.rx() - 640)) && ((viseur->pos_x) <= (ducks->at(i)->positionDuck.rx() - 640 + decalageLargeur))))
+                    {
+                        if (((viseur->pos_y) >= (ducks->at(i)->positionDuck.ry() - 384)) && ((viseur->pos_y) <= (ducks->at(i)->positionDuck.ry() - 384 + decalageHauteur)))
+                        {
+                            if (ducks->at(i)->cliqueDessus == false)
+                            {
+                                ducks->at(i)->isDead = true;
+                                ducks->at(i)->cliqueDessus = true;
+                                (scorus->nombreCanardTue)++;
+                                scorus->scoreCpt = scorus->nombreCanardTue * 1;
+                                round->roundCpt = scorus->nombreCanardTue / 10;
+                            }
+                        }
+                    }
+                }
+                (ammunition->cptMunition)--;
+                msleep(200);
+            }
+        }
+    }
+}
+void FireThread::attachCrosshair(Crosshair *viseurQuiFautAttacher)
+{
+    this->viseur = viseurQuiFautAttacher;
 }
 
-QRectF Crosshair::boundingRect() const
+void FireThread::attachEcran(ecran_acceuil *fenetre_qui_faut_attacher)
 {
-    qreal adjust = 0.5;
-    return QRectF(-18 - adjust, -22 - adjust,
-                  36 + adjust, 60 + adjust);
+    this->ecran = fenetre_qui_faut_attacher;
 }
 
-QPainterPath Crosshair::shape() const
+void FireThread::attachDucks(QList<Duck *> *DucksQuiFautAttacher)
 {
-    QPainterPath path;
-    path.addRect(-10, -20, 75, 71);
-    return path;
+    this->ducks = DucksQuiFautAttacher;
 }
 
-void Crosshair::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+void FireThread::attachAmmo(Munition *munitionQuiFautAttacher)
 {
-    QPixmap imageDeCrosshair(":/images/crosshair.png");
-    painter->drawPixmap(QPoint(-30, -30), imageDeCrosshair);
+    this->ammunition = munitionQuiFautAttacher;
 }
-
-void Crosshair::attach_window(ecran_acceuil *fenetre_qui_faut_attacher)
+void FireThread::attachScore(Score *scoreQuiFautAttacher)
 {
-    this->fenetre = fenetre_qui_faut_attacher;
+    this->scorus = scoreQuiFautAttacher;
 }
-
-void Crosshair::timerEvent(QTimerEvent *event)
+void FireThread::attachRound(Round *roundQuiFautAttacher)
 {
-    // // pos_x = -(fenetre->yaw_double * 23 ) ;
-    // // pos_y = -(fenetre->roll_double * 23 ) ;
-
-    // pos_x = -(tan(fenetre->yaw_double * coeff_teta)) * distance_metre * coeff_pixel;
-    // pos_y = -(tan(fenetre->roll_double * coeff_teta)) * distance_metre * coeff_pixel;
-    // //setPos(coordinateMouse);
-
-    // setPos(QPointF(pos_x + 640, pos_y + 384));
-
-    // fireInTheHole = fenetre->fire;
+    this->round = roundQuiFautAttacher;
+}
+void FireThread::attachVue(GraphicsView *vueQuiFautAttacher)
+{
+    this->vue = vueQuiFautAttacher;
 }

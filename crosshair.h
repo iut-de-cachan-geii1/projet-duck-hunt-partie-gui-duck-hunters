@@ -54,6 +54,7 @@
 
 #include <QGraphicsObject>
 #include <QLabel>
+#include "ecran_acceuil.h"
 
 class Crosshair : public QGraphicsObject
 {
@@ -69,11 +70,16 @@ public:
                QWidget *widget) override;
 
     QPointF coordinateMouse;
+    void attach_window(ecran_acceuil *fenetre_qui_faut_attacher);
+    int fireInTheHole;
+    double pos_x;
+    double pos_y;
 
 protected:
     void timerEvent(QTimerEvent *event) override;
 
 private:
+    ecran_acceuil *fenetre;
 
 };
 
