@@ -52,7 +52,7 @@
 #include <QFont>
 
 Score::Score()
-    : scoreCpt(0),
+    : scoreCpt(0.0),
       nombreCanardTue(0),
       label(new QLabel)
 {

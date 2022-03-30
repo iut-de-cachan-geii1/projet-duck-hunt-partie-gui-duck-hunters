@@ -75,7 +75,7 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
                QWidget *widget) override;
     
-    int scoreCpt;
+    float scoreCpt;
     int nombreCanardTue;
 
 private:

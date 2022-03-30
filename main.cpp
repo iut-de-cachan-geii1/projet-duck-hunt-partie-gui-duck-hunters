@@ -68,6 +68,11 @@
 #include <fstream>
 #include <QSoundEffect>
 #include <QMediaPlayer>
+#include <fstream>
+#include <filesystem>
+#include <nlohmann/json.hpp>
+
+namespace fs = std::filesystem;
 
 int main(int argc, char **argv)
 {
@@ -80,7 +85,17 @@ int main(int argc, char **argv)
     Munition *ammo = new Munition;
     Score *score = new Score;
     Round *round = new Round;
+
     //Chien *chien = new Chien;
+
+    // fs::path path = fs::temp_directory_path();
+
+    // if (!fs::exists("Z:\\s4\\projet er\\projet-duck-hunt-partie-gui-duck-hunters\\save"))
+    // {
+    //     fs::create_directories("Z:\\s4\\projet er\\projet-duck-hunt-partie-gui-duck-hunters\\save");
+    // }
+
+    //std::ofstream("Z:\\s4\\projet er\\projet-duck-hunt-partie-gui-duck-hunters\\save\\bestPlayer.txt").put('a');
 
     scene.setSceneRect(0, 0, 1280, 769);
     scene.setItemIndexMethod(QGraphicsScene::NoIndex);
@@ -140,6 +155,6 @@ int main(int argc, char **argv)
     view.setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     view.setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     view.setCursor(Qt::BlankCursor);
-    
+
     return QApplication::exec();
 }

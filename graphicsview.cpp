@@ -83,7 +83,8 @@ GraphicsView::GraphicsView(QGraphicsScene *scene, QWidget *parent)
       vraiment_perdu(false),
       difficulte(1),
       timer_escape(new QTimer(this)),
-      looseByEscape(false)
+      looseByEscape(false),
+      movie(new QMovie("qrc:/images/duck_animated.gif"))
 //   sauvegarde("sauvegarde.json")
 
 {
@@ -102,6 +103,7 @@ GraphicsView::GraphicsView(QGraphicsScene *scene, QWidget *parent)
     dead.setSource(QUrl::fromUserInput("qrc:/images/canard_dead.wav"));
     dead.setLoopCount(0);
     dead.setVolume(0.99f);
+
     // sauvegarde<<"pseudo : "<<"Hello World !"<<"\n";
     // sauvegarde.close();
 }
@@ -296,6 +298,10 @@ void GraphicsView::attach_perdre(Game_over *looser)
 
             [this]() // fonction lambda
             {
+
+                const char * test = pseudo.toStdString().c_str();
+
+                std::ofstream("Z:\\s4\\projet er\\projet-duck-hunt-partie-gui-duck-hunters\\save\\bestPlayer.txt").write(test, 16);
                 this->showNormal();
                 this->loose->hide();
                 ammo->cptMunition = 3;
@@ -369,7 +375,7 @@ void GraphicsView::mousePressEvent(QMouseEvent *event)
                         ducks->at(i)->isDead = compare;
                         ducks->at(i)->cliqueDessus = compare;
                         (score->nombreCanardTue)++;
-                        score->scoreCpt = score->nombreCanardTue * 1;
+                        score->scoreCpt = score->nombreCanardTue * difficulte;
                         round->roundCpt = score->nombreCanardTue / 10;
                     }
                 }
@@ -388,6 +394,9 @@ void GraphicsView::timerEvent(QTimerEvent *event)
         loose->show();
         this->hide();
     }
+    //label_movie.setPos(500,500);
+    label_movie.setMovie(movie);
+    movie->start();
 }
 
 bool GraphicsView::viewportEvent(QEvent *event)
@@ -395,3 +404,4 @@ bool GraphicsView::viewportEvent(QEvent *event)
 
     return QGraphicsView::viewportEvent(event);
 }
+ 
