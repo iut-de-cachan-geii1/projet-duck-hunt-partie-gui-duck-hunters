@@ -53,11 +53,13 @@
 #include "crosshair.h"
 #include "munition.h"
 #include "score.h"
+#include "chien.h"
 #include "ecran_acceuil.h"
 #include "round.h"
 #include "choix_level.h"
 #include "game_over.h"
 
+#include <nlohmann/json.hpp>
 #include <QGraphicsVideoItem>
 #include <QRandomGenerator>
 #include <QApplication>
@@ -68,6 +70,11 @@
 #include <fstream>
 #include <QSoundEffect>
 #include <QMediaPlayer>
+#include <cstdlib>
+#include <fstream>
+#include <filesystem>
+#include <iostream>
+
 
 int main(int argc, char **argv)
 {
@@ -80,7 +87,7 @@ int main(int argc, char **argv)
     Munition *ammo = new Munition;
     Score *score = new Score;
     Round *round = new Round;
-    //Chien *chien = new Chien;
+    Chien *chien = new Chien;
 
     scene.setSceneRect(0, 0, 1280, 769);
     scene.setItemIndexMethod(QGraphicsScene::NoIndex);
@@ -109,7 +116,7 @@ int main(int argc, char **argv)
     scene.addItem(ammo);
     scene.addItem(score);
     scene.addItem(round);
-    //scene.addItem(chien);
+    scene.addItem(chien);
     // scene.addRect(0,0,1201,600);
 
     view.setRenderHint(QPainter::Antialiasing);
@@ -134,12 +141,12 @@ int main(int argc, char **argv)
     view.attachAmmo(ammo);
     view.attachScore(score);
     view.attachRound(round);
-    //view.attachChien(chien);
+    view.attachChien(chien);
 
     view.setWindowTitle(QT_TRANSLATE_NOOP(QGraphicsView, "Duck hunt"));
     view.setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     view.setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     view.setCursor(Qt::BlankCursor);
-    
+
     return QApplication::exec();
 }

@@ -59,12 +59,16 @@
 #include "round.h"
 #include "choix_level.h"
 #include "game_over.h"
-#include <fstream>
+
+#include <nlohmann/json.hpp>
+
 #include <string>
 #include <iostream>
+#include <filesystem>
 #include <QSoundEffect>
-
 #include<QSoundEffect>
+
+namespace fs = std::filesystem;
 
 class GraphicsView : public QGraphicsView
 {
@@ -80,7 +84,6 @@ public:
     void attachAmmo(Munition *munitionQuiFautAttacher);
     void attachScore(Score *scoreQuiFautAttacher);
     void attachChien(Chien *chienQuiFautAttacher);
-    //void attachChien(Chien *chienQuiFautAttacher);
     void attachRound(Round *roundQuiFautAttacher);
 
 //=============Fonction attache fin===========================
@@ -114,24 +117,31 @@ private:
     int maps;
     int levels;
     QString pseudo;
+    const char* pseudonyme;
+    char nv_score;
+    char nv_round;
     Game_over* loose;
     bool vraiment_perdu;
     float difficulte;
-<<<<<<< HEAD
-    QSoundEffect panpan;
     QSoundEffect choose_map_song;
-=======
-    Duck* veryDead;
+    Duck* veryDead;  
     QSoundEffect panpan;
     QSoundEffect dead;
     QTimer *timer_escape;
     bool looseByEscape;
-
+    QSoundEffect urss_miam;
+    QSoundEffect momo_sound;
+    bool writed;
+    nlohmann::json j2;
+    fs::path path;
+    // std::ifstream save;
+    // std::string valeur;
+    // int val;
+    // nlohmann::json myJson;
 signals:
 // void ilFautFaireRespawnLesCanards();
 
 public slots:
 void lesCanardsDoiventRespawn(Duck* canardATuer);
->>>>>>> 5c5e601faca680b9bd30c2c86dfdbfa31bc07654
 
 };

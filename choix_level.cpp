@@ -44,6 +44,10 @@ choix_level::choix_level(QWidget *parent) :
             }
             if(numero_map == 3)
             {
+                ui->map->setPixmap(QPixmap(":/images/background_nuit_menu.png"));
+            }
+            if(numero_map == 4)
+            {
                 numero_map = 0;
                 ui->map->setPixmap(QPixmap(":/images/stage.png"));
             }
@@ -70,9 +74,13 @@ choix_level::choix_level(QWidget *parent) :
             {
                 ui->map->setPixmap(QPixmap(":/images/background_nuit_menu.png"));
             }
+            if(numero_map == 3)
+            {
+                ui->map->setPixmap(QPixmap(":/images/background_nuit_menu.png"));
+            }
             if(numero_map == -1)
             {
-                numero_map = 2;
+                numero_map = 3;
                 ui->map->setPixmap(QPixmap(":/images/background_nuit_menu.png"));
             }
         // emit choix_level::map_to_send(numero_map);
@@ -135,6 +143,7 @@ choix_level::choix_level(QWidget *parent) :
                 ui->difficulte->setPixmap(QPixmap(":/images/mode_facile.png"));
                
             }
+            
         
         }    
     );
@@ -144,13 +153,13 @@ choix_level::choix_level(QWidget *parent) :
         [this]()
         {
             click.play();
-            emit choix_level::map_to_send(numero_map = 666); 
+            emit choix_level::map_to_send(numero_map = 666);
+            emit choix_level::level_to_send(numero_diff = 3); 
         }
     );
 }
 
 choix_level::~choix_level()
 {
-
     delete ui;
 }

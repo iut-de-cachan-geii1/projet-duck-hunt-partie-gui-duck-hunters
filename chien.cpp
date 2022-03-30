@@ -70,7 +70,7 @@ Chien::Chien()
       chien_fini(false),
       tout_les_canards_sont_mort(false),
       cpt(0),
-      duck_counter_pour_le_chien(1)
+      duck_counter_pour_le_chien(nb_chien)
 {
     startTimer(1000 / 33);
 }
@@ -94,11 +94,7 @@ void Chien::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWi
     bool compare = true;
     // QLineF lineCenterToDestination(QPoint(0, 0), mapFromScene(650, 350));
     // painter->drawLine(lineCenterToDestination);
-    if (tout_les_canards_sont_mort == !compare)
-    {
-        painter->drawRect(QRectF(1, 1, 1, 1));
-    }
-    else
+    if (tout_les_canards_sont_mort == compare)
     {
         if (duck_counter_pour_le_chien == 1)
         {
@@ -108,12 +104,16 @@ void Chien::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWi
         {
             painter->drawPixmap(QPointF(0, 0), QPixmap(":/images/chien_canard2"));
         }
+        // painter->drawRect(QRectF(1, 1, 1, 1));
     }
+    // else
+    // {
+    // }
 }
 
 void Chien::timerEvent(QTimerEvent *event)
 {
-    if (tout_les_canards_sont_mort)
+    if (tout_les_canards_sont_mort == true)
     {
         if (positionChien.ry() > 0)
         {

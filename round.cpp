@@ -52,7 +52,7 @@
 #include <QFont>
 
 Round::Round()
-    : roundCpt(0),
+    : roundCpt(1),
       label(new QLabel)
 {
 }
