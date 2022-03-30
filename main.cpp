@@ -59,6 +59,7 @@
 #include "game_over.h"
 #include "workerthread.h"
 #include "firethread.h"
+#include "setting.h"
 
 #include <QGraphicsVideoItem>
 #include <QRandomGenerator>
@@ -82,6 +83,7 @@ int main(int argc, char **argv)
     Munition *ammo = new Munition;
     Score *score = new Score;
     Round *round = new Round;
+    ecran_acceuil *ecran = new ecran_acceuil;
     //Chien *chien = new Chien;
 
     scene.setSceneRect(0, 0, 1280, 769);
@@ -125,7 +127,6 @@ int main(int argc, char **argv)
     view.attach_ecran_acceuil(&pseudo_win);
     view.attach_choix_level(&choix_niveau);
     view.attach_perdre(&loose);
-
     // view.setBackgroundBrush(QPixmap(":/images/background.png"));
     // view.setForegroundBrush(QPixmap(":/images/foreground.png"));
 
@@ -138,6 +139,7 @@ int main(int argc, char **argv)
     view.attachRound(round);
     //view.attachChien(chien);
     crosshair->attach_window(&pseudo_win);
+    
 
     view.setWindowTitle(QT_TRANSLATE_NOOP(QGraphicsView, "Duck hunt"));
     view.setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);

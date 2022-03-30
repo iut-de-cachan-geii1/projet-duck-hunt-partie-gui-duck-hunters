@@ -1,4 +1,5 @@
 #include "ecran_acceuil.h"
+#include "setting.h"
 #include "ui_ecran_acceuil.h"
 #include "QPushButton"
 #include <QMessageBox>
@@ -14,7 +15,6 @@ ecran_acceuil::ecran_acceuil(QWidget *parent) :
     m_serial(new QSerialPort(this))
 {
     ui->setupUi(this);
-    connect(ui->serialPortInfoListBox, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &ecran_acceuil::checkCustomDevicePathPolicy);
     connect(m_serial, &QSerialPort::errorOccurred, this, &ecran_acceuil::handleError);
     connect(m_serial, &QSerialPort::readyRead, this, &ecran_acceuil::readData);
     setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
@@ -27,12 +27,19 @@ ecran_acceuil::ecran_acceuil(QWidget *parent) :
     );
 
     connect(ui->enter_button, &QPushButton::clicked,this, &ecran_acceuil::apply);
-    fillPortsInfo();
+    connect(ui->setting, &QPushButton::clicked,this, &ecran_acceuil::setting_fenetre);
+    //fillPortsInfo();
 }
 
 ecran_acceuil::~ecran_acceuil()
 {   
     delete ui;
+}
+
+
+void ecran_acceuil::setting_fenetre()
+{
+    s.show();
 }
 
 void ecran_acceuil::apply()
@@ -41,32 +48,9 @@ void ecran_acceuil::apply()
     readData();
 }
 
-void ecran_acceuil::checkCustomDevicePathPolicy(int idx)
-{
-    const bool isCustomPath = !ui->serialPortInfoListBox->itemData(idx).isValid();
-    ui->serialPortInfoListBox->setEditable(isCustomPath);
-    if (isCustomPath)
-       ui->serialPortInfoListBox->clearEditText();
-}
-
-void ecran_acceuil::fillPortsInfo()
-{
-    ui->serialPortInfoListBox->clear();
-
-    const auto infos = QSerialPortInfo::availablePorts();
-
-    for (const QSerialPortInfo &info : infos) {
-        QStringList list;
-
-        list << info.portName();
-
-        ui->serialPortInfoListBox->addItem(list.first(), list);
-    }
-}
-
 void ecran_acceuil::openSerialPort()
 {
-    m_serial->setPortName(ui->serialPortInfoListBox->currentText());
+    m_serial->setPortName(s.nom_port);
     m_serial->setBaudRate(QSerialPort::Baud115200);
     m_serial->setDataBits(QSerialPort::Data8);
     m_serial->setParity(QSerialPort::NoParity);
@@ -152,3 +136,5 @@ void ecran_acceuil::readData()
     (void)0;
 
 }
+
+

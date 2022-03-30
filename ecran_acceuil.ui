@@ -733,21 +733,28 @@ background-color: rgb(255, 255, 255);
     <bool>true</bool>
    </property>
   </widget>
-  <widget class="QComboBox" name="serialPortInfoListBox">
+  <widget class="QPushButton" name="setting">
    <property name="geometry">
     <rect>
-     <x>260</x>
-     <y>450</y>
-     <width>72</width>
-     <height>24</height>
+     <x>540</x>
+     <y>540</y>
+     <width>51</width>
+     <height>51</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: transparent;
+image: url(:/images/settings.png);</string>
+   </property>
+   <property name="text">
+    <string/>
    </property>
   </widget>
   <zorder>label_2</zorder>
   <zorder>enter_button</zorder>
   <zorder>pseudo</zorder>
   <zorder>label</zorder>
-  <zorder>serialPortInfoListBox</zorder>
+  <zorder>setting</zorder>
  </widget>
  <resources>
   <include location="mice.qrc"/>

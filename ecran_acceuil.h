@@ -5,6 +5,7 @@
 #include "qserialport.h"
 #include "qserialportinfo.h"
 #include <QIntValidator>
+#include "setting.h"
 
 namespace Ui {
 class ecran_acceuil;
@@ -21,24 +22,30 @@ public:
     double yaw_double,pitch_double,roll_double,fire;
     int cpt = 0;
     QSerialPort *m_serial = nullptr;
+    void attachSettings(setting *fenetre_qui_faut_attacher);
+
 signals : 
     void pseudo_to_send(QString pseudo);
-   
+     
 
 private slots:
 
-    void checkCustomDevicePathPolicy(int idx);
     void openSerialPort();
     void closeSerialPort();
     void handleError(QSerialPort::SerialPortError error);
     void writeData(const QByteArray &data);
     void readData();
     void apply();
+    void setting_fenetre();
 
+    
 private:
     void fillPortsInfo();
     Ui::ecran_acceuil *ui;
     QIntValidator *m_intValidator = nullptr;
+    setting s;
+    //setting *parametre;
+
 
 };
 
