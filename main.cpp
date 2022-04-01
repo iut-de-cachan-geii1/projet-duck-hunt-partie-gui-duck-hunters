@@ -126,7 +126,7 @@ int main(int argc, char **argv)
     scene.addItem(ammo);
     scene.addItem(score);
     scene.addItem(round);
-    scene.addItem(chien);
+    //scene.addItem(chien);
     // scene.addRect(0,0,1201,600);
 
     view.setRenderHint(QPainter::Antialiasing);
