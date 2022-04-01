@@ -43,6 +43,9 @@
         <file>images/mode_difficile.png</file>
         <file>images/game_over.png</file>
         <file>images/skull_doom.png</file>
+        <file>images/urss.png</file>
+        <file>images/background_blyat2.png</file>
+        <file>images/foreground_blyat2.png</file>
         <file>images/hell_background_gif.gif</file>
         <file>images/bruit_tir.wav</file>
         <file>images/oui_tir.wav</file>
@@ -51,5 +54,8 @@
         <file>images/click_wii.wav</file>
         <file>images/minecraft_song.wav</file>
         <file>images/elevator_song.wav</file>
+        <file>images/urss_song.wav</file>   
+        <file>images/desert_song.wav</file>
+        <file>images/sauvegarde.json</file>   
     </qresource>
 </RCC>

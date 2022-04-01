@@ -64,6 +64,7 @@
 #include <QGraphicsVideoItem>
 #include <QMediaPlayer>
 
+
 class Chien : public QGraphicsObject
 {
     Q_OBJECT
@@ -79,6 +80,7 @@ public:
     QPointF positionChien;
     bool tout_les_canards_sont_mort;
     bool chien_fini;
+    int nb_chien;
 
 protected:
     void timerEvent(QTimerEvent *event) override;
@@ -86,5 +88,6 @@ protected:
 private:
     int cpt; 
     int duck_counter_pour_le_chien;
+    
 };
 #endif

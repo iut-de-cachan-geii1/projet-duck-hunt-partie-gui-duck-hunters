@@ -66,14 +66,21 @@
 #include <string>
 #include <iostream>
 #include <QTimer>
+#include <cstdlib>
+#include <fstream>
+#include <filesystem>
+#include <nlohmann/json.hpp>
 #include <QtMultimedia/QMediaPlayer>
+#include <sstream>
+
+namespace fs = std::filesystem;
 
 #define decalageLargeur 75 // 75
 #define decalageHauteur 68 // 68
 
 GraphicsView::GraphicsView(QGraphicsScene *scene, QWidget *parent)
     : QGraphicsView(scene, parent),
-      DuckCount(1),
+      DuckCount(QRandomGenerator::global()->bounded(1, 3)),
       pos_random(),
       compare(true),
       has_pseudo(false),
@@ -84,8 +91,8 @@ GraphicsView::GraphicsView(QGraphicsScene *scene, QWidget *parent)
       difficulte(1),
       timer_escape(new QTimer(this)),
       looseByEscape(false),
-      movie(new QMovie("qrc:/images/duck_animated.gif"))
-//   sauvegarde("sauvegarde.json")
+      writed(true),
+      path(fs::temp_directory_path())
 
 {
     connect(timer_escape, &QTimer::timeout, this, GraphicsView::escapadeDesCanards);
@@ -103,7 +110,21 @@ GraphicsView::GraphicsView(QGraphicsScene *scene, QWidget *parent)
     dead.setSource(QUrl::fromUserInput("qrc:/images/canard_dead.wav"));
     dead.setLoopCount(0);
     dead.setVolume(0.99f);
+    urss_miam.setSource(QUrl::fromUserInput("qrc:/images/urss_song.wav"));
+    urss_miam.setLoopCount(QSoundEffect::Infinite);
+    urss_miam.setVolume(0.55f);
+    momo_sound.setSource(QUrl::fromUserInput("qrc:/images/desert_song.wav"));
+    momo_sound.setLoopCount(QSoundEffect::Infinite);
+    momo_sound.setVolume(0.70f);
+    // save >> myJson;
+    //  val = myJson["1er"];
 
+    // valeur = myJson["1er"];
+    // valeur = myJson["name"];
+
+    // std::stringstream buffer;
+    // buffer << save.rdbuf();
+    // valeur = buffer.str();
     // sauvegarde<<"pseudo : "<<"Hello World !"<<"\n";
     // sauvegarde.close();
 }
@@ -136,10 +157,10 @@ void GraphicsView::attachScore(Score *scoreQuiFautAttacher)
 {
     this->score = scoreQuiFautAttacher;
 }
-// void GraphicsView::attachChien(Chien *chienQuiFautAttacher)
-// {
-//     this->chien = chienQuiFautAttacher;
-// }
+void GraphicsView::attachChien(Chien *chienQuiFautAttacher)
+{
+    this->chien = chienQuiFautAttacher;
+}
 void GraphicsView::attachRound(Round *roundQuiFautAttacher)
 {
     this->round = roundQuiFautAttacher;
@@ -152,6 +173,7 @@ void GraphicsView::attach_ecran_acceuil(ecran_acceuil *ecran)
 
             [this](QString username) // fonction lambda
             {
+                pseudo = username;
                 this->level->showNormal();
                 this->ecran->hide();
                 choose_map_song.setSource(QUrl::fromUserInput("qrc:/images/elevator_song.wav"));
@@ -186,6 +208,7 @@ void GraphicsView::attach_choix_level(choix_level *level)
                     delete ducks->at(0);
                     ducks->removeAt(0);
                 }
+                chien->nb_chien = DuckCount;
 
                 for (int i = 0; i < DuckCount; i++)
                 {
@@ -203,7 +226,7 @@ void GraphicsView::attach_choix_level(choix_level *level)
                     ducks->at(i)->difficulte_round = ducks->at(i)->difficulte_round + round->roundCpt / 10;
                 }
                 looseByEscape = false;
-                timer_escape->start(10000); 
+                timer_escape->start(10000);
 
                 if (maps == 0)
                 {
@@ -214,16 +237,23 @@ void GraphicsView::attach_choix_level(choix_level *level)
                 {
                     this->setBackgroundBrush(QPixmap(":/images/background_momo.png"));
                     this->setForegroundBrush(QPixmap(":/images/foreground_momo.png"));
+                    momo_sound.play();
                 }
                 if (maps == 2)
                 {
                     this->setBackgroundBrush(QPixmap(":/images/background_nuit.png"));
                     this->setForegroundBrush(QPixmap(":/images/foreground_nuit.png"));
                 }
+                if (maps == 3)
+                {
+                    this->setBackgroundBrush(QPixmap(":/images/background_blyat2.png"));
+                    this->setForegroundBrush(QPixmap(":/images/foreground_blyat2.png"));
+                    urss_miam.play();
+                }
                 if (maps == 666)
                 {
                     this->setBackgroundBrush(QPixmap(":/images/hell_background.jpg"));
-                    // this->setForegroundBrush(QPixmap(":/images/foreground.png"));
+                    this->setForegroundBrush(QPixmap(""));
                 }
                 this->level->hide();
                 this->showNormal();
@@ -241,11 +271,15 @@ void GraphicsView::attach_choix_level(choix_level *level)
                 }
                 else if (level_choix == 1)
                 {
-                    difficulte = 1.5;
+                    difficulte = 1.33;
                 }
                 else if (level_choix == 2)
                 {
-                    difficulte = 2;
+                    difficulte = 1.66;
+                }
+                else if (level_choix == 3)
+                {
+                    difficulte = 1.66;
                 }
                 this->level->hide();
                 this->showNormal();
@@ -258,7 +292,7 @@ void GraphicsView::lesCanardsDoiventRespawn(Duck *canardATuer)
     {
         if (canardATuer == ducks->at(i))
         {
-            if(canardATuer -> isCanardEscaped == true)
+            if (canardATuer->isCanardEscaped == true)
             {
                 looseByEscape = true;
             }
@@ -271,6 +305,8 @@ void GraphicsView::lesCanardsDoiventRespawn(Duck *canardATuer)
     {
         ammo->cptMunition = 3;
         DuckCount = QRandomGenerator::global()->bounded(1, 3);
+        chien->nb_chien = DuckCount;
+        chien->tout_les_canards_sont_mort = true;
 
         for (int i = 0; i < DuckCount; i++)
         {
@@ -298,10 +334,7 @@ void GraphicsView::attach_perdre(Game_over *looser)
 
             [this]() // fonction lambda
             {
-
-                const char * test = pseudo.toStdString().c_str();
-
-                std::ofstream("Z:\\s4\\projet er\\projet-duck-hunt-partie-gui-duck-hunters\\save\\bestPlayer.txt").write(test, 16);
+                writed = true;
                 this->showNormal();
                 this->loose->hide();
                 ammo->cptMunition = 3;
@@ -323,6 +356,7 @@ void GraphicsView::attach_perdre(Game_over *looser)
                 }
 
                 DuckCount = QRandomGenerator::global()->bounded(1, 3);
+                chien->nb_chien = DuckCount;
 
                 for (int i = 0; i < DuckCount; i++)
                 {
@@ -391,8 +425,91 @@ void GraphicsView::timerEvent(QTimerEvent *event)
 {
     if (((ammo->cptMunition <= 0) && (ducks->size() >= 1) && (ducks->at(0)->isDead == !compare) && (ducks->at(0)->isDead2 == !compare) && (ducks->at(0)->vraimentMort == !compare)) || (looseByEscape == true))
     {
+
+        if (writed)
+        {
+            pseudonyme = pseudo.toStdString().c_str();
+
+            if (!fs::exists(path / "MVPs.json"))
+            {
+                std::ofstream ofs(path / "MVPs.json");
+                nlohmann::json j1;
+
+                j1["Pseudo"] = "None";
+                j1["Score"] = 0;
+                j1["Round"] = 0;
+
+                j1["Pseudo2"] = "None";
+                j1["Score2"] = 0;
+                j1["Round2"] = 0;
+
+                j1["Pseudo3"] = "None";
+                j1["Score3"] = 0;
+                j1["Round3"] = 0;
+                ofs << j1;
+                ofs.close();
+            }
+
+            std::ifstream ifs(path / "MVPs.json");
+
+            nlohmann::json j2;
+
+            j2 << ifs;
+
+            if (score->scoreCpt > j2["Score"])
+            {
+                j2["Pseudo2"] = j2["Pseudo"];
+                j2["Score2"] = j2["Score"];
+                j2["Round2"] = j2["Round"];
+
+                j2["Pseudo"] = pseudonyme;
+                j2["Score"] = score->scoreCpt;
+                j2["Round"] = round->roundCpt;
+            }
+            else if (score->scoreCpt > j2["Score2"])
+            {
+                j2["Pseudo3"] = j2["Pseudo2"];
+                j2["Score3"] = j2["Score2"];
+                j2["Round3"] = j2["Round2"];
+
+                j2["Pseudo2"] = pseudonyme;
+                j2["Score2"] = score->scoreCpt;
+                j2["Round2"] = round->roundCpt;
+            }
+            else if (score->scoreCpt > j2["Score3"])
+            {
+                j2["Pseudo3"] = pseudonyme;
+                j2["Score3"] = score->scoreCpt;
+                j2["Round3"] = round->roundCpt;
+            }
+
+            loose->player_best->setText(QString::fromStdString(j2["Pseudo"]));
+            loose->player_best_deuxieme->setText(QString::fromStdString(j2["Pseudo2"]));
+            loose->player_best_troisieme->setText(QString::fromStdString(j2["Pseudo3"]));
+
+            int test = j2["Score"];
+            int test2 = j2["Score2"];
+            int test3 = j2["Score3"];
+
+            loose->player_best_scorus->setText(QString::number(test));
+            loose->player_best_deuxieme_scorus->setText(QString::number(test2));
+            loose->player_best_troisieme_scorus->setText(QString::number(test3));
+
+            ifs.close();
+
+            std::ofstream ofs(path / "MVPs.json");
+
+            ofs << std::setw(4) << j2 << std::endl;
+
+            ofs.close();
+
+            writed = false;
+        }
+
         loose->show();
         this->hide();
+        urss_miam.stop();
+        momo_sound.stop();
     }
     //label_movie.setPos(500,500);
     label_movie.setMovie(movie);

@@ -53,11 +53,13 @@
 #include "crosshair.h"
 #include "munition.h"
 #include "score.h"
+#include "chien.h"
 #include "ecran_acceuil.h"
 #include "round.h"
 #include "choix_level.h"
 #include "game_over.h"
 
+#include <nlohmann/json.hpp>
 #include <QGraphicsVideoItem>
 #include <QRandomGenerator>
 #include <QApplication>
@@ -68,11 +70,11 @@
 #include <fstream>
 #include <QSoundEffect>
 #include <QMediaPlayer>
+#include <cstdlib>
 #include <fstream>
 #include <filesystem>
-#include <nlohmann/json.hpp>
+#include <iostream>
 
-namespace fs = std::filesystem;
 
 int main(int argc, char **argv)
 {
@@ -124,7 +126,7 @@ int main(int argc, char **argv)
     scene.addItem(ammo);
     scene.addItem(score);
     scene.addItem(round);
-    //scene.addItem(chien);
+    scene.addItem(chien);
     // scene.addRect(0,0,1201,600);
 
     view.setRenderHint(QPainter::Antialiasing);
