@@ -208,7 +208,7 @@ void GraphicsView::attach_choix_level(choix_level *level)
                     delete ducks->at(0);
                     ducks->removeAt(0);
                 }
-                chien->nb_chien = DuckCount;
+                //chien->nb_chien = DuckCount;//signed by robbie_le_renneTM
 
                 for (int i = 0; i < DuckCount; i++)
                 {
@@ -305,8 +305,8 @@ void GraphicsView::lesCanardsDoiventRespawn(Duck *canardATuer)
     {
         ammo->cptMunition = 3;
         DuckCount = QRandomGenerator::global()->bounded(1, 3);
-        chien->nb_chien = DuckCount;
-        chien->tout_les_canards_sont_mort = true;
+        //chien->nb_chien = DuckCount;
+        //chien->tout_les_canards_sont_mort = true;
 
         for (int i = 0; i < DuckCount; i++)
         {
@@ -356,7 +356,7 @@ void GraphicsView::attach_perdre(Game_over *looser)
                 }
 
                 DuckCount = QRandomGenerator::global()->bounded(1, 3);
-                chien->nb_chien = DuckCount;
+                //chien->nb_chien = DuckCount;
 
                 for (int i = 0; i < DuckCount; i++)
                 {
@@ -409,7 +409,7 @@ void GraphicsView::mousePressEvent(QMouseEvent *event)
                         ducks->at(i)->isDead = compare;
                         ducks->at(i)->cliqueDessus = compare;
                         (score->nombreCanardTue)++;
-                        score->scoreCpt = score->nombreCanardTue * 1;
+                        score->scoreCpt = score->nombreCanardTue * difficulte;
                         round->roundCpt = score->nombreCanardTue / 10;
                     }
                 }
@@ -511,6 +511,9 @@ void GraphicsView::timerEvent(QTimerEvent *event)
         urss_miam.stop();
         momo_sound.stop();
     }
+    //label_movie.setPos(500,500);
+    // label_movie.setMovie(movie);
+    // movie->start();
 }
 
 bool GraphicsView::viewportEvent(QEvent *event)
@@ -518,3 +521,4 @@ bool GraphicsView::viewportEvent(QEvent *event)
 
     return QGraphicsView::viewportEvent(event);
 }
+ 

@@ -87,7 +87,17 @@ int main(int argc, char **argv)
     Munition *ammo = new Munition;
     Score *score = new Score;
     Round *round = new Round;
-    Chien *chien = new Chien;
+
+    //Chien *chien = new Chien;
+
+    // fs::path path = fs::temp_directory_path();
+
+    // if (!fs::exists("Z:\\s4\\projet er\\projet-duck-hunt-partie-gui-duck-hunters\\save"))
+    // {
+    //     fs::create_directories("Z:\\s4\\projet er\\projet-duck-hunt-partie-gui-duck-hunters\\save");
+    // }
+
+    //std::ofstream("Z:\\s4\\projet er\\projet-duck-hunt-partie-gui-duck-hunters\\save\\bestPlayer.txt").put('a');
 
     scene.setSceneRect(0, 0, 1280, 769);
     scene.setItemIndexMethod(QGraphicsScene::NoIndex);
@@ -116,7 +126,7 @@ int main(int argc, char **argv)
     scene.addItem(ammo);
     scene.addItem(score);
     scene.addItem(round);
-    scene.addItem(chien);
+    //scene.addItem(chien);
     // scene.addRect(0,0,1201,600);
 
     view.setRenderHint(QPainter::Antialiasing);
@@ -141,7 +151,7 @@ int main(int argc, char **argv)
     view.attachAmmo(ammo);
     view.attachScore(score);
     view.attachRound(round);
-    view.attachChien(chien);
+    //view.attachChien(chien);
 
     view.setWindowTitle(QT_TRANSLATE_NOOP(QGraphicsView, "Duck hunt"));
     view.setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);

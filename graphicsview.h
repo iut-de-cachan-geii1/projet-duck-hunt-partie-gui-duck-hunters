@@ -124,7 +124,7 @@ private:
     bool vraiment_perdu;
     float difficulte;
     QSoundEffect choose_map_song;
-    Duck* veryDead;  
+    Duck* veryDead;
     QSoundEffect panpan;
     QSoundEffect dead;
     QTimer *timer_escape;
