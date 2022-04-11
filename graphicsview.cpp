@@ -74,9 +74,10 @@
 #include <sstream>
 
 namespace fs = std::filesystem;
+#include <math.h>
 
-#define decalageLargeur 75 // 75
-#define decalageHauteur 68 // 68
+#define decalageLargeur 85 // 75
+#define decalageHauteur 78 // 68
 
 GraphicsView::GraphicsView(QGraphicsScene *scene, QWidget *parent)
     : QGraphicsView(scene, parent),
@@ -100,7 +101,7 @@ GraphicsView::GraphicsView(QGraphicsScene *scene, QWidget *parent)
 
     viewport()->setAttribute(Qt::WA_AcceptTouchEvents);
     setDragMode(ScrollHandDrag);
-    startTimer(1000 / 500);
+    startTimer(1000 / 33);
     setFixedSize(1280, 769);
     setMouseTracking(true);
     QCursor cursor(Qt::BlankCursor);
@@ -393,37 +394,64 @@ void GraphicsView::attach_perdre(Game_over *looser)
 
 void GraphicsView::mousePressEvent(QMouseEvent *event)
 {
-
-    if (event->buttons() == Qt::LeftButton)
-    {
-        panpan.play();
-        for (int i = 0; i < DuckCount; i++)
-        {
-            if (((crosshair->coordinateMouse.rx()) >= ((ducks->at(i)->positionDuck.rx())) && ((crosshair->coordinateMouse.rx()) <= (ducks->at(i)->positionDuck.rx() + decalageLargeur))))
-            {
-                if (((crosshair->coordinateMouse.ry()) >= (ducks->at(i)->positionDuck.ry())) && ((crosshair->coordinateMouse.ry()) <= (ducks->at(i)->positionDuck.ry() + decalageHauteur)))
-                {
-                    if (ducks->at(i)->cliqueDessus == !compare)
-                    {
-                        dead.play();
-                        ducks->at(i)->isDead = compare;
-                        ducks->at(i)->cliqueDessus = compare;
-                        (score->nombreCanardTue)++;
-                        score->scoreCpt = score->nombreCanardTue * difficulte;
-                        round->roundCpt = score->nombreCanardTue / 10;
-                    }
-                }
-            }
-        }
-        (ammo->cptMunition)--;
-    }
+    // if (event->buttons() == Qt::LeftButton)
+    // {
+    //     for (int i = 0; i < DuckCount; i++)
+    //     {
+    //         if (((crosshair->coordinateMouse.rx()) >= ((ducks->at(i)->positionDuck.rx())) && ((crosshair->coordinateMouse.rx()) <= (ducks->at(i)->positionDuck.rx() + decalageLargeur))))
+    //         {
+    //             if (((crosshair->coordinateMouse.ry()) >= (ducks->at(i)->positionDuck.ry())) && ((crosshair->coordinateMouse.ry()) <= (ducks->at(i)->positionDuck.ry() + decalageHauteur)))
+    //             {
+    //                 if (ducks->at(i)->cliqueDessus == !compare)
+    //                 {
+    //                     ducks->at(i)->isDead = compare;
+    //                     ducks->at(i)->cliqueDessus = compare;
+    //                     (score->nombreCanardTue)++;
+    //                     score->scoreCpt = score->nombreCanardTue * 1;
+    //                     round->roundCpt = score->nombreCanardTue / 10;
+    //                 }
+    //             }
+    //         }
+    //     }
+    //     (ammo->cptMunition)--;
+    // }
 }
 
 //==================BOUM BOUM LE CANARD==================
 
 void GraphicsView::timerEvent(QTimerEvent *event)
 {
-    if (((ammo->cptMunition <= 0) && (ducks->size() >= 1) && (ducks->at(0)->isDead == !compare) && (ducks->at(0)->isDead2 == !compare) && (ducks->at(0)->vraimentMort == !compare)) || (looseByEscape == true))
+    // static int cpt_test = 0;
+
+    // if (ecran->m_serial->isOpen())
+    // {
+    //     //crosshair->setPos(QPointF(crosshair->pos_x + 640, crosshair->pos_y + 384));
+
+    //     if (crosshair->fireInTheHole == 1)
+    //     {
+    //         cpt_test++;
+    //         for (int i = 0; i < DuckCount; i++)
+    //         {
+    //             if (((crosshair->pos_x) >= ((ducks->at(i)->positionDuck.rx()-640)) && ((crosshair->pos_x) <= (ducks->at(i)->positionDuck.rx()-640 + decalageLargeur))))
+    //             {
+    //                 if (((crosshair->pos_y) >= (ducks->at(i)->positionDuck.ry()-384)) && ((crosshair->pos_y) <= (ducks->at(i)->positionDuck.ry()-384 + decalageHauteur)))
+    //                 {
+    //                     if (ducks->at(i)->cliqueDessus == !compare)
+    //                     {
+    //                         ducks->at(i)->isDead = compare;
+    //                         ducks->at(i)->cliqueDessus = compare;
+    //                         (score->nombreCanardTue)++;
+    //                         score->scoreCpt = score->nombreCanardTue * 1;
+    //                         round->roundCpt = score->nombreCanardTue / 10;
+    //                     }
+    //                 }
+    //             }
+    //         }
+    //         (ammo->cptMunition)--;
+    //     }
+    // }
+
+    if ((ammo->cptMunition <= 0) && (ducks->size() >= 1) && (ducks->at(0)->isDead == !compare) && (ducks->at(0)->isDead2 == !compare) && (ducks->at(0)->vraimentMort == !compare))
     {
 
         if (writed)

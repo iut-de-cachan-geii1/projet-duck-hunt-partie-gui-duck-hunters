@@ -157,7 +157,11 @@ choix_level::choix_level(QWidget *parent) :
             emit choix_level::level_to_send(numero_diff = 3); 
         }
     );
+
+
 }
+
+
 
 choix_level::~choix_level()
 {

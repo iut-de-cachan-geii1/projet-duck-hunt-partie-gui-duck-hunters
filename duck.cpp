@@ -54,7 +54,7 @@
 #define Gauche 0
 #define Haut 0
 #define Bas 600
-#define vitesseX 10
+#define vitesseX 1
 
 static qreal normalizeAngle(qreal angle)
 {

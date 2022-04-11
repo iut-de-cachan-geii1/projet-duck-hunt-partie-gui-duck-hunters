@@ -1,5 +1,7 @@
 QT += widgets multimedia multimediawidgets serialport
 
+
+
 HEADERS += \
         chien.h \
         choix_level.h \
@@ -12,7 +14,8 @@ HEADERS += \
         mouse.h \
         munition.h \
         round.h \
-        score.h
+        score.h \
+        setting.h
 SOURCES += \
     chien.cpp \
     choix_level.cpp \
@@ -25,7 +28,8 @@ SOURCES += \
     menu.cpp \
     munition.cpp \
     round.cpp \
-    score.cpp
+    score.cpp \
+    setting.cpp
 
 RESOURCES += \
 	mice.qrc
@@ -33,5 +37,6 @@ RESOURCES += \
 FORMS += \
     choix_level.ui \
     ecran_acceuil.ui \
-    game_over.ui
+    game_over.ui \
+    setting.ui
 

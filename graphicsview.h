@@ -101,10 +101,11 @@ public:
     int DuckCount;
     bool respawn = false;
     bool has_pseudo;
+    Crosshair* crosshair;
 
 private:
     qreal totalScaleFactor = 1;
-    Crosshair* crosshair;
+    //Crosshair* crosshair;
     QList<Duck*> *ducks;
     Munition *ammo;
     Score *score;

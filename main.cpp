@@ -58,6 +58,9 @@
 #include "round.h"
 #include "choix_level.h"
 #include "game_over.h"
+#include "workerthread.h"
+#include "firethread.h"
+#include "setting.h"
 
 #include <nlohmann/json.hpp>
 #include <QGraphicsVideoItem>
@@ -87,7 +90,7 @@ int main(int argc, char **argv)
     Munition *ammo = new Munition;
     Score *score = new Score;
     Round *round = new Round;
-
+    ecran_acceuil *ecran = new ecran_acceuil;
     //Chien *chien = new Chien;
 
     // fs::path path = fs::temp_directory_path();
@@ -140,7 +143,6 @@ int main(int argc, char **argv)
     view.attach_ecran_acceuil(&pseudo_win);
     view.attach_choix_level(&choix_niveau);
     view.attach_perdre(&loose);
-
     // view.setBackgroundBrush(QPixmap(":/images/background.png"));
     // view.setForegroundBrush(QPixmap(":/images/foreground.png"));
 
@@ -152,11 +154,30 @@ int main(int argc, char **argv)
     view.attachScore(score);
     view.attachRound(round);
     //view.attachChien(chien);
+    crosshair->attach_window(&pseudo_win);
+    
 
     view.setWindowTitle(QT_TRANSLATE_NOOP(QGraphicsView, "Duck hunt"));
     view.setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     view.setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     view.setCursor(Qt::BlankCursor);
 
+    WorkerThread *workerThread = new WorkerThread;
+    FireThread *fireThread = new FireThread;
+ 
+    workerThread->attachEcran(&pseudo_win);
+    workerThread->attachCrosshair(crosshair);
+
+    fireThread->attachEcran(&pseudo_win);
+    fireThread->attachCrosshair(crosshair);
+    fireThread->attachVue(&view);
+    fireThread->attachAmmo(ammo);
+    fireThread->attachRound(round);
+    fireThread->attachDucks(listeDeCanard);
+    fireThread->attachScore(score);
+
+    workerThread->start();
+    fireThread->start();
+    
     return QApplication::exec();
 }
