@@ -1,39 +1,13 @@
-# Projet Pinchzoom
+#Projet Duck Hunt
 
-Sujet du projet Pinchzoom à l'IUT de Cachan
+Le but de ce projet Duck Hunt a été de reproduire l'interface graphique par 2. Puis, à l'aide d'un second binôme qui a recré une manette grâce à un uC, nous pouvons jouer au jeu dans de bonnes conditions. 
 
-## Préface
-L'objectif de cette semaine de projet GL est de développer un programme
-(en binôme) en __langage C++__ dans l'environnement Qt. Il s'agira dans 
-ce programme de faire évoluer un programme existant capable de détecter le
-mouvement _pincer/zoomer_ capturé sur écran tactile.
+Le code a été réalisé en C++ grâce à des bibliothèques Qt et les fenêtres des menus ont été réalisées sur Qt creator. 
 
-## Cahier des charges
-* Le programme initial fait bouger de manière aléatoire des objets
-(des souris) sur une scène 2D. A l'approche d'une ou plusieurs objets souris 
-voisins, chaque objet souris change de direction pour ne pas entrer en 
-collision.
+Voici une petite démonstration de notre jeu final :
 
-* L'évolution demandé est d'intégrer votre propre objet souris qui obéira à vos 
-ordres : 
-    - Si un double-toucher/double-clic (avec un seul doigt) sur le plan 2D 
-    a été détecté, votre objet souris doit avancer dans cette direction
-        - Une bulle avec point d'exclamation doit apparaître sur votre objet
-         souris pendant 1s pour indiquer que celui-ci a bien reçu l'ordre
-    - En avançant dans cette direction, votre objet souris doit éviter les 
-    autres objets souris
-    - Une fois arrivé à destination, votre objet souris repart de manière 
-    aléatoire
+![2022-04-11 15-42-23](https://user-images.githubusercontent.com/76152677/163243221-7bdd85ba-d1d1-4831-94e0-6d6d478a77e7.gif)
 
-## Etapes du travail 
-### Phase 1 : Installation
-Suivre le tutoriel video que vous fournira votre professeur pour installer les 
-logiciels requis.
+Concernant l'installation il faut suivre le tutoriel video qui suis et compiler sur VSCode la branche se nomant "test_avec_timer" :
 
-### Phase 2 : Exploration
-Testez d'abord le programme dans la branche __`master`__
-(_Pinchzoom_ avec juste la fonctionnalité _pincer/zoomer_)
-
-### Phase 3 : Développement
-Une fois compris, basculer dans une branche __`essai`__ dans lequel vous 
-travaillerez.
+https://user-images.githubusercontent.com/76152677/163243566-9a9f7179-c3ec-4ef9-b0ea-52d18f7dc223.mp4
