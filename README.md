@@ -6,7 +6,7 @@ Le code a été réalisé en C++ grâce à des bibliothèques Qt et les fenêtre
 
 Voici une petite démonstration de notre jeu final :
 
-![2022-04-11 15-42-23](https://user-images.githubusercontent.com/76152677/163243221-7bdd85ba-d1d1-4831-94e0-6d6d478a77e7.gif)
+![Démonstration jeu Duck Hunt (2)](https://user-images.githubusercontent.com/76152677/163245174-580acad5-bbfb-4e96-bc22-9833509776c9.gif)
 
 Concernant l'installation il faut suivre le tutoriel video qui suis et compiler sur VSCode la branche se nomant "test_avec_timer" :
 
