@@ -91,6 +91,10 @@ int main(int argc, char **argv)
     Score *score = new Score;
     Round *round = new Round;
     ecran_acceuil *ecran = new ecran_acceuil;
+
+   
+
+
     //Chien *chien = new Chien;
 
     // fs::path path = fs::temp_directory_path();

@@ -65,12 +65,16 @@ class WorkerThread : public QThread
 {
     Q_OBJECT
     void run() override;
-public:
-    void attachCrosshair(Crosshair* viseurQuiFautAttacher);
-    void attachEcran(ecran_acceuil *fenetre_qui_faut_attacher);
 
-    Crosshair * viseur;
-    ecran_acceuil * ecran;
+public:
+    WorkerThread();
+    
+    void attachCrosshair(Crosshair *viseurQuiFautAttacher);
+    void attachEcran(ecran_acceuil *fenetre_qui_faut_attacher);
+    void timerEvent(QTimerEvent *event) override;
+
+    Crosshair *viseur;
+    ecran_acceuil *ecran;
 
     double pos_x_th;
     double pos_y_th;

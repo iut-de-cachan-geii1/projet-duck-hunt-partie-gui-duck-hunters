@@ -72,10 +72,18 @@ constexpr float coeff_teta = Pi / 180.0f;
 constexpr float distance_metre = 0.40f; //40
 constexpr float coeff_pixel = 3779.5275591f;            
 
+WorkerThread::WorkerThread() : QThread()
+{
+    this->startTimer(1);
+}
+
 void WorkerThread::run()
 {
-    while (true)
-    {
+    WorkerThread::exec();
+}
+
+void WorkerThread::timerEvent(QTimerEvent *event)
+{
         // pos_x = -(fenetre->yaw_double * 23 ) ;
         // pos_y = -(fenetre->roll_double * 23 ) ;
 
@@ -87,8 +95,9 @@ void WorkerThread::run()
         viseur->pos_x = pos_x_th;
         viseur->pos_y = pos_y_th;
         //viseur->fireInTheHole = ecran->fire;
-    }
 }
+
+
 void WorkerThread::attachCrosshair(Crosshair *viseurQuiFautAttacher)
 {
     this->viseur = viseurQuiFautAttacher;

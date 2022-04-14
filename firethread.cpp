@@ -58,6 +58,7 @@
 #include <QLabel>
 #include <QDialog>
 #include <QPixmap>
+#include <QSoundEffect>
 
 #include "firethread.h"
 #include "graphicsview.h"
@@ -69,41 +70,63 @@ constexpr qreal Pi = M_PI;
 constexpr qreal TwoPi = 2 * M_PI;
 
 constexpr float coeff_teta = Pi / 180.0f;
-constexpr float distance_metre = 0.40f; //40
-constexpr float coeff_pixel = 3779.5275591f;            
+constexpr float distance_metre = 0.40f; // 40
+constexpr float coeff_pixel = 3779.5275591f;
 
-void FireThread::run()
+FireThread::FireThread() 
+: QThread()
 {
-    while (true)
-    {
-     viseur->fireInTheHole = ecran->fire;
+    panpan.setSource(QUrl::fromUserInput("qrc:/images/oui_tir.wav"));
+    panpan.setLoopCount(0);
+    panpan.setVolume(0.99f);
+    dead.setSource(QUrl::fromUserInput("qrc:/images/canard_dead.wav"));
+    dead.setLoopCount(0);
+    dead.setVolume(0.99f);
+    this->startTimer(1);
 
-        if (ecran->m_serial->isOpen())
+}
+
+void FireThread::timerEvent(QTimerEvent *event)
+{
+    viseur->fireInTheHole = ecran->fire;
+
+    if (ecran->m_serial->isOpen())
+    {
+        if (viseur->fireInTheHole == 1)
         {
-            if (viseur->fireInTheHole == 1)
+            panpan.play();
+            for (int i = 0; i < vue->DuckCount; i++)
             {
-                for (int i = 0; i < vue->DuckCount; i++)
+                if (((viseur->pos_x) >= ((ducks->at(i)->positionDuck.rx() - 640)) && ((viseur->pos_x) <= (ducks->at(i)->positionDuck.rx() - 640 + decalageLargeur))))
                 {
-                    if (((viseur->pos_x) >= ((ducks->at(i)->positionDuck.rx() - 640)) && ((viseur->pos_x) <= (ducks->at(i)->positionDuck.rx() - 640 + decalageLargeur))))
+                    if (((viseur->pos_y) >= (ducks->at(i)->positionDuck.ry() - 384)) && ((viseur->pos_y) <= (ducks->at(i)->positionDuck.ry() - 384 + decalageHauteur)))
                     {
-                        if (((viseur->pos_y) >= (ducks->at(i)->positionDuck.ry() - 384)) && ((viseur->pos_y) <= (ducks->at(i)->positionDuck.ry() - 384 + decalageHauteur)))
+                        if (ducks->at(i)->cliqueDessus == false)
                         {
-                            if (ducks->at(i)->cliqueDessus == false)
-                            {
-                                ducks->at(i)->isDead = true;
-                                ducks->at(i)->cliqueDessus = true;
-                                (scorus->nombreCanardTue)++;
-                                scorus->scoreCpt = scorus->nombreCanardTue * 1;
-                                round->roundCpt = scorus->nombreCanardTue / 10;
-                            }
+                            ducks->at(i)->isDead = true;
+                            ducks->at(i)->cliqueDessus = true;
+                            (scorus->nombreCanardTue)++;
+                            scorus->scoreCpt = scorus->nombreCanardTue * 1;
+                            round->roundCpt = scorus->nombreCanardTue / 10;
+                            dead.play();
                         }
                     }
                 }
-                (ammunition->cptMunition)--;
-                msleep(200);
             }
+            (ammunition->cptMunition)--;
+            msleep(200);
         }
     }
+}
+
+void FireThread::run()
+{
+
+    FireThread::exec();
+
+    // while (true)
+    // {
+    // }
 }
 void FireThread::attachCrosshair(Crosshair *viseurQuiFautAttacher)
 {

@@ -54,6 +54,7 @@
 
 #include <QGraphicsView>
 #include <QThread>
+#include <QSoundEffect>
 #include "graphicsview.h"
 #include "ecran_acceuil.h"
 #include "crosshair.h"
@@ -66,6 +67,8 @@ class FireThread : public QThread
     Q_OBJECT
     void run() override;
 public:
+    FireThread();
+
     void attachCrosshair(Crosshair* viseurQuiFautAttacher);
     void attachEcran(ecran_acceuil *fenetre_qui_faut_attacher);
     void attachAmmo(Munition *munitionQuiFautAttacher);
@@ -74,6 +77,8 @@ public:
     void attachDucks(QList<Duck *> *DucksQuiFautAttacher);
     void attachVue(GraphicsView * vueQuiFautAttacher);
 
+    void timerEvent(QTimerEvent *event) override;
+
     Crosshair * viseur;
     ecran_acceuil * ecran;
     Round * round;
@@ -81,6 +86,8 @@ public:
     Score * scorus;
     QList<Duck *> *ducks;
     GraphicsView* vue;
+    QSoundEffect panpan;
+    QSoundEffect dead;
 
 };
 

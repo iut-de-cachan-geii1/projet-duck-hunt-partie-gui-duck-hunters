@@ -44,7 +44,7 @@ choix_level::choix_level(QWidget *parent) :
             }
             if(numero_map == 3)
             {
-                ui->map->setPixmap(QPixmap(":/images/background_nuit_menu.png"));
+                ui->map->setPixmap(QPixmap(":/images/map_blyat_mini.png"));
             }
             if(numero_map == 4)
             {
@@ -81,7 +81,7 @@ choix_level::choix_level(QWidget *parent) :
             if(numero_map == -1)
             {
                 numero_map = 3;
-                ui->map->setPixmap(QPixmap(":/images/background_nuit_menu.png"));
+                ui->map->setPixmap(QPixmap(":/images/map_blyat_mini.png"));
             }
         // emit choix_level::map_to_send(numero_map);
         }    

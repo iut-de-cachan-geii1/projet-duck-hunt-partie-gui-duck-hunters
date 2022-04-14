@@ -22,7 +22,7 @@ ecran_acceuil::ecran_acceuil(QWidget *parent) :
     pseudo_song.setSource(QUrl::fromUserInput("qrc:/images/minecraft_song.wav"));
     pseudo_song.setLoopCount(QSoundEffect::Infinite);
     pseudo_song.setVolume(1.0);
-    pseudo_song.play();
+    //pseudo_song.play();
 
     connect(ui->enter_button, &QPushButton::clicked, this,
 
