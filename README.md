@@ -1,4 +1,4 @@
-#Projet Duck Hunt
+# Projet Duck Hunt
 
 Le but de ce projet Duck Hunt a été de reproduire l'interface graphique par 2. Puis, à l'aide d'un second binôme qui a recré une manette grâce à un uC, nous pouvons jouer au jeu dans de bonnes conditions. 
 
